@@ -14,4 +14,9 @@
       FullName="xxazor.oracle.apps.per.documents.server.DocumentsAM"
       ObjectType="AppModule" >
    </Containee>
+   <Containee
+      Name="DocumentTypesVO"
+      FullName="xxazor.oracle.apps.per.documents.server.DocumentTypesVO"
+      ObjectType="ViewObject" >
+   </Containee>
 </JboPackage>

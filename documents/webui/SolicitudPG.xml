@@ -1,10 +1,35 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <page xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:ui="http://xmlns.oracle.com/uix/ui" version="10.1.3_" xml:lang="en-US" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$">
    <content>
-      <oa:pageLayout id="region1" amDefName="xxazor.oracle.apps.per.documents.server.DocumentsAM" windowTitle="Solicitud" title="Solicitud">
+      <oa:pageLayout id="region1" amDefName="xxazor.oracle.apps.per.documents.server.DocumentsAM" windowTitle="Solicitud" title="Solicitud" controllerClass="xxazor.oracle.apps.per.documents.webui.SolicitudCO">
          <ui:corporateBranding>
             <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
          </ui:corporateBranding>
+         <ui:contents>
+            <oa:tableLayout id="region2" hAlign="center" amDefName="xxazor.oracle.apps.per.documents.server.DocumentsAM">
+               <ui:contents>
+                  <oa:rowLayout id="region3">
+                     <ui:contents>
+                        <oa:cellFormat id="region4">
+                           <ui:contents>
+                              <oa:messageChoice id="item1" required="yes" prompt="Tipo de Solicitud:" pickListValAttr="Code" pickListDispAttr="Meaning" pickListViewName="DocumentsAM.DocumentTypesVO1"/>
+                           </ui:contents>
+                        </oa:cellFormat>
+                        <oa:cellFormat id="region5"/>
+                     </ui:contents>
+                  </oa:rowLayout>
+               </ui:contents>
+            </oa:tableLayout>
+            <oa:pageButtonBar id="pageButtonBarRN">
+               <ui:contents>
+                  <oa:button id="SolicitarBtn" text="Solicitar" prompt="Solicitar">
+                     <ui:primaryClientAction>
+                        <ui:fireAction event="solicitarEvt"/>
+                     </ui:primaryClientAction>
+                  </oa:button>
+               </ui:contents>
+            </oa:pageButtonBar>
+         </ui:contents>
       </oa:pageLayout>
    </content>
 </page>

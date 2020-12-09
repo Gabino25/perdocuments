@@ -9,4 +9,8 @@
       <Attr Name="_version" Value="10.1.3.43.6" />
       <Attr Name="_deployType" Value="0" />
    </DesignTime>
+   <ViewUsage
+      Name="DocumentTypesVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.DocumentTypesVO" >
+   </ViewUsage>
 </AppModule>
