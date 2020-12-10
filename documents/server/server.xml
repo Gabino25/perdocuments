@@ -19,4 +19,9 @@
       FullName="xxazor.oracle.apps.per.documents.server.DocumentTypesVO"
       ObjectType="ViewObject" >
    </Containee>
+   <Containee
+      Name="UsersInfoVO"
+      FullName="xxazor.oracle.apps.per.documents.server.UsersInfoVO"
+      ObjectType="ViewObject" >
+   </Containee>
 </JboPackage>

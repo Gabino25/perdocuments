@@ -13,4 +13,8 @@
       Name="DocumentTypesVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.DocumentTypesVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="UsersInfoVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.UsersInfoVO" >
+   </ViewUsage>
 </AppModule>

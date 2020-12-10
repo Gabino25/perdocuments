@@ -51,4 +51,15 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
     public DocumentTypesVOImpl getDocumentTypesVO1() {
         return (DocumentTypesVOImpl)findViewObject("DocumentTypesVO1");
     }
+
+    /**Container's getter for UsersInfoVO1
+     */
+    public UsersInfoVOImpl getUsersInfoVO1() {
+        return (UsersInfoVOImpl)findViewObject("UsersInfoVO1");
+    }
+
+    public void filterUserInfo(int userId) {
+        UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1(); 
+        usersInfoVOImpl.filterBy(userId);
+    }
 }

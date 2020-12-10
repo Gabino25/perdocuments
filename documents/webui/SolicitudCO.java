@@ -37,6 +37,8 @@ public class SolicitudCO extends OAControllerImpl
     DocumentsAMImpl  documentsAMImpl = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
     OAMessageChoiceBean poplistBean = (OAMessageChoiceBean)webBean.findChildRecursive("item1");  
     poplistBean.setPickListCacheEnabled(false);  
+    int userId = pageContext.getUserId();
+    documentsAMImpl.filterUserInfo(userId);
    
   }
 
