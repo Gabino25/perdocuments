@@ -10,7 +10,7 @@ import oracle.jbo.server.AttributeDefImpl;
 // ---    Custom code may be added to this class.
 // ---    Warning: Do not modify method signatures of generated methods.
 // ---------------------------------------------------------------------
-public class UsersInfoVORowImpl extends OAViewRowImpl {
+public class PerDocsVORowImpl extends OAViewRowImpl {
     public static final int PERSONID = 0;
     public static final int ASSIGNMENTID = 1;
     public static final int EMPLOYEENUMBER = 2;
@@ -19,13 +19,14 @@ public class UsersInfoVORowImpl extends OAViewRowImpl {
     public static final int FULLNAME = 5;
     public static final int NAME = 6;
     public static final int POSITIONID = 7;
-    public static final int USERNAME = 8;
-    public static final int USERID = 9;
-    public static final int FECHASOLICITUD = 10;
+    public static final int ID = 8;
+    public static final int CREATIONDATE = 9;
+    public static final int EFECTIVEDATE = 10;
+    public static final int STATUS = 11;
 
     /**This is the default constructor (do not remove)
      */
-    public UsersInfoVORowImpl() {
+    public PerDocsVORowImpl() {
     }
 
     /**Gets the attribute value for the calculated attribute PersonId
@@ -124,28 +125,52 @@ public class UsersInfoVORowImpl extends OAViewRowImpl {
         setAttributeInternal(POSITIONID, value);
     }
 
-    /**Gets the attribute value for the calculated attribute UserName
+    /**Gets the attribute value for the calculated attribute Id
      */
-    public String getUserName() {
-        return (String) getAttributeInternal(USERNAME);
+    public Number getId() {
+        return (Number) getAttributeInternal(ID);
     }
 
-    /**Sets <code>value</code> as the attribute value for the calculated attribute UserName
+    /**Sets <code>value</code> as the attribute value for the calculated attribute Id
      */
-    public void setUserName(String value) {
-        setAttributeInternal(USERNAME, value);
+    public void setId(Number value) {
+        setAttributeInternal(ID, value);
     }
 
-    /**Gets the attribute value for the calculated attribute UserId
+    /**Gets the attribute value for the calculated attribute CreationDate
      */
-    public Number getUserId() {
-        return (Number) getAttributeInternal(USERID);
+    public Date getCreationDate() {
+        return (Date) getAttributeInternal(CREATIONDATE);
     }
 
-    /**Sets <code>value</code> as the attribute value for the calculated attribute UserId
+    /**Sets <code>value</code> as the attribute value for the calculated attribute CreationDate
      */
-    public void setUserId(Number value) {
-        setAttributeInternal(USERID, value);
+    public void setCreationDate(Date value) {
+        setAttributeInternal(CREATIONDATE, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute EfectiveDate
+     */
+    public Date getEfectiveDate() {
+        return (Date) getAttributeInternal(EFECTIVEDATE);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute EfectiveDate
+     */
+    public void setEfectiveDate(Date value) {
+        setAttributeInternal(EFECTIVEDATE, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute Status
+     */
+    public String getStatus() {
+        return (String) getAttributeInternal(STATUS);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute Status
+     */
+    public void setStatus(String value) {
+        setAttributeInternal(STATUS, value);
     }
 
     /**getAttrInvokeAccessor: generated method. Do not modify.
@@ -169,12 +194,14 @@ public class UsersInfoVORowImpl extends OAViewRowImpl {
             return getName();
         case POSITIONID:
             return getPositionId();
-        case USERNAME:
-            return getUserName();
-        case USERID:
-            return getUserId();
-        case FECHASOLICITUD:
-            return getFechaSolicitud();
+        case ID:
+            return getId();
+        case CREATIONDATE:
+            return getCreationDate();
+        case EFECTIVEDATE:
+            return getEfectiveDate();
+        case STATUS:
+            return getStatus();
         default:
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -185,24 +212,9 @@ public class UsersInfoVORowImpl extends OAViewRowImpl {
     protected void setAttrInvokeAccessor(int index, Object value, 
                                          AttributeDefImpl attrDef) throws Exception {
         switch (index) {
-        case FECHASOLICITUD:
-            setFechaSolicitud((Date)value);
-            return;
         default:
             super.setAttrInvokeAccessor(index, value, attrDef);
             return;
         }
-    }
-
-    /**Gets the attribute value for the calculated attribute FechaSolicitud
-     */
-    public Date getFechaSolicitud() {
-        return (Date) getAttributeInternal(FECHASOLICITUD);
-    }
-
-    /**Sets <code>value</code> as the attribute value for the calculated attribute FechaSolicitud
-     */
-    public void setFechaSolicitud(Date value) {
-        setAttributeInternal(FECHASOLICITUD, value);
     }
 }

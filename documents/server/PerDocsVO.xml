@@ -2,11 +2,11 @@
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
-   Name="UsersInfoVO"
+   Name="PerDocsVO"
    BindingStyle="OracleName"
    CustomQuery="true"
-   RowClass="xxazor.oracle.apps.per.documents.server.UsersInfoVORowImpl"
-   ComponentClass="xxazor.oracle.apps.per.documents.server.UsersInfoVOImpl"
+   RowClass="xxazor.oracle.apps.per.documents.server.PerDocsVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.PerDocsVOImpl"
    UseGlueCode="false" >
    <SQLQuery><![CDATA[
 SELECT V.PERSON_ID,
@@ -17,12 +17,14 @@ SELECT V.PERSON_ID,
           V.FULL_NAME,
           V.NAME,
           V.POSITION_ID,
-          U.USER_NAME,
-          U.USER_ID,
-          TRUNC(SYSDATE) FECHA_SOLICITUD
+          XPD.ID,
+          XPD.CREATION_DATE,
+          XPD.EFECTIVE_DATE,
+          XPD.STATUS
      FROM APPS.XXAZOR_PER_CARTA_LABORAL_V V
-         ,FND_USER U
-    WHERE V.PERSON_ID = U.EMPLOYEE_ID
+         ,XXAZOR_PER_DOCS XPD
+    WHERE V.PERSON_ID = XPD.PERSON_ID
+      AND V.ASSIGNMENT_ID = XPD.ASSIGNMENT_ID
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
@@ -147,46 +149,60 @@ SELECT V.PERSON_ID,
       </DesignTime>
    </ViewAttribute>
    <ViewAttribute
-      Name="UserName"
+      Name="Id"
       IsUpdateable="false"
       IsPersistent="false"
       IsNotNull="true"
-      Precision="100"
-      Type="java.lang.String"
-      ColumnType="VARCHAR2"
-      AliasName="USER_NAME"
-      Expression="USER_NAME"
-      SQLType="VARCHAR" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="100" />
-      </DesignTime>
-   </ViewAttribute>
-   <ViewAttribute
-      Name="UserId"
-      IsUpdateable="false"
-      IsPersistent="false"
-      IsNotNull="true"
-      Precision="15"
-      Scale="0"
       Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
-      AliasName="USER_ID"
-      Expression="USER_ID"
+      AliasName="ID"
+      Expression="ID"
       SQLType="NUMERIC" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="22" />
       </DesignTime>
    </ViewAttribute>
    <ViewAttribute
-      Name="FechaSolicitud"
+      Name="CreationDate"
+      IsUpdateable="false"
       IsPersistent="false"
+      IsNotNull="true"
       Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
-      AliasName="FECHA_SOLICITUD"
-      Expression="FECHA_SOLICITUD"
+      AliasName="CREATION_DATE"
+      Expression="CREATION_DATE"
       SQLType="DATE" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EfectiveDate"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="EFECTIVE_DATE"
+      Expression="EFECTIVE_DATE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Status"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="STATUS"
+      Expression="STATUS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
       </DesignTime>
    </ViewAttribute>
 </ViewObject>

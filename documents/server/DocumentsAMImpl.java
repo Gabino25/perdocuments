@@ -1,8 +1,16 @@
 package xxazor.oracle.apps.per.documents.server;
 
+import java.sql.SQLException;
+import java.sql.Types;
+
+import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.server.OAApplicationModuleImpl;
 
+import oracle.apps.fnd.framework.server.OADBTransaction;
+
 import oracle.jbo.RowSetIterator;
+
+import oracle.jdbc.OracleCallableStatement;
 
 import xxazor.oracle.apps.per.documents.utils.Utils;
 // ---------------------------------------------------------------------
@@ -61,5 +69,60 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
     public void filterUserInfo(int userId) {
         UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1(); 
         usersInfoVOImpl.filterBy(userId);
+    }
+
+    public String crearSolicitud(String pDocumentType,int pUserID,int pLoginID) {
+        String retval =null;
+        UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1();
+        UsersInfoVORowImpl usersInfoVORowImpl = (UsersInfoVORowImpl)usersInfoVOImpl.getCurrentRow();
+        String strCallableStmt = " BEGIN \n" + 
+                                 "  APPS.XXAZOR_PER_DOCS_PKG.generate_request ( PSI_ERRCOD             => :1\n" + 
+                                 "                                            , PSI_ERRMSG             => :2\n" + 
+                                 "                                            , PNI_PERSON_ID          => :3\n" + 
+                                 "                                            , PNI_ASSIGNMENT_ID      => :4\n" + 
+                                 "                                            , PDI_EFFECTIVE_DATE     => :5\n" + 
+                                 "                                            , PSI_DOC_TYPE           => :6\n" +
+                                 "                                            , PNI_USER_ID            => :7\n" +
+                                 "                                            , PNI_LOGIN_ID           => :8\n" +
+                                 "                                            );\n" + 
+                                 " END; \n";
+      OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
+      OracleCallableStatement oraclecallablestatement =  (OracleCallableStatement)oadbtransaction.createCallableStatement(strCallableStmt, 1);
+        try {
+            System.out.println("usersInfoVORowImpl.getFechaSolicitud().dateValue():"+usersInfoVORowImpl.getFechaSolicitud().dateValue());
+            oraclecallablestatement.registerOutParameter(1,Types.VARCHAR);
+            oraclecallablestatement.registerOutParameter(2,Types.VARCHAR);
+            oraclecallablestatement.setDouble(3,usersInfoVORowImpl.getPersonId().doubleValue());
+            oraclecallablestatement.setDouble(4,usersInfoVORowImpl.getAssignmentId().doubleValue());
+            oraclecallablestatement.setDate(5,usersInfoVORowImpl.getFechaSolicitud().dateValue());
+            oraclecallablestatement.setString(6,pDocumentType);
+            oraclecallablestatement.setDouble(7,new Double(pUserID));
+            oraclecallablestatement.setDouble(8,new Double(pLoginID));
+            oraclecallablestatement.execute();
+            retval = oraclecallablestatement.getString(2);
+            System.out.println("retval:"+retval);
+           
+        } catch (SQLException e) {
+                   System.out.println("SQLException en el metodo crearSolicitud:"+e.getErrorCode()+", "+e.getMessage());
+                   throw new OAException("SQLException en el metodo crearSolicitud:"+e.getErrorCode(),OAException.ERROR); 
+       }
+       return retval;
+    }
+
+
+    public void filterDocTypes() {
+        UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1();
+        UsersInfoVORowImpl usersInfoVORowImpl = (UsersInfoVORowImpl)usersInfoVOImpl.first();
+        PerDocsVOImpl perDocsVOImpl = getPerDocsVO1();
+        System.out.println("perDocsVOImpl:"+perDocsVOImpl);
+        System.out.println("usersInfoVORowImpl:"+usersInfoVORowImpl);
+        perDocsVOImpl.filter(usersInfoVORowImpl.getPersonId()
+                            ,usersInfoVORowImpl.getAssignmentId());
+    }
+
+    /**Container's getter for PerDocsVO1
+     */
+    public PerDocsVOImpl getPerDocsVO1() {
+        return (PerDocsVOImpl)findViewObject("PerDocsVO1");
     }
 }

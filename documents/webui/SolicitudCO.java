@@ -6,7 +6,10 @@
  +===========================================================================*/
 package xxazor.oracle.apps.per.documents.webui;
 
+import java.util.Enumeration;
+
 import oracle.apps.fnd.common.VersionInfo;
+import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
@@ -30,15 +33,17 @@ public class SolicitudCO extends OAControllerImpl
    * @param pageContext the current OA page context
    * @param webBean the web bean corresponding to the region
    */
+   private DocumentsAMImpl  documentsAMImpl;
   public void processRequest(OAPageContext pageContext, OAWebBean webBean)
   {
     super.processRequest(pageContext, webBean);
     System.out.println("Entra SolicitudCO");
-    DocumentsAMImpl  documentsAMImpl = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
-    OAMessageChoiceBean poplistBean = (OAMessageChoiceBean)webBean.findChildRecursive("item1");  
+    documentsAMImpl = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
+    OAMessageChoiceBean poplistBean = (OAMessageChoiceBean)webBean.findChildRecursive("documentType");  
     poplistBean.setPickListCacheEnabled(false);  
     int userId = pageContext.getUserId();
     documentsAMImpl.filterUserInfo(userId);
+    documentsAMImpl.filterDocTypes();
    
   }
 
@@ -51,6 +56,24 @@ public class SolicitudCO extends OAControllerImpl
   public void processFormRequest(OAPageContext pageContext, OAWebBean webBean)
   {
     super.processFormRequest(pageContext, webBean);
+    String strEventParam = pageContext.getParameter(this.EVENT_PARAM);
+    Enumeration params = pageContext.getParameterNames();
+    while(params.hasMoreElements()){
+    String strParam = (String)params.nextElement();
+    String strParamValue = pageContext.getParameter(strParam);
+    //System.out.println("strParam:"+strParam);
+    //System.out.println("strParamValue:"+strParamValue);
+    }
+    String strDocumentType  = pageContext.getParameter("documentType");
+    int loginID = pageContext.getLoginId();
+    int userID  = pageContext.getUserId();
+    if("solicitarEvt".equals(strEventParam)){
+        String strGetVal = documentsAMImpl.crearSolicitud(strDocumentType,userID,loginID);
+        if(null!=strGetVal){
+            throw new OAException(strGetVal,OAException.INFORMATION); 
+        }
+        return;
+    }
   }
 
 }

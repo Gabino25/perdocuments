@@ -6,16 +6,23 @@
             <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
          </ui:corporateBranding>
          <ui:contents>
+            <oa:messageComponentLayout id="region6" columns="1" rows="1">
+               <ui:contents>
+                  <oa:messageStyledText id="item2" viewName="UsersInfoVO1" viewAttr="EmployeeNumber" prompt="Numero Empleado:"/>
+                  <oa:messageStyledText id="item3" viewName="UsersInfoVO1" viewAttr="FullName" prompt="Nombre Empleado:"/>
+                  <oa:messageStyledText id="item4" viewName="UsersInfoVO1" viewAttr="FechaContratacion" prompt="Fecha Contratacion"/>
+                  <oa:messageStyledText id="item5" viewName="UsersInfoVO1" viewAttr="Name" prompt="Puesto"/>
+               </ui:contents>
+            </oa:messageComponentLayout>
             <oa:tableLayout id="region2" hAlign="center" amDefName="xxazor.oracle.apps.per.documents.server.DocumentsAM">
                <ui:contents>
                   <oa:rowLayout id="region3">
                      <ui:contents>
                         <oa:cellFormat id="region4">
                            <ui:contents>
-                              <oa:messageChoice id="item1" required="yes" prompt="Tipo de Solicitud:" pickListValAttr="Code" pickListDispAttr="Meaning" pickListViewName="DocumentsAM.DocumentTypesVO1"/>
+                              <oa:messageChoice id="documentType" required="yes" prompt="Tipo de Solicitud:" pickListValAttr="Code" pickListDispAttr="Meaning" pickListViewName="DocumentsAM.DocumentTypesVO1"/>
                            </ui:contents>
                         </oa:cellFormat>
-                        <oa:cellFormat id="region5"/>
                      </ui:contents>
                   </oa:rowLayout>
                </ui:contents>
@@ -29,6 +36,18 @@
                   </oa:button>
                </ui:contents>
             </oa:pageButtonBar>
+            <oa:advancedTable id="region7" viewName="PerDocsVO1" text="Informacion de Solicitudes">
+               <ui:contents>
+                  <oa:column id="column1">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="sortableHeader1" prompt="ID Solicitud"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="ID" viewAttr="Id"/>
+                     </ui:contents>
+                  </oa:column>
+               </ui:contents>
+            </oa:advancedTable>
          </ui:contents>
       </oa:pageLayout>
    </content>

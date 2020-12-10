@@ -17,4 +17,8 @@
       Name="UsersInfoVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.UsersInfoVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="PerDocsVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PerDocsVO" >
+   </ViewUsage>
 </AppModule>

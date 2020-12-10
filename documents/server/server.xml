@@ -20,6 +20,11 @@
       ObjectType="ViewObject" >
    </Containee>
    <Containee
+      Name="PerDocsVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PerDocsVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
       Name="UsersInfoVO"
       FullName="xxazor.oracle.apps.per.documents.server.UsersInfoVO"
       ObjectType="ViewObject" >
