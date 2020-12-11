@@ -36,7 +36,7 @@
                   </oa:button>
                </ui:contents>
             </oa:pageButtonBar>
-            <oa:advancedTable id="region7" viewName="PerDocsVO1" text="Informacion de Solicitudes">
+            <oa:advancedTable id="PerDocsRN" viewName="PerDocsVO1" text="Informacion de Solicitudes">
                <ui:contents>
                   <oa:column id="column1">
                      <ui:columnHeader>
@@ -44,6 +44,61 @@
                      </ui:columnHeader>
                      <ui:contents>
                         <oa:messageStyledText id="ID" viewAttr="Id"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="EmployeeNumberCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="EmployeeNumberHead" prompt="Numero Empleado"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="EmployeeNumber" viewAttr="EmployeeNumber"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="DocTypeMeaningCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="DocTypeMeaningHead" prompt="Tipo Documento"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="DocTypeMeaning" viewAttr="DocTypeMeaning"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="StatusCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="StatusHead" prompt="Status"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="Status" viewAttr="Status"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="EfectiveDateCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="EfectiveDateHead" prompt="Fecha"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="EfectiveDate" viewAttr="EfectiveDate"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="DocumentoCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="Documento" prompt="Documento"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:switcher regionName="" id="DocumentSwitcher" viewAttr="Status">
+                           <ui:case name="CERRADA">
+                              <oa:image id="CERRADA" source="duplicate_enabled.gif" imageHeight="24" imageWidth="24">
+                                 <ui:primaryClientAction>
+                                    <ui:fireAction event="RevisarDocumentoEvt" id="fireAction1" formSubmitted="true" unvalidated="true">
+                                       <ui:parameters>
+                                          <ui:parameter key="pReqDocId" value="${oa.PerDocsVO1.Id}"/>
+                                       </ui:parameters>
+                                    </ui:fireAction>
+                                 </ui:primaryClientAction>
+                              </oa:image>
+                           </ui:case>
+                           <ui:case name="ABIERTA">
+                              <oa:image source="duplicate_disabled.gif" id="ABIERTA" imageHeight="24" imageWidth="24"/>
+                           </ui:case>
+                        </oa:switcher>
                      </ui:contents>
                   </oa:column>
                </ui:contents>

@@ -23,6 +23,8 @@ public class PerDocsVORowImpl extends OAViewRowImpl {
     public static final int CREATIONDATE = 9;
     public static final int EFECTIVEDATE = 10;
     public static final int STATUS = 11;
+    public static final int DOCTYPE = 12;
+    public static final int DOCTYPEMEANING = 13;
 
     /**This is the default constructor (do not remove)
      */
@@ -202,6 +204,10 @@ public class PerDocsVORowImpl extends OAViewRowImpl {
             return getEfectiveDate();
         case STATUS:
             return getStatus();
+        case DOCTYPE:
+            return getDocType();
+        case DOCTYPEMEANING:
+            return getDocTypeMeaning();
         default:
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -212,9 +218,39 @@ public class PerDocsVORowImpl extends OAViewRowImpl {
     protected void setAttrInvokeAccessor(int index, Object value, 
                                          AttributeDefImpl attrDef) throws Exception {
         switch (index) {
+        case DOCTYPE:
+            setDocType((String)value);
+            return;
+        case DOCTYPEMEANING:
+            setDocTypeMeaning((String)value);
+            return;
         default:
             super.setAttrInvokeAccessor(index, value, attrDef);
             return;
         }
+    }
+
+    /**Gets the attribute value for the calculated attribute DocType
+     */
+    public String getDocType() {
+        return (String) getAttributeInternal(DOCTYPE);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute DocType
+     */
+    public void setDocType(String value) {
+        setAttributeInternal(DOCTYPE, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute DocTypeMeaning
+     */
+    public String getDocTypeMeaning() {
+        return (String) getAttributeInternal(DOCTYPEMEANING);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute DocTypeMeaning
+     */
+    public void setDocTypeMeaning(String value) {
+        setAttributeInternal(DOCTYPEMEANING, value);
     }
 }

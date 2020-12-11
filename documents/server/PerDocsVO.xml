@@ -7,6 +7,7 @@
    CustomQuery="true"
    RowClass="xxazor.oracle.apps.per.documents.server.PerDocsVORowImpl"
    ComponentClass="xxazor.oracle.apps.per.documents.server.PerDocsVOImpl"
+   FetchMode="FETCH_AS_NEEDED"
    UseGlueCode="false" >
    <SQLQuery><![CDATA[
 SELECT V.PERSON_ID,
@@ -20,11 +21,15 @@ SELECT V.PERSON_ID,
           XPD.ID,
           XPD.CREATION_DATE,
           XPD.EFECTIVE_DATE,
-          XPD.STATUS
+          XPD.STATUS,
+          XPD.DOC_TYPE,
+          XPDT.MEANING DOC_TYPE_MEANING
      FROM APPS.XXAZOR_PER_CARTA_LABORAL_V V
          ,XXAZOR_PER_DOCS XPD
+         ,XXAZOR_PER_DOC_TYPES XPDT
     WHERE V.PERSON_ID = XPD.PERSON_ID
       AND V.ASSIGNMENT_ID = XPD.ASSIGNMENT_ID
+      AND XPD.DOC_TYPE = XPDT.CODE
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
@@ -205,4 +210,34 @@ SELECT V.PERSON_ID,
          <Attr Name="_DisplaySize" Value="200" />
       </DesignTime>
    </ViewAttribute>
+   <ViewAttribute
+      Name="DocType"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DOC_TYPE"
+      Expression="DOC_TYPE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DocTypeMeaning"
+      IsPersistent="false"
+      Precision="13"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="DOC_TYPE_MEANING"
+      Expression="DOC_TYPE_MEANING"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="13" />
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id" />
+   </AttrArray>
 </ViewObject>
