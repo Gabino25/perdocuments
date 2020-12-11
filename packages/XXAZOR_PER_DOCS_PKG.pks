@@ -17,11 +17,13 @@ PROCEDURE generate_request(PSI_ERRCOD         OUT VARCHAR2
 PROCEDURE generate_xml(PSI_ERRCOD         OUT VARCHAR2
                       ,PSI_ERRMSG         OUT VARCHAR2
                       ,PNI_REQUEST_ID     IN  NUMBER
-                      ,PNI_PERSON_ID      IN  NUMBER
-                      ,PNI_ASSIGNMENT_ID  IN  NUMBER
-                      ,PDI_EFFECTIVE_DATE IN  DATE
-                      ,PSI_DOC_TYPE       IN  VARCHAR2
+                      ,PNI_USER_ID        IN  NUMBER
+                      ,PNI_LOGIN_ID       IN  NUMBER
                        );
+
+PROCEDURE get_xml(PSO_XMLDOC         OUT CLOB
+                 ,PNI_REQUEST_ID     IN  NUMBER
+                  );                       
 END XXAZOR_PER_DOCS_PKG; 
 /
 
