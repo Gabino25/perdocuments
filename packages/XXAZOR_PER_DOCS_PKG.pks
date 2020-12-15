@@ -2,6 +2,8 @@ CREATE OR REPLACE PACKAGE APPS.XXAZOR_PER_DOCS_PKG AS
  
 gs_carta_laboral VARCHAR2(2000) := 'CARTA_LABORAL';
 gs_carta_patronal VARCHAR2(2000) := 'CARTA_PATRONAL';
+gs_carta_ingresos VARCHAR2(2000) := 'CARTA_INGRESOS';
+
 gs_open  varchar2(200) := 'ABIERTA';
 gs_close varchar2(200) := 'CERRADA';
 

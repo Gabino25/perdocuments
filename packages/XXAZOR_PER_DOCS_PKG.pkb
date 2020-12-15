@@ -57,7 +57,10 @@ CURSOR get_per_info(CUR_PERSON_ID        NUMBER
           XPD.STATUS,
           XPD.DOC_TYPE,
           XPDT.MEANING DOC_TYPE_MEANING,
-          (SELECT INITCAP(ppf.FULL_NAME) FROM per_people_f ppf WHERE XPD.EFECTIVE_DATE BETWEEN ppf.effective_start_date and ppf.effective_end_date and ppf.person_id = XPD.approver_id) nombre_aprobador
+          (SELECT INITCAP(ppf.FULL_NAME) FROM per_people_f ppf WHERE XPD.EFECTIVE_DATE BETWEEN ppf.effective_start_date and ppf.effective_end_date and ppf.person_id = XPD.approver_id) nombre_aprobador,
+          V.RFC_EMP,
+          V.NSS_EMP,
+          V.DIRECCION_EMPLEADO
      FROM APPS.XXAZOR_PER_CARTA_PATRONAL_V V
          ,XXAZOR_PER_DOCS XPD
          ,XXAZOR_PER_DOC_TYPES XPDT
@@ -65,6 +68,34 @@ CURSOR get_per_info(CUR_PERSON_ID        NUMBER
       AND V.ASSIGNMENT_ID = XPD.ASSIGNMENT_ID
       AND XPD.DOC_TYPE = XPDT.CODE
       AND XPD.ID = CUR_REQ_DOC_ID;
+      
+   CURSOR get_PerDocs_info_v3(CUR_REQ_DOC_ID NUMBER) IS
+    SELECT V.PERSON_ID,
+          V.ASSIGNMENT_ID,
+          V.EMPLOYEE_NUMBER,
+          V.FECHA_CONTRATACION,
+          V.FECHA_BAJA,
+          INITCAP(V.FULL_NAME) FULL_NAME,
+          V.NAME POSITION_NAME,
+          V.POSITION_ID,
+          XPD.ID,
+          XPD.CREATION_DATE,
+          XPD.EFECTIVE_DATE,
+          XPD.STATUS,
+          XPD.DOC_TYPE,
+          XPDT.MEANING DOC_TYPE_MEANING,
+          (SELECT INITCAP(ppf.FULL_NAME) FROM per_people_f ppf WHERE XPD.EFECTIVE_DATE BETWEEN ppf.effective_start_date and ppf.effective_end_date and ppf.person_id = XPD.approver_id) nombre_aprobador,
+          V.RFC_EMP,
+          V.NSS_EMP,
+          V.DIRECCION_EMPLEADO,
+          V.SUELDO_MENSUAL
+     FROM APPS.XXAZOR_PER_CARTA_INGRESOS_V V
+         ,XXAZOR_PER_DOCS XPD
+         ,XXAZOR_PER_DOC_TYPES XPDT
+    WHERE V.PERSON_ID = XPD.PERSON_ID
+      AND V.ASSIGNMENT_ID = XPD.ASSIGNMENT_ID
+      AND XPD.DOC_TYPE = XPDT.CODE
+      AND XPD.ID = CUR_REQ_DOC_ID;   
  
  /**Funcion de reemplazo**/
 FUNCTION replace_char_esp(p_cadena IN VARCHAR2)
@@ -142,7 +173,10 @@ BEGIN
   PSI_ERRCOD := null; 
   PSI_ERRMSG := null;
  
-  if PSI_DOC_TYPE in (gs_carta_laboral,gs_carta_patronal)   then 
+  if PSI_DOC_TYPE in (gs_carta_laboral
+                     ,gs_carta_patronal
+                     ,gs_carta_ingresos
+                     )   then 
  
   OPEN get_per_info(PNI_PERSON_ID
                    ,PNI_ASSIGNMENT_ID
@@ -218,6 +252,8 @@ ls_per_doc   clob := '';
 
  PerDocs_info_rec     get_PerDocs_info%ROWTYPE;
  PerDocs_info_rec_v2  get_PerDocs_info_v2%ROWTYPE;
+ PerDocs_info_rec_v3  get_PerDocs_info_v3%ROWTYPE;
+ 
  ls_day           varchar2(200);
  ls_month         varchar2(200);
  ls_year          varchar2(200);
@@ -275,12 +311,40 @@ BEGIN
       ls_per_doc := ls_per_doc||'<FECHA_BAJA>'||replace(to_char(PerDocs_info_rec_v2.fecha_baja,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_BAJA>';
       ls_per_doc := ls_per_doc||'<PUESTO>'||replace_char_esp(PerDocs_info_rec_v2.position_name)||'</PUESTO>';
       ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(PerDocs_info_rec_v2.nombre_aprobador)||'</APROBADOR>';
+      ls_per_doc := ls_per_doc||'<RFC_EMP>'||PerDocs_info_rec_v2.rfc_emp||'</RFC_EMP>';
+      ls_per_doc := ls_per_doc||'<NSS_EMP>'||PerDocs_info_rec_v2.nss_emp||'</NSS_EMP>';
+      ls_per_doc := ls_per_doc||'<DIRECCION_EMP>'||replace_char_esp(PerDocs_info_rec_v2.direccion_empleado)||'</DIRECCION_EMP>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
     
       EXIT;
    END LOOP;
    CLOSE get_PerDocs_info_v2;
      
+  elsif  'CARTA_INGRESOS' = ls_doc_type then 
+      
+   OPEN get_PerDocs_info_v3(PNI_REQUEST_ID);
+   LOOP
+      FETCH get_PerDocs_info_v3 INTO PerDocs_info_rec_v3;
+      EXIT WHEN get_PerDocs_info_v3%NOTFOUND;
+      
+      ls_day := extract(day from PerDocs_info_rec_v3.efective_date);
+      ls_month := getMonthDesc(extract(month from PerDocs_info_rec_v3.efective_date));
+      ls_year := extract(year from PerDocs_info_rec_v3.efective_date);
+      
+      ls_per_doc := ls_per_doc||'<FECHA>'||'a '||ls_day||' de '||ls_month||' a '||ls_year||'</FECHA>';
+      ls_per_doc := ls_per_doc||'<EMPLOYEE_NAME>'||replace_char_esp(PerDocs_info_rec_v3.full_name)||'</EMPLOYEE_NAME>';
+      ls_per_doc := ls_per_doc||'<FECHA_INGRESO>'||replace(to_char(PerDocs_info_rec_v3.fecha_contratacion,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_INGRESO>';
+      ls_per_doc := ls_per_doc||'<FECHA_BAJA>'||replace(to_char(PerDocs_info_rec_v3.fecha_baja,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_BAJA>';
+      ls_per_doc := ls_per_doc||'<PUESTO>'||replace_char_esp(PerDocs_info_rec_v3.position_name)||'</PUESTO>';
+      ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(PerDocs_info_rec_v3.nombre_aprobador)||'</APROBADOR>';
+      ls_per_doc := ls_per_doc||'<RFC_EMP>'||PerDocs_info_rec_v3.rfc_emp||'</RFC_EMP>';
+      ls_per_doc := ls_per_doc||'<NSS_EMP>'||PerDocs_info_rec_v3.nss_emp||'</NSS_EMP>';
+      ls_per_doc := ls_per_doc||'<DIRECCION_EMP>'||replace_char_esp(PerDocs_info_rec_v3.direccion_empleado)||'</DIRECCION_EMP>';
+      ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
+    
+      EXIT;
+   END LOOP;
+   CLOSE get_PerDocs_info_v3; 
   end if;
   
    
