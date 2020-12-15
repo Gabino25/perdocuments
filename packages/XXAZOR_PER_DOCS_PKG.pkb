@@ -83,7 +83,7 @@ FUNCTION replace_char_esp(p_cadena IN VARCHAR2)
  v_cadena := REPLACE(v_cadena, CHR(50067), CHR(38)||'#211;'); /* v_cadena := REPLACE(v_cadena, CHR(50067), CHR(38)||'Oacute;'); */
  v_cadena := REPLACE(v_cadena, CHR(50074), CHR(38)||'#218;'); /* v_cadena := REPLACE(v_cadena, CHR(50074), CHR(38)||'Uacute;'); */
  v_cadena := REPLACE(v_cadena, CHR(50065), CHR(38)||'#209;'); /* v_cadena := REPLACE(v_cadena, CHR(50065), CHR(38)||'Ntilde;'); */
- v_cadena := REPLACE(v_cadena, CHR(50065), CHR(38)||'#241;'); /* v_cadena := REPLACE(v_cadena, CHR(50097), CHR(38)||'ntilde'); */
+ v_cadena := REPLACE(v_cadena, CHR(50097), CHR(38)||'#241;'); /* v_cadena := REPLACE(v_cadena, CHR(50097), CHR(38)||'ntilde'); */
  v_cadena := REPLACE(v_cadena, CHR(49844), '');
  v_cadena := REPLACE(v_cadena, CHR(50090), '');
  v_cadena := REPLACE(v_cadena, CHR(50056), 'E');
