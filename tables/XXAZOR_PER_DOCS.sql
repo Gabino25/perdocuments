@@ -8,6 +8,7 @@ CREATE TABLE APPS.XXAZOR_PER_DOCS(ID                NUMBER  NOT NULL
                                  ,EFECTIVE_DATE     DATE    NOT NULL
                                  ,XML               CLOB    
                                  ,STATUS            VARCHAR2(200)  NOT NULL
+                                 ,APPROVER_ID       NUMBER
                                  ,CREATED_BY        NUMBER  NOT NULL
                                  ,CREATION_DATE     DATE    NOT NULL
                                  ,LAST_UPDATED_BY   NUMBER  NOT NULL

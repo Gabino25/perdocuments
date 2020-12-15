@@ -85,10 +85,14 @@ public class SolicitudCO extends OAControllerImpl
     //System.out.println("strParamValue:"+strParamValue);
     }
     String strDocumentType  = pageContext.getParameter("documentType");
+    String strAprobadorID  = pageContext.getParameter("AprobadorID");
+    System.out.println("strDocumentType:"+strDocumentType);
+    System.out.println("strAprobadorID:"+strAprobadorID);
     int loginID = pageContext.getLoginId();
     int userID  = pageContext.getUserId();
     if("solicitarEvt".equals(strEventParam)){
-        String strGetVal = documentsAMImpl.crearSolicitud(strDocumentType,userID,loginID);
+        String strGetVal = documentsAMImpl.crearSolicitud(strDocumentType,strAprobadorID,userID,loginID);
+        documentsAMImpl.getPerDocsVO1().executeQuery();
         if(null!=strGetVal){
             throw new OAException(strGetVal,OAException.INFORMATION); 
         }

@@ -25,6 +25,15 @@
                         </oa:cellFormat>
                      </ui:contents>
                   </oa:rowLayout>
+                  <oa:rowLayout id="region7">
+                     <ui:contents>
+                        <oa:cellFormat id="region8">
+                           <ui:contents>
+                              <oa:messageChoice id="AprobadorID" required="yes" prompt="Aprobador:" pickListValAttr="PersonId" pickListDispAttr="FullName" pickListViewName="DocumentsAM.AprovadoresInfoVO1"/>
+                           </ui:contents>
+                        </oa:cellFormat>
+                     </ui:contents>
+                  </oa:rowLayout>
                </ui:contents>
             </oa:tableLayout>
             <oa:pageButtonBar id="pageButtonBarRN">

@@ -76,7 +76,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         usersInfoVOImpl.filterBy(userId);
     }
 
-    public String crearSolicitud(String pDocumentType,int pUserID,int pLoginID) {
+    public String crearSolicitud(String pDocumentType,String pAprobadorID,int pUserID,int pLoginID) {
         String retval =null;
         UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1();
         UsersInfoVORowImpl usersInfoVORowImpl = (UsersInfoVORowImpl)usersInfoVOImpl.getCurrentRow();
@@ -87,8 +87,9 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                  "                                            , PNI_ASSIGNMENT_ID      => :4\n" + 
                                  "                                            , PDI_EFFECTIVE_DATE     => :5\n" + 
                                  "                                            , PSI_DOC_TYPE           => :6\n" +
-                                 "                                            , PNI_USER_ID            => :7\n" +
-                                 "                                            , PNI_LOGIN_ID           => :8\n" +
+                                 "                                            , PNI_APPROVER_ID        => :7\n" +
+                                 "                                            , PNI_USER_ID            => :8\n" +
+                                 "                                            , PNI_LOGIN_ID           => :9\n" +
                                  "                                            );\n" + 
                                  " END; \n";
       OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
@@ -101,8 +102,9 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             oraclecallablestatement.setDouble(4,usersInfoVORowImpl.getAssignmentId().doubleValue());
             oraclecallablestatement.setDate(5,usersInfoVORowImpl.getFechaSolicitud().dateValue());
             oraclecallablestatement.setString(6,pDocumentType);
-            oraclecallablestatement.setDouble(7,new Double(pUserID));
-            oraclecallablestatement.setDouble(8,new Double(pLoginID));
+            oraclecallablestatement.setDouble(7,new Double(pAprobadorID));
+            oraclecallablestatement.setDouble(8,new Double(pUserID));
+            oraclecallablestatement.setDouble(9,new Double(pLoginID));
             oraclecallablestatement.execute();
             retval = oraclecallablestatement.getString(2);
             System.out.println("retval:"+retval);
@@ -152,7 +154,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             oraclecallablestatement.execute();
             retval = oraclecallablestatement.getString(2);
             System.out.println("retval:"+retval);
-           
+            getPerDocsVO1().executeQuery();
         } catch (SQLException e) {
                    System.out.println("SQLException en el metodo generateReqDoc:"+e.getErrorCode()+", "+e.getMessage());
                    throw new OAException("SQLException en el metodo generateReqDoc:"+e.getErrorCode(),OAException.ERROR); 
@@ -211,5 +213,11 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             throw new OAException("IOException en el metodo getXmlDocByReqId:"+ioe.getMessage(),OAException.ERROR);
         }
         return retval;
+    }
+
+    /**Container's getter for AprovadoresInfoVO1
+     */
+    public AprovadoresInfoVOImpl getAprovadoresInfoVO1() {
+        return (AprovadoresInfoVOImpl)findViewObject("AprovadoresInfoVO1");
     }
 }

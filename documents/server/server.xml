@@ -10,6 +10,11 @@
       <Attr Name="_version" Value="10.1.3.43.6" />
    </DesignTime>
    <Containee
+      Name="AprovadoresInfoVO"
+      FullName="xxazor.oracle.apps.per.documents.server.AprovadoresInfoVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
       Name="DocumentsAM"
       FullName="xxazor.oracle.apps.per.documents.server.DocumentsAM"
       ObjectType="AppModule" >
