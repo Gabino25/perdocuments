@@ -1,8 +1,11 @@
 CREATE OR REPLACE PACKAGE APPS.XXAZOR_PER_DOCS_PKG AS
  
+gs_currency_format varchar2(2000) := '$999,999,999,999,999,999.99'; 
 gs_carta_laboral VARCHAR2(2000) := 'CARTA_LABORAL';
 gs_carta_patronal VARCHAR2(2000) := 'CARTA_PATRONAL';
 gs_carta_ingresos VARCHAR2(2000) := 'CARTA_INGRESOS';
+gs_item_type varchar2(2000) :=  'XXPER';
+gs_documents_prc  varchar2(2000) := 'DOCUMENTS_PRC';
 
 gs_open  varchar2(200) := 'ABIERTA';
 gs_close varchar2(200) := 'CERRADA';

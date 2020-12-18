@@ -27,6 +27,7 @@ import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
 
+import oracle.apps.fnd.framework.webui.beans.layout.OAPageLayoutBean;
 import oracle.apps.fnd.framework.webui.beans.message.OAMessageChoiceBean;
 
 import oracle.apps.xdo.XDOException;
@@ -63,8 +64,15 @@ public class SolicitudCO extends OAControllerImpl
     poplistBean.setPickListCacheEnabled(false);  
     int userId = pageContext.getUserId();
     documentsAMImpl.filterUserInfo(userId);
-    documentsAMImpl.filterDocTypes();
-   
+    String strGetval = documentsAMImpl.filterDocTypes();
+    System.out.println("strGetval:"+strGetval);
+    if(null!=strGetval){
+        webBean.findChildRecursive("region6").setRendered(false);
+        webBean.findChildRecursive("region2").setRendered(false);
+        webBean.findChildRecursive("pageButtonBarRN").setRendered(false);
+        webBean.findChildRecursive("PerDocsRN").setRendered(false);
+      throw new OAException(strGetval,OAException.ERROR);
+    }
   }
 
   /**
@@ -88,6 +96,9 @@ public class SolicitudCO extends OAControllerImpl
     String strAprobadorID  = pageContext.getParameter("AprobadorID");
     System.out.println("strDocumentType:"+strDocumentType);
     System.out.println("strAprobadorID:"+strAprobadorID);
+    if(null==strAprobadorID){
+        strAprobadorID = "-1";
+    }
     int loginID = pageContext.getLoginId();
     int userID  = pageContext.getUserId();
     if("solicitarEvt".equals(strEventParam)){

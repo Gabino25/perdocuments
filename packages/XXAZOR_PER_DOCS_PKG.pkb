@@ -88,7 +88,7 @@ CURSOR get_per_info(CUR_PERSON_ID        NUMBER
           V.RFC_EMP,
           V.NSS_EMP,
           V.DIRECCION_EMPLEADO,
-          V.SUELDO_MENSUAL
+          nvl(V.SUELDO_MENSUAL,0)  SUELDO_MENSUAL
      FROM APPS.XXAZOR_PER_CARTA_INGRESOS_V V
          ,XXAZOR_PER_DOCS XPD
          ,XXAZOR_PER_DOC_TYPES XPDT
@@ -167,7 +167,8 @@ PROCEDURE generate_request(PSI_ERRCOD         OUT VARCHAR2
                           ) IS 
 
  per_info_rec get_per_info%ROWTYPE;
-  
+ ls_itemkey   varchar2(2000);
+ ln_per_doc_id number; 
 BEGIN 
 
   PSI_ERRCOD := null; 
@@ -188,6 +189,10 @@ BEGIN
       
       PSI_ERRMSG := 'ENTRA LOOP';
       
+      select XXAZOR_PER_DOCS_S.NEXTVAL
+        into ln_per_doc_id
+        from dual; 
+      
        INSERT INTO  APPS.XXAZOR_PER_DOCS(ID           /**NUMBER  NOT NULL **/
                                  ,PERSON_ID         /**NUMBER  NOT NULL**/
                                  ,ASSIGNMENT_ID     /**NUMBER  NOT NULL**/
@@ -202,7 +207,7 @@ BEGIN
                                  ,LAST_UPDATE_DATE   /**DATE    NOT NULL**/
                                  ,LAST_UPDATE_LOGIN  /**NUMBER  NOT NULL**/
                                  ) VALUES
-                                 (XXAZOR_PER_DOCS_S.NEXTVAL
+                                 (ln_per_doc_id
                                  ,per_info_rec.person_id
                                  ,per_info_rec.assignment_id
                                  ,psi_doc_type
@@ -220,7 +225,67 @@ BEGIN
     commit; 
     
     PSI_ERRMSG := 'SE HA CREADO LA SOLICITUD';
+    
+    for idx in (SELECT full_name,doc_type_meaning from XXAZOR_PER_DOCS_V where id = ln_per_doc_id) loop
+        
+        select XXAZOR_PER_DOCS_WF_S.nextval
+          into ls_itemkey
+          from dual;
+         
+        wf_engine.CreateProcess (itemtype => gs_item_type
+                                ,itemkey  => ls_itemkey
+                                ,process  => gs_documents_prc
+                                );
+        
+        wf_engine.SetItemUserKey (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,userkey  => nvl(fnd_global.user_name,'SYSADMIN')
+                                 );
      
+       wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => '#FROM_ROLE'
+                                 ,avalue   =>  nvl(fnd_global.user_name,'SYSADMIN')
+                                  );
+                                  
+       wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'SUPERVISOR'
+                                 ,avalue   => 'MPMOYA'
+                                  );
+     
+       wf_engine.SetItemAttrNumber(itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'REQ_DOC_ID'
+                                 ,avalue   => ln_per_doc_id
+                                  );
+                                  
+        wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'DOC_TYPE'
+                                 ,avalue   => idx.doc_type_meaning
+                                  );
+                                  
+          wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'EMPLOYEE'
+                                 ,avalue   => idx.full_name
+                                  );
+                                                           
+        wf_engine.SetItemOwner (itemtype =>  gs_item_type
+                               ,itemkey  =>  ls_itemkey
+                               ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
+                               );
+     
+        wf_engine.StartProcess (itemtype  => gs_item_type
+                               ,itemkey   => ls_itemkey
+                               );
+         
+         commit;
+    
+    end loop; 
+    
+    
     exit;
       
    END LOOP;
@@ -340,6 +405,7 @@ BEGIN
       ls_per_doc := ls_per_doc||'<RFC_EMP>'||PerDocs_info_rec_v3.rfc_emp||'</RFC_EMP>';
       ls_per_doc := ls_per_doc||'<NSS_EMP>'||PerDocs_info_rec_v3.nss_emp||'</NSS_EMP>';
       ls_per_doc := ls_per_doc||'<DIRECCION_EMP>'||replace_char_esp(PerDocs_info_rec_v3.direccion_empleado)||'</DIRECCION_EMP>';
+      ls_per_doc := ls_per_doc||'<SUELDO_MENSUAL>'||trim(to_char(PerDocs_info_rec_v3.sueldo_mensual,gs_currency_format))||'</SUELDO_MENSUAL>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
     
       EXIT;

@@ -20,6 +20,11 @@
       ObjectType="AppModule" >
    </Containee>
    <Containee
+      Name="DocumentsTypesMgrVO"
+      FullName="xxazor.oracle.apps.per.documents.server.DocumentsTypesMgrVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
       Name="DocumentTypesVO"
       FullName="xxazor.oracle.apps.per.documents.server.DocumentTypesVO"
       ObjectType="ViewObject" >

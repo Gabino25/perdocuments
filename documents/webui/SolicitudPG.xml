@@ -29,7 +29,7 @@
                      <ui:contents>
                         <oa:cellFormat id="region8">
                            <ui:contents>
-                              <oa:messageChoice id="AprobadorID" required="yes" prompt="Aprobador:" pickListValAttr="PersonId" pickListDispAttr="FullName" pickListViewName="DocumentsAM.AprovadoresInfoVO1"/>
+                              <oa:messageChoice id="AprobadorID" required="yes" prompt="Aprobador:" pickListValAttr="PersonId" pickListDispAttr="FullName" pickListViewName="DocumentsAM.AprovadoresInfoVO1" rendered="false"/>
                            </ui:contents>
                         </oa:cellFormat>
                      </ui:contents>
@@ -87,7 +87,7 @@
                         <oa:messageStyledText id="EfectiveDate" viewAttr="EfectiveDate"/>
                      </ui:contents>
                   </oa:column>
-                  <oa:column id="DocumentoCol">
+                  <oa:column id="DocumentoCol" rendered="false">
                      <ui:columnHeader>
                         <oa:sortableHeader id="Documento" prompt="Documento"/>
                      </ui:columnHeader>

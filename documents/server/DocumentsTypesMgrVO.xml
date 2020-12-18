@@ -2,15 +2,14 @@
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
-   Name="DocumentTypesVO"
+   Name="DocumentsTypesMgrVO"
    BindingStyle="OracleName"
    CustomQuery="true"
-   RowClass="xxazor.oracle.apps.per.documents.server.DocumentTypesVORowImpl"
-   ComponentClass="xxazor.oracle.apps.per.documents.server.DocumentTypesVOImpl"
+   RowClass="xxazor.oracle.apps.per.documents.server.DocumentsTypesMgrVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.DocumentsTypesMgrVOImpl"
    UseGlueCode="false" >
    <SQLQuery><![CDATA[
 select code,meaning from XXAZOR_PER_DOC_TYPES
- where code not in ('CARTA_LABORAL')
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
@@ -22,28 +21,28 @@ select code,meaning from XXAZOR_PER_DOC_TYPES
       Name="Code"
       IsUpdateable="false"
       IsPersistent="false"
-      Precision="13"
+      Precision="14"
       Type="java.lang.String"
-      ColumnType="CHAR"
+      ColumnType="VARCHAR2"
       AliasName="CODE"
       Expression="CODE"
       SQLType="VARCHAR" >
       <DesignTime>
-         <Attr Name="_DisplaySize" Value="13" />
+         <Attr Name="_DisplaySize" Value="14" />
       </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="Meaning"
       IsUpdateable="false"
       IsPersistent="false"
-      Precision="13"
+      Precision="14"
       Type="java.lang.String"
-      ColumnType="CHAR"
+      ColumnType="VARCHAR2"
       AliasName="MEANING"
       Expression="MEANING"
       SQLType="VARCHAR" >
       <DesignTime>
-         <Attr Name="_DisplaySize" Value="13" />
+         <Attr Name="_DisplaySize" Value="14" />
       </DesignTime>
    </ViewAttribute>
 </ViewObject>

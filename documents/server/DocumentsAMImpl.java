@@ -117,14 +117,20 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
     }
 
 
-    public void filterDocTypes() {
+    public String filterDocTypes() {
+        String retval = null;
         UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1();
         UsersInfoVORowImpl usersInfoVORowImpl = (UsersInfoVORowImpl)usersInfoVOImpl.first();
         PerDocsVOImpl perDocsVOImpl = getPerDocsVO1();
         System.out.println("perDocsVOImpl:"+perDocsVOImpl);
         System.out.println("usersInfoVORowImpl:"+usersInfoVORowImpl);
-        perDocsVOImpl.filter(usersInfoVORowImpl.getPersonId()
-                            ,usersInfoVORowImpl.getAssignmentId());
+        if(null==usersInfoVORowImpl){
+            retval ="No se encontro informacion de empleado";
+        }else{
+            perDocsVOImpl.filter(usersInfoVORowImpl.getPersonId()
+                                ,usersInfoVORowImpl.getAssignmentId());
+        }
+        return retval;
     }
 
     /**Container's getter for PerDocsVO1
@@ -219,5 +225,11 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
      */
     public AprovadoresInfoVOImpl getAprovadoresInfoVO1() {
         return (AprovadoresInfoVOImpl)findViewObject("AprovadoresInfoVO1");
+    }
+
+    /**Container's getter for DocumentsTypesMgrVO1
+     */
+    public DocumentsTypesMgrVOImpl getDocumentsTypesMgrVO1() {
+        return (DocumentsTypesMgrVOImpl)findViewObject("DocumentsTypesMgrVO1");
     }
 }

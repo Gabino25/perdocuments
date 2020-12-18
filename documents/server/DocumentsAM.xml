@@ -25,4 +25,8 @@
       Name="AprovadoresInfoVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.AprovadoresInfoVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="DocumentsTypesMgrVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.DocumentsTypesMgrVO" >
+   </ViewUsage>
 </AppModule>
