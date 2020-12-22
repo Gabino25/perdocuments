@@ -30,6 +30,7 @@ SELECT V.PERSON_ID,
     WHERE V.PERSON_ID = XPD.PERSON_ID
       AND V.ASSIGNMENT_ID = XPD.ASSIGNMENT_ID
       AND XPD.DOC_TYPE = XPDT.CODE
+    ORDER BY XPD.ID DESC
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />

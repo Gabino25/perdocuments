@@ -29,4 +29,20 @@
       Name="DocumentsTypesMgrVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.DocumentsTypesMgrVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="AclPVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.AclPVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="AclHVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.AclHVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="AclNVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.AclNVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="AclControlsVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.AclControlsVO" >
+   </ViewUsage>
 </AppModule>

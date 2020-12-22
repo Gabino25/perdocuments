@@ -232,4 +232,45 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
     public DocumentsTypesMgrVOImpl getDocumentsTypesMgrVO1() {
         return (DocumentsTypesMgrVOImpl)findViewObject("DocumentsTypesMgrVO1");
     }
+
+    /**Container's getter for AclPVO1
+     */
+    public AclPVOImpl getAclPVO1() {
+        return (AclPVOImpl)findViewObject("AclPVO1");
+    }
+
+    /**Container's getter for AclHVO1
+     */
+    public AclHVOImpl getAclHVO1() {
+        return (AclHVOImpl)findViewObject("AclHVO1");
+    }
+
+    /**Container's getter for AclNVO1
+     */
+    public AclNVOImpl getAclNVO1() {
+        return (AclNVOImpl)findViewObject("AclNVO1");
+    }
+
+    /**Container's getter for AclControlsVO1
+     */
+    public AclControlsVOImpl getAclControlsVO1() {
+        return (AclControlsVOImpl)findViewObject("AclControlsVO1");
+    }
+
+    public void initControls() {
+        AclControlsVOImpl aclControlsVOImpl= getAclControlsVO1();
+        AclControlsVORowImpl aclControlsVORowImpl = null; 
+        aclControlsVOImpl.executeQuery();
+        RowSetIterator rowSetIterator = aclControlsVOImpl.createRowSetIterator("");
+        while(rowSetIterator.hasNext()){
+           aclControlsVORowImpl = (AclControlsVORowImpl)rowSetIterator.next();
+            System.out.println("aclControlsVORowImpl.getPadre():"+aclControlsVORowImpl.getPadre());
+            System.out.println("aclControlsVORowImpl.getPadreR():"+aclControlsVORowImpl.getPadreR());
+           aclControlsVORowImpl.setPadre("Y");
+           aclControlsVORowImpl.setHijo("N");
+           aclControlsVORowImpl.setNieto("N");
+           System.out.println("aclControlsVORowImpl.getPadre():"+aclControlsVORowImpl.getPadre());
+           System.out.println("aclControlsVORowImpl.getPadreR():"+aclControlsVORowImpl.getPadreR());
+        }
+    }
 }

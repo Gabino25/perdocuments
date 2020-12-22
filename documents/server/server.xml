@@ -10,6 +10,26 @@
       <Attr Name="_version" Value="10.1.3.43.6" />
    </DesignTime>
    <Containee
+      Name="AclControlsVO"
+      FullName="xxazor.oracle.apps.per.documents.server.AclControlsVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="AclHVO"
+      FullName="xxazor.oracle.apps.per.documents.server.AclHVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="AclNVO"
+      FullName="xxazor.oracle.apps.per.documents.server.AclNVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="AclPVO"
+      FullName="xxazor.oracle.apps.per.documents.server.AclPVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
       Name="AprovadoresInfoVO"
       FullName="xxazor.oracle.apps.per.documents.server.AprovadoresInfoVO"
       ObjectType="ViewObject" >

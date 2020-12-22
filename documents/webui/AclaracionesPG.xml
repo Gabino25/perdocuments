@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<page xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:ui="http://xmlns.oracle.com/uix/ui" version="10.1.3_" xml:lang="en-US" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$">
+   <content>
+      <oa:pageLayout id="region1" amDefName="xxazor.oracle.apps.per.documents.server.DocumentsAM" windowTitle="Aclaraciones" title="Aclaraciones" controllerClass="xxazor.oracle.apps.per.documents.webui.AclaracionesCO">
+         <ui:corporateBranding>
+            <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
+         </ui:corporateBranding>
+         <ui:contents>
+            <oa:tableLayout id="region2" hAlign="center">
+               <ui:contents>
+                  <oa:rowLayout id="PadreRL" rendered="${oa.AclControlsVO1.PadreR}" hAlign="center" vAlign="middle">
+                     <ui:contents>
+                        <oa:cellFormat id="PadreCF" hAlign="center" vAlign="middle"/>
+                     </ui:contents>
+                  </oa:rowLayout>
+                  <oa:rowLayout id="HijoRL" rendered="${oa.AclControlsVO1.HijoR}" hAlign="center" vAlign="middle">
+                     <ui:contents>
+                        <oa:cellFormat id="HijoCF" hAlign="center" vAlign="middle"/>
+                     </ui:contents>
+                  </oa:rowLayout>
+                  <oa:rowLayout id="NietoRL" rendered="${oa.AclControlsVO1.NietoR}" hAlign="center" vAlign="middle">
+                     <ui:contents>
+                        <oa:cellFormat id="NietoCF" hAlign="center" vAlign="middle"/>
+                     </ui:contents>
+                  </oa:rowLayout>
+               </ui:contents>
+            </oa:tableLayout>
+            <oa:messageComponentLayout id="region3" rows="1" columns="1">
+               <ui:contents>
+                  <oa:messageChoice id="padre" required="yes" pickListViewDef="xxazor.oracle.apps.per.documents.server.AclPVO" pickListDispAttr="Meaning" pickListValAttr="Code" prompt="Tipo de Solicitud:" rendered="${oa.AclControlsVO1.PadreR}">
+                     <ui:primaryClientAction>
+                        <ui:firePartialAction event="PadreEvt" id="firePartialAction1"/>
+                     </ui:primaryClientAction>
+                  </oa:messageChoice>
+                  <oa:messageChoice id="hijo" pickListViewName="AclHVO1" pickListDispAttr="Meaning" pickListValAttr="Code" required="yes" rendered="${oa.AclControlsVO1.HijoR}">
+                     <ui:primaryClientAction>
+                        <ui:firePartialAction event="HijoEvt" id="firePartialAction2"/>
+                     </ui:primaryClientAction>
+                  </oa:messageChoice>
+                  <oa:messageChoice id="nieto" pickListViewName="AclNVO1" pickListDispAttr="Meaning" pickListValAttr="Code" required="yes" rendered="${oa.AclControlsVO1.NietoR}">
+                     <ui:primaryClientAction>
+                        <ui:firePartialAction event="NietoEvt" id="firePartialAction3"/>
+                     </ui:primaryClientAction>
+                  </oa:messageChoice>
+               </ui:contents>
+            </oa:messageComponentLayout>
+         </ui:contents>
+      </oa:pageLayout>
+   </content>
+</page>

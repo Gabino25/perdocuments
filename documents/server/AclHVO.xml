@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="AclHVO"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="xxazor.oracle.apps.per.documents.server.AclHVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.AclHVOImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+select code_k,code,meaning from XXAZOR_PER_ACL_H_V
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+   </DesignTime>
+   <ViewAttribute
+      Name="CodeK"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="19"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODE_K"
+      Expression="CODE_K"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="19" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Code"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="35"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODE"
+      Expression="CODE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="35" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Meaning"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="35"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEANING"
+      Expression="MEANING"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="35" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

@@ -323,6 +323,7 @@ ls_per_doc   clob := '';
  ls_month         varchar2(200);
  ls_year          varchar2(200);
  ls_doc_type      varchar2(200);
+ ls_aprovador     varchar2(200);
 
 BEGIN 
 
@@ -333,6 +334,21 @@ BEGIN
    into ls_doc_type
     from XXAZOR_PER_DOCS 
     where id = PNI_REQUEST_ID;
+  
+  
+  begin 
+  
+  select INITCAP(full_name)
+   into ls_aprovador
+   from per_people_f 
+  where attribute1 = 'Y'
+    and sysdate between effective_start_date and effective_end_date
+    and rownum=1; 
+  
+  exception when others then 
+     ls_aprovador := 'NO_CONFIGURADO';
+  end; 
+  
   
   ls_per_doc := ls_per_doc||'<XXAZOR_PER_DOC>';
   
@@ -352,7 +368,7 @@ BEGIN
       ls_per_doc := ls_per_doc||'<FECHA_INGRESO>'||replace(to_char(PerDocs_info_rec.fecha_contratacion,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_INGRESO>';
       ls_per_doc := ls_per_doc||'<FECHA_BAJA>'||replace(to_char(PerDocs_info_rec.fecha_baja,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_BAJA>';
       ls_per_doc := ls_per_doc||'<PUESTO>'||replace_char_esp(PerDocs_info_rec.position_name)||'</PUESTO>';
-      ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(PerDocs_info_rec.nombre_aprobador)||'</APROBADOR>';
+      ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(ls_aprovador)||'</APROBADOR>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
       
       EXIT;
@@ -375,7 +391,7 @@ BEGIN
       ls_per_doc := ls_per_doc||'<FECHA_INGRESO>'||replace(to_char(PerDocs_info_rec_v2.fecha_contratacion,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_INGRESO>';
       ls_per_doc := ls_per_doc||'<FECHA_BAJA>'||replace(to_char(PerDocs_info_rec_v2.fecha_baja,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_BAJA>';
       ls_per_doc := ls_per_doc||'<PUESTO>'||replace_char_esp(PerDocs_info_rec_v2.position_name)||'</PUESTO>';
-      ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(PerDocs_info_rec_v2.nombre_aprobador)||'</APROBADOR>';
+      ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(ls_aprovador)||'</APROBADOR>';
       ls_per_doc := ls_per_doc||'<RFC_EMP>'||PerDocs_info_rec_v2.rfc_emp||'</RFC_EMP>';
       ls_per_doc := ls_per_doc||'<NSS_EMP>'||PerDocs_info_rec_v2.nss_emp||'</NSS_EMP>';
       ls_per_doc := ls_per_doc||'<DIRECCION_EMP>'||replace_char_esp(PerDocs_info_rec_v2.direccion_empleado)||'</DIRECCION_EMP>';
@@ -401,7 +417,7 @@ BEGIN
       ls_per_doc := ls_per_doc||'<FECHA_INGRESO>'||replace(to_char(PerDocs_info_rec_v3.fecha_contratacion,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_INGRESO>';
       ls_per_doc := ls_per_doc||'<FECHA_BAJA>'||replace(to_char(PerDocs_info_rec_v3.fecha_baja,'DD/MONTH/YYYY','NLS_DATE_LANGUAGE=SPANISH'),' ','')||'</FECHA_BAJA>';
       ls_per_doc := ls_per_doc||'<PUESTO>'||replace_char_esp(PerDocs_info_rec_v3.position_name)||'</PUESTO>';
-      ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(PerDocs_info_rec_v3.nombre_aprobador)||'</APROBADOR>';
+      ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(ls_aprovador)||'</APROBADOR>';
       ls_per_doc := ls_per_doc||'<RFC_EMP>'||PerDocs_info_rec_v3.rfc_emp||'</RFC_EMP>';
       ls_per_doc := ls_per_doc||'<NSS_EMP>'||PerDocs_info_rec_v3.nss_emp||'</NSS_EMP>';
       ls_per_doc := ls_per_doc||'<DIRECCION_EMP>'||replace_char_esp(PerDocs_info_rec_v3.direccion_empleado)||'</DIRECCION_EMP>';

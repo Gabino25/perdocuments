@@ -1,0 +1,4 @@
+CREATE OR REPLACE VIEW XXAZOR_PER_ACL_P_V AS 
+ select upper('ACLARACIONES_NOMINA') code, REPLACE(INITCAP('ACLARACIONES_NOMINA'),'_',' ') meaning from dual
+ 
+  
