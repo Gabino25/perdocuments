@@ -6,6 +6,14 @@
             <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
          </ui:corporateBranding>
          <ui:contents>
+            <oa:messageComponentLayout id="region6" columns="1" rows="1">
+               <ui:contents>
+                  <oa:messageStyledText id="item2" viewName="UsersInfoVO1" viewAttr="EmployeeNumber" prompt="Numero Empleado:"/>
+                  <oa:messageStyledText id="item3" viewName="UsersInfoVO1" viewAttr="FullName" prompt="Nombre Empleado:"/>
+                  <oa:messageStyledText id="item4" viewName="UsersInfoVO1" viewAttr="FechaContratacion" prompt="Fecha Contratacion"/>
+                  <oa:messageStyledText id="item5" viewName="UsersInfoVO1" viewAttr="Name" prompt="Puesto"/>
+               </ui:contents>
+            </oa:messageComponentLayout>
             <oa:tableLayout id="region2" hAlign="center">
                <ui:contents>
                   <oa:rowLayout id="PadreRL" rendered="${oa.AclControlsVO1.PadreR}" hAlign="center" vAlign="middle">
@@ -27,23 +35,33 @@
             </oa:tableLayout>
             <oa:messageComponentLayout id="region3" rows="1" columns="1">
                <ui:contents>
-                  <oa:messageChoice id="padre" required="yes" pickListViewDef="xxazor.oracle.apps.per.documents.server.AclPVO" pickListDispAttr="Meaning" pickListValAttr="Code" prompt="Tipo de Solicitud:" rendered="${oa.AclControlsVO1.PadreR}">
+                  <oa:messageChoice id="padre" required="yes" pickListViewDef="xxazor.oracle.apps.per.documents.server.AclPVO" pickListDispAttr="Meaning" pickListValAttr="Code" prompt="Tipo de Solicitud:" rendered="${oa.AclControlsVO1.PadreR}" serverUnvalidated="false">
                      <ui:primaryClientAction>
-                        <ui:firePartialAction event="PadreEvt" id="firePartialAction1"/>
+                        <ui:firePartialAction event="PadreEvt" id="firePartialAction1" unvalidated="true"/>
                      </ui:primaryClientAction>
                   </oa:messageChoice>
                   <oa:messageChoice id="hijo" pickListViewName="AclHVO1" pickListDispAttr="Meaning" pickListValAttr="Code" required="yes" rendered="${oa.AclControlsVO1.HijoR}">
                      <ui:primaryClientAction>
-                        <ui:firePartialAction event="HijoEvt" id="firePartialAction2"/>
+                        <ui:firePartialAction event="HijoEvt" id="firePartialAction2" unvalidated="true"/>
                      </ui:primaryClientAction>
                   </oa:messageChoice>
                   <oa:messageChoice id="nieto" pickListViewName="AclNVO1" pickListDispAttr="Meaning" pickListValAttr="Code" required="yes" rendered="${oa.AclControlsVO1.NietoR}">
                      <ui:primaryClientAction>
-                        <ui:firePartialAction event="NietoEvt" id="firePartialAction3"/>
+                        <ui:firePartialAction event="NietoEvt" id="firePartialAction3" unvalidated="true"/>
                      </ui:primaryClientAction>
                   </oa:messageChoice>
+                  <oa:messageRichTextEditor id="ObservacionesAcl" prompt="Descripcion de la aclaracion:" rendered="${oa.AclControlsVO1.ObservacionesR}" richTextModeDisplayHeight="10%" richTextModeDisplayLength="50%" maximumLength="4000"/>
                </ui:contents>
             </oa:messageComponentLayout>
+            <oa:pageButtonBar id="pageButtonBarRN" rendered="${oa.AclControlsVO1.ObservacionesR}">
+               <ui:contents>
+                  <oa:button id="SolicitarBtn" text="Solicitar" prompt="Solicitar">
+                     <ui:primaryClientAction>
+                        <ui:fireAction event="solicitarEvt" id="fireAction1"/>
+                     </ui:primaryClientAction>
+                  </oa:button>
+               </ui:contents>
+            </oa:pageButtonBar>
          </ui:contents>
       </oa:pageLayout>
    </content>

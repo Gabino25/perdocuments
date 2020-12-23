@@ -86,9 +86,9 @@ public class AclControlsVORowImpl extends OAViewRowImpl {
     public void setObservaciones(String value) {
         setAttributeInternal(OBSERVACIONES, value);
         if("N".equals(value)){
-            setAttributeInternal(OBSERVACIONESR, true);
+            setObservacionesR(false);
         }else{
-            setAttributeInternal(OBSERVACIONESR, false);
+            setObservacionesR(true);
         }
     }
 

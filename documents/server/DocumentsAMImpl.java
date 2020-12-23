@@ -269,8 +269,52 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
            aclControlsVORowImpl.setPadre("Y");
            aclControlsVORowImpl.setHijo("N");
            aclControlsVORowImpl.setNieto("N");
+           aclControlsVORowImpl.setObservaciones("N");
            System.out.println("aclControlsVORowImpl.getPadre():"+aclControlsVORowImpl.getPadre());
            System.out.println("aclControlsVORowImpl.getPadreR():"+aclControlsVORowImpl.getPadreR());
         }
+    }
+
+    public void filterAclHijo(String pPadreValue) {
+        AclHVOImpl aclHVOImpl= getAclHVO1(); 
+        aclHVOImpl.filterAclHijo(pPadreValue);
+        AclControlsVOImpl aclControlsVOImpl= getAclControlsVO1();
+        AclControlsVORowImpl aclControlsVORowImpl = null; 
+        aclControlsVORowImpl = (AclControlsVORowImpl)aclControlsVOImpl.first();
+        int count = aclHVOImpl.getRowCount();
+        if(count==0){
+            aclControlsVORowImpl.setHijo("N");
+        }else{
+            aclControlsVORowImpl.setHijo("Y");
+        }
+    }
+
+    public void filterAclNieto(String pHijoValue) {
+        AclNVOImpl aclNVOImpl= getAclNVO1(); 
+        aclNVOImpl.filterAclNieto(pHijoValue);
+        AclControlsVOImpl aclControlsVOImpl= getAclControlsVO1();
+        AclControlsVORowImpl aclControlsVORowImpl = null; 
+        aclControlsVORowImpl = (AclControlsVORowImpl)aclControlsVOImpl.first();
+        int count = aclNVOImpl.getRowCount();
+        if(count==0){
+            aclControlsVORowImpl.setNieto("N");
+        }else{
+            aclControlsVORowImpl.setNieto("Y");
+        }
+    }
+
+    /**Container's getter for PerAclarVO1
+     */
+    public PerAclarVOImpl getPerAclarVO1() {
+        return (PerAclarVOImpl)findViewObject("PerAclarVO1");
+    }
+
+    public String crearAclaracion(String pPadre
+                                , String pHijo
+                                , String pNieto
+                                , String pObservacionesAcl
+                                , int pUserID
+                                , int pLoginID
+                                ) {
     }
 }

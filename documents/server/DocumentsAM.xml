@@ -45,4 +45,8 @@
       Name="AclControlsVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.AclControlsVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="PerAclarVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PerAclarVO" >
+   </ViewUsage>
 </AppModule>

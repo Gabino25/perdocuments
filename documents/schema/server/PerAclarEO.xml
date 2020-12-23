@@ -1,0 +1,534 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="PerAclarEO"
+   DBObjectType="table"
+   DBObjectName="XXAZOR_PER_ACLAR"
+   AliasName="PerAclarEO"
+   BindingStyle="OracleName"
+   UseGlueCode="false"
+   RowClass="xxazor.oracle.apps.per.documents.schema.server.PerAclarEOImpl"
+   DefClass="oracle.apps.fnd.framework.server.OAEntityDefImpl"
+   CollClass="xxazor.oracle.apps.per.documents.schema.server.PerAclarEOCollImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+      <Attr Name="_codeGenFlag2" Value="Init|Delete|Access|DML|Coll|Val" />
+   </DesignTime>
+   <Attribute
+      Name="Id"
+      IsNotNull="true"
+      ColumnName="ID"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="XXAZOR_PER_ACLAR"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PersonId"
+      IsUnique="true"
+      IsNotNull="true"
+      ColumnName="PERSON_ID"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AssignmentId"
+      IsUnique="true"
+      IsNotNull="true"
+      ColumnName="ASSIGNMENT_ID"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="EfectiveDate"
+      IsUnique="true"
+      IsNotNull="true"
+      ColumnName="EFECTIVE_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Status"
+      IsNotNull="true"
+      Precision="200"
+      ColumnName="STATUS"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Padre"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="500"
+      ColumnName="PADRE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="500" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Hijo"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="500"
+      ColumnName="HIJO"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="500" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Nieto"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="500"
+      ColumnName="NIETO"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="500" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ApproverId"
+      ColumnName="APPROVER_ID"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      ColumnName="CREATED_BY"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CreationDate"
+      IsNotNull="true"
+      ColumnName="CREATION_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LastUpdatedBy"
+      IsNotNull="true"
+      ColumnName="LAST_UPDATED_BY"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LastUpdateDate"
+      IsNotNull="true"
+      ColumnName="LAST_UPDATE_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LastUpdateLogin"
+      IsNotNull="true"
+      ColumnName="LAST_UPDATE_LOGIN"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DescAclaracion"
+      Precision="4000"
+      ColumnName="DESC_ACLARACION"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="NotaApprover"
+      Precision="4000"
+      ColumnName="NOTA_APPROVER"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="XXAZOR_PER_ACLAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </Attribute>
+   <Key
+      Name="PeraclareoPrimaryKey" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Id" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_isPrimary" Value="true" />
+         <Attr Name="_DBObjectName" Value="PERACLAREO_PRIMARY_KEY" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295501" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Id" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;ID&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295501" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295502" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.PersonId" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;PERSON_ID&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295502" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295503" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.AssignmentId" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;ASSIGNMENT_ID&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295503" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295504" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.EfectiveDate" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;EFECTIVE_DATE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295504" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295505" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Status" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;STATUS&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295505" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295506" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Padre" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;PADRE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295506" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295507" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Hijo" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;HIJO&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295507" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295508" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Nieto" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;NIETO&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295508" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295509" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295509" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295510" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.CreationDate" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;CREATION_DATE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295510" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295511" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.LastUpdatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;LAST_UPDATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295511" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295512" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.LastUpdateDate" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;LAST_UPDATE_DATE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295512" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295513" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.LastUpdateLogin" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;LAST_UPDATE_LOGIN&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295513" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295515" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Id" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;ID&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295515" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295516" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.PersonId" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;PERSON_ID&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295516" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295517" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.AssignmentId" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;ASSIGNMENT_ID&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295517" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295518" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.EfectiveDate" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;EFECTIVE_DATE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295518" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295519" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Status" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;STATUS&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295519" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295520" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Padre" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;PADRE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295520" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295521" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Hijo" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;HIJO&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295521" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295522" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Nieto" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;NIETO&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295522" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295523" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295523" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295524" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.CreationDate" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;CREATION_DATE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295524" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295525" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.LastUpdatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;LAST_UPDATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295525" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295526" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.LastUpdateDate" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;LAST_UPDATE_DATE&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295526" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00295527" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.LastUpdateLogin" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_checkCondition" Value="&#34;LAST_UPDATE_LOGIN&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_DBObjectName" Value="SYS_C00295527" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="XxazorPerAclarU1" >
+      <AttrArray Name="Attributes">
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.PersonId" />
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.AssignmentId" />
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Padre" />
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Hijo" />
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.Nieto" />
+         <Item Value="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO.EfectiveDate" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_isUnique" Value="true" />
+         <Attr Name="_DBObjectName" Value="XXAZOR_PER_ACLAR_U1" />
+      </DesignTime>
+   </Key>
+</Entity>

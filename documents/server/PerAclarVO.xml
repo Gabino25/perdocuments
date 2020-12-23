@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="PerAclarVO"
+   SelectList="PerAclarEO.ID, 
+       PerAclarEO.PERSON_ID, 
+       PerAclarEO.ASSIGNMENT_ID, 
+       PerAclarEO.EFECTIVE_DATE, 
+       PerAclarEO.STATUS, 
+       PerAclarEO.PADRE, 
+       PerAclarEO.HIJO, 
+       PerAclarEO.NIETO, 
+       PerAclarEO.APPROVER_ID, 
+       PerAclarEO.CREATED_BY, 
+       PerAclarEO.CREATION_DATE, 
+       PerAclarEO.LAST_UPDATED_BY, 
+       PerAclarEO.LAST_UPDATE_DATE, 
+       PerAclarEO.LAST_UPDATE_LOGIN, 
+       PerAclarEO.DESC_ACLARACION, 
+       PerAclarEO.NOTA_APPROVER"
+   FromList="XXAZOR_PER_ACLAR PerAclarEO"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   RowClass="xxazor.oracle.apps.per.documents.server.PerAclarVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.PerAclarVOImpl"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+   </DesignTime>
+   <EntityUsage
+      Name="PerAclarEO"
+      Entity="xxazor.oracle.apps.per.documents.schema.server.PerAclarEO" >
+      <DesignTime>
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      IsNotNull="true"
+      EntityAttrName="Id"
+      EntityUsage="PerAclarEO"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PersonId"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="PersonId"
+      EntityUsage="PerAclarEO"
+      AliasName="PERSON_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AssignmentId"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="AssignmentId"
+      EntityUsage="PerAclarEO"
+      AliasName="ASSIGNMENT_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EfectiveDate"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="EfectiveDate"
+      EntityUsage="PerAclarEO"
+      AliasName="EFECTIVE_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Status"
+      IsNotNull="true"
+      EntityAttrName="Status"
+      EntityUsage="PerAclarEO"
+      AliasName="STATUS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Padre"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="Padre"
+      EntityUsage="PerAclarEO"
+      AliasName="PADRE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Hijo"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="Hijo"
+      EntityUsage="PerAclarEO"
+      AliasName="HIJO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nieto"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="Nieto"
+      EntityUsage="PerAclarEO"
+      AliasName="NIETO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApproverId"
+      EntityAttrName="ApproverId"
+      EntityUsage="PerAclarEO"
+      AliasName="APPROVER_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      EntityAttrName="CreatedBy"
+      EntityUsage="PerAclarEO"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreationDate"
+      IsNotNull="true"
+      EntityAttrName="CreationDate"
+      EntityUsage="PerAclarEO"
+      AliasName="CREATION_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      IsNotNull="true"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="PerAclarEO"
+      AliasName="LAST_UPDATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdateDate"
+      IsNotNull="true"
+      EntityAttrName="LastUpdateDate"
+      EntityUsage="PerAclarEO"
+      AliasName="LAST_UPDATE_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdateLogin"
+      IsNotNull="true"
+      EntityAttrName="LastUpdateLogin"
+      EntityUsage="PerAclarEO"
+      AliasName="LAST_UPDATE_LOGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescAclaracion"
+      EntityAttrName="DescAclaracion"
+      EntityUsage="PerAclarEO"
+      AliasName="DESC_ACLARACION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NotaApprover"
+      EntityAttrName="NotaApprover"
+      EntityUsage="PerAclarEO"
+      AliasName="NOTA_APPROVER" >
+   </ViewAttribute>
+</ViewObject>
