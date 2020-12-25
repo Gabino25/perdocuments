@@ -466,6 +466,149 @@ END get_xml;
    
                   
 
+PROCEDURE generate_aclar(PSI_ERRCOD         OUT VARCHAR2
+                        ,PSI_ERRMSG         OUT VARCHAR2
+                        ,PNI_PERSON_ID      IN  NUMBER
+                        ,PNI_ASSIGNMENT_ID  IN  NUMBER
+                        ,PDI_EFFECTIVE_DATE IN  DATE
+                        ,PSI_PADRE          IN  VARCHAR2
+                        ,PSI_HIJO           IN  VARCHAR2
+                        ,PSI_NIETO          IN  VARCHAR2
+                        ,PSI_OBS_ACLA       IN  VARCHAR2
+                        ,PNI_USER_ID        IN  NUMBER
+                        ,PNI_LOGIN_ID       IN  NUMBER
+                        )is 
+
+ ln_aclar_id    number; 
+ ls_itemkey     varchar2(2000);
+ 
+BEGIN 
+
+  select XXAZOR_PER_ACLAR_S.NEXTVAL
+        into ln_aclar_id
+        from dual; 
+        
+   INSERT INTO APPS.XXAZOR_PER_ACLAR(
+                                      ID                 /* NUMBER                     NOT NULL,*/
+                                     ,PERSON_ID          /* NUMBER                     NOT NULL,*/
+                                     ,ASSIGNMENT_ID      /* NUMBER                     NOT NULL,*/
+                                     ,EFECTIVE_DATE      /* DATE                       NOT NULL,*/
+                                     ,STATUS             /* VARCHAR2(200 BYTE)         NOT NULL,*/
+                                     ,PADRE              /* VARCHAR2(500 BYTE)         NOT NULL,*/
+                                     ,HIJO               /* VARCHAR2(500 BYTE)         NOT NULL,*/
+                                     ,NIETO              /* VARCHAR2(500 BYTE)         NOT NULL,*/
+                                     ,APPROVER_ID        /* NUMBER,                             */
+                                     ,DESC_ACLARACION    /* VARCHAR2(4000 BYTE),                */
+                                     ,NOTA_APPROVER      /* VARCHAR2(4000 BYTE),                */
+                                     ,CREATED_BY         /* NUMBER                     NOT NULL,*/ 
+                                     ,CREATION_DATE      /* DATE                       NOT NULL,*/
+                                     ,LAST_UPDATED_BY    /* NUMBER                     NOT NULL,*/
+                                     ,LAST_UPDATE_DATE   /* DATE                       NOT NULL,*/
+                                     ,LAST_UPDATE_LOGIN  /* NUMBER                     NOT NULL */
+                                    )
+                              VALUES(
+                                     ln_aclar_id
+                                    ,PNI_PERSON_ID
+                                    ,PNI_ASSIGNMENT_ID
+                                    ,PDI_EFFECTIVE_DATE
+                                    ,XXAZOR_PER_DOCS_PKG.gs_open
+                                    ,PSI_PADRE
+                                    ,PSI_HIJO
+                                    ,PSI_NIETO
+                                    ,-1
+                                    ,PSI_OBS_ACLA
+                                    ,null
+                                    ,PNI_USER_ID
+                                    ,SYSDATE
+                                    ,PNI_USER_ID
+                                    ,SYSDATE
+                                    ,PNI_LOGIN_ID
+                                    );
+       commit; 
+
+  for idx in (select full_name,padre_desc,hijo_desc,nieto_desc from XXAZOR_PER_ACLAR_V where id = ln_aclar_id) loop
+
+  
+     select XXAZOR_PER_DOCS_WF_S.nextval
+          into ls_itemkey
+          from dual;
+         
+        wf_engine.CreateProcess (itemtype => gs_item_type
+                                ,itemkey  => ls_itemkey
+                                ,process  => gs_aclar_prc
+                                );
+        
+        wf_engine.SetItemUserKey (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,userkey  => nvl(fnd_global.user_name,'SYSADMIN')
+                                 );
+     
+       wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => '#FROM_ROLE'
+                                 ,avalue   =>  nvl(fnd_global.user_name,'SYSADMIN')
+                                  );
+                                  
+       wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'SUPERVISOR'
+                                 ,avalue   => 'MPMOYA'
+                                  );
+     
+       wf_engine.SetItemAttrNumber(itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'REQ_ACLR_ID'
+                                 ,avalue   => ln_aclar_id
+                                  );
+                                  
+        wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'ACLAR_LINEA1'
+                                 ,avalue   => 'Tipo Alcaracion:'||idx.padre_desc
+                                  );
+                                  
+          wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'ACLAR_LINEA2'
+                                 ,avalue   => idx.padre_desc||':'||idx.hijo_desc
+                                  );
+                                  
+           wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'ACLAR_LINEA3'
+                                 ,avalue   => idx.hijo_desc||':'||idx.nieto_desc
+                                  );
+                                                                                  
+          wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'EMPLOYEE'
+                                 ,avalue   => idx.full_name
+                                  );
+                                                           
+        wf_engine.SetItemOwner (itemtype =>  gs_item_type
+                               ,itemkey  =>  ls_itemkey
+                               ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
+                               );
+     
+        wf_engine.StartProcess (itemtype  => gs_item_type
+                               ,itemkey   => ls_itemkey
+                               );
+         
+         commit; 
+
+  end loop; 
+ 
+PSI_ERRMSG := 'SE HA CREADO LA SOLICITUD';
+
+
+EXCEPTION WHEN OTHERS THEN 
+ 
+ PSI_ERRCOD := SQLCODE;
+ PSI_ERRMSG := SQLERRM; 
+ 
+END generate_aclar; 
+                        
+
 END XXAZOR_PER_DOCS_PKG; 
 /
 

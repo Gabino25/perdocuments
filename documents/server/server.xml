@@ -50,6 +50,11 @@
       ObjectType="ViewObject" >
    </Containee>
    <Containee
+      Name="PerAclarViewVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PerAclarViewVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
       Name="PerAclarVO"
       FullName="xxazor.oracle.apps.per.documents.server.PerAclarVO"
       ObjectType="ViewObject" >

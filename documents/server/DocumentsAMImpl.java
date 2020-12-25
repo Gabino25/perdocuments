@@ -316,5 +316,72 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                 , int pUserID
                                 , int pLoginID
                                 ) {
+        String retval =null;
+        UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1();
+        UsersInfoVORowImpl usersInfoVORowImpl = (UsersInfoVORowImpl)usersInfoVOImpl.getCurrentRow();
+        String strCallableStmt = " BEGIN \n" + 
+                                 "  APPS.XXAZOR_PER_DOCS_PKG.generate_aclar ( PSI_ERRCOD             => :1\n" + 
+                                 "                                            , PSI_ERRMSG             => :2\n" + 
+                                 "                                            , PNI_PERSON_ID          => :3\n" + 
+                                 "                                            , PNI_ASSIGNMENT_ID      => :4\n" + 
+                                 "                                            , PDI_EFFECTIVE_DATE     => :5\n" + 
+                                 "                                            , PSI_PADRE              => :6\n" +
+                                 "                                            , PSI_HIJO               => :7\n" +
+                                 "                                            , PSI_NIETO              => :8\n" +
+                                 "                                            , PSI_OBS_ACLA           => :9\n" +
+                                 "                                            , PNI_USER_ID            => :10\n" +
+                                 "                                            , PNI_LOGIN_ID           => :11\n" +
+                                 "                                            );\n" + 
+                                 " END; \n";
+        OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
+        OracleCallableStatement oraclecallablestatement =  (OracleCallableStatement)oadbtransaction.createCallableStatement(strCallableStmt, 1);
+        try {
+            System.out.println("usersInfoVORowImpl.getFechaSolicitud().dateValue():"+usersInfoVORowImpl.getFechaSolicitud().dateValue());
+            oraclecallablestatement.registerOutParameter(1,Types.VARCHAR);
+            oraclecallablestatement.registerOutParameter(2,Types.VARCHAR);
+            oraclecallablestatement.setDouble(3,usersInfoVORowImpl.getPersonId().doubleValue());
+            oraclecallablestatement.setDouble(4,usersInfoVORowImpl.getAssignmentId().doubleValue());
+            oraclecallablestatement.setDate(5,usersInfoVORowImpl.getFechaSolicitud().dateValue());
+            oraclecallablestatement.setString(6,pPadre);
+            oraclecallablestatement.setString(7,pHijo);
+            oraclecallablestatement.setString(8,pNieto);
+            oraclecallablestatement.setString(9,pObservacionesAcl);
+            oraclecallablestatement.setDouble(10,new Double(pUserID));
+            oraclecallablestatement.setDouble(11,new Double(pLoginID));
+            oraclecallablestatement.execute();
+            retval = oraclecallablestatement.getString(2);
+            System.out.println("retval:"+retval);
+           
+        } catch (SQLException e) {
+                   System.out.println("SQLException en el metodo crearAclaracion:"+e.getErrorCode()+", "+e.getMessage());
+                   throw new OAException("SQLException en el metodo crearAclaracion:"+e.getErrorCode(),OAException.ERROR); 
+        }
+        return retval;                         
     }
+
+    /**Container's getter for PerAclarViewVO1
+     */
+    public PerAclarViewVOImpl getPerAclarViewVO1() {
+        return (PerAclarViewVOImpl)findViewObject("PerAclarViewVO1");
+    }
+
+    public void initAclaInfo() {
+        PerAclarViewVOImpl perAclarViewVOImpl= getPerAclarViewVO1();
+        UsersInfoVOImpl usersInfoVOImpl = getUsersInfoVO1(); 
+        UsersInfoVORowImpl usersInfoVORowImpl = (UsersInfoVORowImpl)usersInfoVOImpl.first();
+        perAclarViewVOImpl.filter(usersInfoVORowImpl.getPersonId(),usersInfoVORowImpl.getAssignmentId());
+        
+    }
+
+    public void filterAclarInfo(String strAclarId) {
+        PerAclarViewVOImpl perAclarViewVOImpl= getPerAclarViewVO1();
+        oracle.jbo.domain.Number numAclarId;
+        try {
+            numAclarId = new  oracle.jbo.domain.Number(strAclarId);
+            perAclarViewVOImpl.filter(numAclarId);
+        } catch (SQLException e) {
+          throw new OAException(e.getMessage(),OAException.ERROR);
+        }
+    }
+    
 }

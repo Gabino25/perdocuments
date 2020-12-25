@@ -7,6 +7,7 @@
 package xxazor.oracle.apps.per.documents.webui;
 
 import oracle.apps.fnd.common.VersionInfo;
+import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
@@ -14,6 +15,8 @@ import oracle.apps.fnd.framework.webui.beans.OAWebBean;
 import oracle.apps.fnd.framework.webui.beans.message.OAMessageChoiceBean;
 
 import oracle.apps.fnd.framework.webui.beans.message.OAMessageRichTextEditorBean;
+
+import oracle.apps.fnd.framework.webui.beans.message.OAMessageTextInputBean;
 
 import xxazor.oracle.apps.per.documents.server.AclControlsVORowImpl;
 import xxazor.oracle.apps.per.documents.server.DocumentsAMImpl;
@@ -39,6 +42,7 @@ public class AclaracionesCO extends OAControllerImpl
     int userId = pageContext.getUserId();
     documentsAM.filterUserInfo(userId);
     documentsAM.initControls();
+    documentsAM.initAclaInfo();
     /*
     if(null!=webBean.findChildRecursive("HijoRL")){
         webBean.findChildRecursive("HijoRL").setRendered(false);
@@ -62,7 +66,7 @@ public class AclaracionesCO extends OAControllerImpl
     System.out.println("strEventParam:"+strEventParam);
     DocumentsAMImpl documentsAM = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
     OAMessageChoiceBean oAMessageChoiceBean = null; 
-    OAMessageRichTextEditorBean oAMessageRichTextEditorBean = null; 
+    OAMessageTextInputBean oAMessageTextInputBean = null; 
     AclControlsVORowImpl aclControlsVORowImpl = (AclControlsVORowImpl)documentsAM.getAclControlsVO1().first();
     if(null==aclControlsVORowImpl){
      return;
@@ -79,6 +83,7 @@ public class AclaracionesCO extends OAControllerImpl
         documentsAM.filterAclHijo(strPadreValue);
         oAMessageChoiceBean = (OAMessageChoiceBean)webBean.findChildRecursive("hijo"); 
         oAMessageChoiceBean.setPrompt(strPadre);
+        return;
     }else if("HijoEvt".equals(strEventParam)){
         aclControlsVORowImpl.setObservaciones("N");
         oAMessageChoiceBean = (OAMessageChoiceBean)webBean.findChildRecursive("hijo"); 
@@ -87,9 +92,11 @@ public class AclaracionesCO extends OAControllerImpl
         documentsAM.filterAclNieto(strHijoValue);
         oAMessageChoiceBean = (OAMessageChoiceBean)webBean.findChildRecursive("nieto"); 
         oAMessageChoiceBean.setPrompt(strHijo);
+        return;
     }else if("NietoEvt".equals(strEventParam)){
         aclControlsVORowImpl.setObservaciones("Y");
-        oAMessageRichTextEditorBean = (OAMessageRichTextEditorBean)webBean.findChildRecursive("ObservacionesAcl"); 
+        oAMessageTextInputBean = (OAMessageTextInputBean)webBean.findChildRecursive("ObservacionesAcl"); 
+        return;
     }else if("solicitarEvt".equals(strEventParam)){
         String strPadre = pageContext.getParameter("padre");
         String strHijo = pageContext.getParameter("hijo");
@@ -97,8 +104,15 @@ public class AclaracionesCO extends OAControllerImpl
         String strObservacionesAcl = pageContext.getParameter("ObservacionesAcl");
         int loginID = pageContext.getLoginId();
         int userID  = pageContext.getUserId();
+        System.out.println("strPadre:"+strPadre);
+        System.out.println("strHijo:"+strHijo);
+        System.out.println("strNieto:"+strNieto);
+        System.out.println("strObservacionesAcl:"+strObservacionesAcl);
         String strGetVal = documentsAM.crearAclaracion(strPadre,strHijo,strNieto,strObservacionesAcl,userID,loginID);
-        
+        if(null!=strGetVal){
+            throw new OAException(strGetVal,OAException.INFORMATION); 
+        }
+        return;        
     }
     
   }

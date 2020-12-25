@@ -1,0 +1,84 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oa:stackLayout version="10.1.3_" xml:lang="en-US" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:ui="http://xmlns.oracle.com/uix/ui" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$" controllerClass="xxazor.oracle.apps.per.documents.webui.AclrStackLayCO" amDefName="xxazor.oracle.apps.per.documents.server.DocumentsAM">
+   <ui:contents>
+      <oa:advancedTable id="PerAclarViewVORN" viewName="PerAclarViewVO1">
+         <ui:contents>
+            <oa:column id="IdCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="IdSH" prompt="Numero Solicitud"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="Id" viewAttr="Id"/>
+               </ui:contents>
+            </oa:column>
+            <oa:column id="EmployeeNumberCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="EmployeeNumberSH" prompt="Numero Empleado"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="EmployeeNumber" viewAttr="EmployeeNumber"/>
+               </ui:contents>
+            </oa:column>
+            <oa:column id="FullNameCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="FullNameSH" prompt="Nombre"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="FullName" viewAttr="FullName"/>
+               </ui:contents>
+            </oa:column>
+            <oa:column id="PadreDescCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="PadreDescSH" prompt="Tipo Solicitud"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="PadreDesc" viewAttr="PadreDesc"/>
+               </ui:contents>
+            </oa:column>
+            <oa:column id="HijoDescCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="HijoDescSH" prompt="Primera Descripcion"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="HijoDesc" viewAttr="HijoDesc"/>
+               </ui:contents>
+            </oa:column>
+            <oa:column id="NietoDescCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="NietoDescSH" prompt="Segunda Descripcion"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="NietoDesc" viewAttr="NietoDesc"/>
+               </ui:contents>
+            </oa:column>
+            <oa:column id="DescAclaracionCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="DescAclaracionSH" prompt="Descripcion Aclaracion"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="DescAclaracion" viewAttr="DescAclaracion"/>
+               </ui:contents>
+            </oa:column>
+            <oa:column id="NotaApproverCol">
+               <ui:columnHeader>
+                  <oa:sortableHeader id="NotaApproverSH" prompt="Nota del Aprobador"/>
+               </ui:columnHeader>
+               <ui:contents>
+                  <oa:messageStyledText id="NotaApprover" viewAttr="NotaApprover"/>
+               </ui:contents>
+            </oa:column>
+         </ui:contents>
+         <ui:tableActions>
+            <oa:flowLayout id="region1">
+               <ui:contents>
+                  <oa:button id="UpdateBtn" text="Actualizar" prompt="Actualizar">
+                     <ui:primaryClientAction>
+                        <ui:firePartialAction event="UpdateEvt"/>
+                     </ui:primaryClientAction>
+                  </oa:button>
+               </ui:contents>
+            </oa:flowLayout>
+         </ui:tableActions>
+      </oa:advancedTable>
+   </ui:contents>
+</oa:stackLayout>

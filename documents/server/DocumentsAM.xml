@@ -49,4 +49,8 @@
       Name="PerAclarVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.PerAclarVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="PerAclarViewVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PerAclarViewVO" >
+   </ViewUsage>
 </AppModule>
