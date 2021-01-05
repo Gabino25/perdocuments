@@ -172,11 +172,13 @@ PROCEDURE generate_request(PSI_ERRCOD         OUT VARCHAR2
 BEGIN 
 
   PSI_ERRCOD := null; 
-  PSI_ERRMSG := null;
+  PSI_ERRMSG := 'LA SOLICITUD NO HA SIDO CREADA';
  
   if PSI_DOC_TYPE in (gs_carta_laboral
                      ,gs_carta_patronal
                      ,gs_carta_ingresos
+                     ,gs_carta_visa
+                     ,gs_carta_identidad
                      )   then 
  
   OPEN get_per_info(PNI_PERSON_ID
@@ -226,7 +228,7 @@ BEGIN
     
     PSI_ERRMSG := 'SE HA CREADO LA SOLICITUD';
     
-    for idx in (SELECT full_name,doc_type_meaning from XXAZOR_PER_DOCS_V where id = ln_per_doc_id) loop
+    for idx in (SELECT id,full_name,doc_type_meaning from XXAZOR_PER_DOCS_V where id = ln_per_doc_id) loop
         
         select XXAZOR_PER_DOCS_WF_S.nextval
           into ls_itemkey
@@ -276,7 +278,25 @@ BEGIN
                                ,itemkey  =>  ls_itemkey
                                ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
                                );
-     
+        /*
+        wf_engine.SetItemAttrDocument(itemtype    => gs_item_type
+                                     ,itemkey     => ls_itemkey
+                                     ,aname       => 'SOL_DOC_RN_INFO'
+                                     ,documentid  => 'JSP:/OA_HTML/OA.jsp?OAFunc=XXAZOR_PER_DOC_SOL_RN_F&pSolDocId='||idx.id
+                                     );              
+         */
+         wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'FUNCNAME_ATTR'
+                                 ,avalue   => 'XXAZOR_PER_DOC_SOL_RN_F'
+                                  );
+                                   
+         wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'MSGATTR1'
+                                 ,avalue   => idx.id
+                                  ); 
+                                                                             
         wf_engine.StartProcess (itemtype  => gs_item_type
                                ,itemkey   => ls_itemkey
                                );

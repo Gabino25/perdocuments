@@ -383,5 +383,15 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
           throw new OAException(e.getMessage(),OAException.ERROR);
         }
     }
-    
+
+    public void filterSolDocById(String strSolDocId) {
+        PerDocsVOImpl perDocsVOImpl = getPerDocsVO1();
+        oracle.jbo.domain.Number numSolDocId;
+        try {
+            numSolDocId = new  oracle.jbo.domain.Number(strSolDocId);
+            perDocsVOImpl.filter(numSolDocId);
+        } catch (SQLException e) {
+          throw new OAException(e.getMessage(),OAException.ERROR);
+        }
+    }
 }
