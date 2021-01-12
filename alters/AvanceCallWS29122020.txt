@@ -1,0 +1,38 @@
+select * from SYS.JAVA$POLICY$
+where type_name like '%RuntimePermission%'
+
+begin
+  dbms_java.grant_permission( 'APPS', 'SYS:java.net.SocketPermission', 'www.indiciumsolutions-test.com:80', 'connect, resolve');
+  dbms_java.grant_permission('APPS','SYS:java.util.PropertyPermission','*','read,write');
+  dbms_java.grant_permission( 'APPS', 'SYS:java.lang.RuntimePermission', 'getClassLoader', '' ) ;
+  dbms_java.grant_permission( 'APPS', 'SYS:java.lang.RuntimePermission', 'accessDeclaredMembers', '' );
+end;
+
+begin
+dbms_java.grant_permission( 'APPS', 'SYS:java.lang.RuntimePermission', 'accessDeclaredMembers', '' );
+end; 
+
+
+
+select * from all_tables
+where TABLE_NAME LIKE '%JAVA%'
+
+
+select * from all_objects
+where object_type like '%JAVA%'
+  and object_name like '%xxazor%' 
+  or object_name like 'mx/%' 
+  or object_name like '%org/tempuri%'
+  
+  xxazor/oracle/per/ws/ServiceDeGeneracionSoap
+  
+  
+  SELECT dbms_java.longname(object_name),dbms_java.shortname(object_name), object_name,object_type
+  FROM all_objects
+  WHERE object_type like '%JAVA%' 
+   and object_name like '%xxazor%'
+   
+   xxazor/oracle/per/ws/ServiceDeGeneracion
+   
+   xxazor/oracle/per/ws/ServiceDeGeneracion.xml
+
