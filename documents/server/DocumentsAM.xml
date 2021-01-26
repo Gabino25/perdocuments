@@ -53,4 +53,20 @@
       Name="PerAclarViewVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.PerAclarViewVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="PayrollsVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PayrollsVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PayPeriodsVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PayPeriodsVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PayExecutionsVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PayExecutionsVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="GenTimControlsVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.GenTimControlsVO" >
+   </ViewUsage>
 </AppModule>

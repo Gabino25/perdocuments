@@ -50,6 +50,26 @@
       ObjectType="ViewObject" >
    </Containee>
    <Containee
+      Name="GenTimControlsVO"
+      FullName="xxazor.oracle.apps.per.documents.server.GenTimControlsVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="PayExecutionsVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PayExecutionsVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="PayPeriodsVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PayPeriodsVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="PayrollsVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PayrollsVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
       Name="PerAclarViewVO"
       FullName="xxazor.oracle.apps.per.documents.server.PerAclarViewVO"
       ObjectType="ViewObject" >

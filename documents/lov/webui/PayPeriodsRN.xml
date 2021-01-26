@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oa:listOfValues version="10.1.3_" xml:lang="en-US" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:ui="http://xmlns.oracle.com/uix/ui" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$" scope="/">
+   <ui:contents>
+      <oa:table name="PayPeriodsRN" id="PayPeriodsVORN">
+         <ui:contents>
+            <oa:messageStyledText id="PeriodName" dataType="VARCHAR2" prompt="Periodo" viewName="PayPeriodsVO1" viewAttr="PeriodName" maximumLength="70" queryable="true"/>
+            <oa:messageStyledText id="TimePeriodId" dataType="NUMBER" prompt="TimePeriodId" viewName="PayPeriodsVO1" viewAttr="TimePeriodId" maximumLength="15"/>
+            <oa:messageStyledText id="PayrollId" dataType="NUMBER" prompt="PayrollId" viewName="PayPeriodsVO1" viewAttr="PayrollId" maximumLength="9"/>
+            <oa:messageStyledText id="PeriodNum" dataType="NUMBER" prompt="PeriodNum" viewName="PayPeriodsVO1" viewAttr="PeriodNum" maximumLength="15"/>
+            <oa:messageStyledText id="PeriodType" dataType="VARCHAR2" prompt="PeriodType" viewName="PayPeriodsVO1" viewAttr="PeriodType" maximumLength="30"/>
+            <oa:messageStyledText id="StartDate" dataType="DATE" prompt="StartDate" viewName="PayPeriodsVO1" viewAttr="StartDate"/>
+            <oa:messageStyledText id="EndDate" dataType="DATE" prompt="EndDate" viewName="PayPeriodsVO1" viewAttr="EndDate"/>
+         </ui:contents>
+      </oa:table>
+   </ui:contents>
+</oa:listOfValues>

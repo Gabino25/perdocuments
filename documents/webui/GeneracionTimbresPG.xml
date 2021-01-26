@@ -1,0 +1,48 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<page xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:ui="http://xmlns.oracle.com/uix/ui" version="10.1.3_" xml:lang="en-US" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$">
+   <content>
+      <oa:pageLayout id="region1" windowTitle="Generacion Timbres" title="Generacion Timbres" amDefName="xxazor.oracle.apps.per.documents.server.DocumentsAM" controllerClass="xxazor.oracle.apps.per.documents.webui.GeneracionTimbresCO">
+         <ui:corporateBranding>
+            <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
+         </ui:corporateBranding>
+         <ui:contents>
+            <oa:pageButtonBar id="region2">
+               <ui:contents>
+                  <oa:submitButton id="item1" text="Llamar Web Service" prompt="Llamar Web Service"/>
+               </ui:contents>
+            </oa:pageButtonBar>
+            <oa:messageComponentLayout id="region3" rows="1" columns="1">
+               <ui:contents>
+                  <oa:messageLovInput id="PayrollName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PayrollsRN" prompt="Nomina" required="yes">
+                     <lovMappings>
+                        <lovMap id="lovMap1" lovItem="PayrollName" resultTo="PayrollName" criteriaFrom="PayrollName"/>
+                        <lovMap id="lovMap2" lovItem="PayrollId" resultTo="PayrollIdFV"/>
+                        <lovMap id="lovMap3" lovItem="BusinessGroupId" resultTo="BusinessGroupIdFV"/>
+                     </lovMappings>
+                  </oa:messageLovInput>
+                  <oa:messageLovInput id="PeriodName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PayPeriodsRN" prompt="Periodo" required="yes" rendered="${oa.GenTimControlsVO1.PeriodoR}">
+                     <lovMappings>
+                        <lovMap id="lovMap4" lovItem="PeriodName" resultTo="PeriodName" criteriaFrom="PeriodName"/>
+                        <lovMap id="lovMap5" lovItem="TimePeriodId" resultTo="TimePeriodIdFV"/>
+                     </lovMappings>
+                  </oa:messageLovInput>
+               </ui:contents>
+               <ui:footer>
+                  <oa:flowLayout id="region4">
+                     <ui:contents>
+                        <oa:button id="ConsultarBtn" text="Consultar" prompt="Consultar" rendered="${oa.GenTimControlsVO1.ConsultaBtnR}">
+                           <ui:primaryClientAction>
+                              <ui:fireAction event="ConsultarEvt"/>
+                           </ui:primaryClientAction>
+                        </oa:button>
+                     </ui:contents>
+                  </oa:flowLayout>
+               </ui:footer>
+            </oa:messageComponentLayout>
+            <oa:formValue id="PayrollIdFV"/>
+            <oa:formValue id="BusinessGroupIdFV"/>
+            <oa:formValue id="TimePeriodIdFV"/>
+         </ui:contents>
+      </oa:pageLayout>
+   </content>
+</page>

@@ -1,0 +1,12 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oa:listOfValues version="10.1.3_" xml:lang="en-US" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:ui="http://xmlns.oracle.com/uix/ui" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$" scope="/">
+   <ui:contents>
+      <oa:table name="PayrollsRN" id="PayrollsVORN">
+         <ui:contents>
+            <oa:messageStyledText id="PayrollName" dataType="VARCHAR2" prompt="Nomina" viewName="PayrollsVO1" viewAttr="PayrollName" maximumLength="80" queryable="true"/>
+            <oa:messageStyledText id="PayrollId" dataType="NUMBER" prompt="PayrollId" viewName="PayrollsVO1" viewAttr="PayrollId" maximumLength="9"/>
+            <oa:messageStyledText id="BusinessGroupId" dataType="NUMBER" prompt="BusinessGroupId" viewName="PayrollsVO1" viewAttr="BusinessGroupId" maximumLength="15"/>
+         </ui:contents>
+      </oa:table>
+   </ui:contents>
+</oa:listOfValues>

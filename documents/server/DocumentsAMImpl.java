@@ -394,4 +394,28 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
           throw new OAException(e.getMessage(),OAException.ERROR);
         }
     }
+
+    /**Container's getter for PayrollsVO1
+     */
+    public PayrollsVOImpl getPayrollsVO1() {
+        return (PayrollsVOImpl)findViewObject("PayrollsVO1");
+    }
+
+    /**Container's getter for PayPeriodsVO1
+     */
+    public PayPeriodsVOImpl getPayPeriodsVO1() {
+        return (PayPeriodsVOImpl)findViewObject("PayPeriodsVO1");
+    }
+
+    /**Container's getter for PayExecutionsVO1
+     */
+    public PayExecutionsVOImpl getPayExecutionsVO1() {
+        return (PayExecutionsVOImpl)findViewObject("PayExecutionsVO1");
+    }
+
+    /**Container's getter for GenTimControlsVO1
+     */
+    public GenTimControlsVOImpl getGenTimControlsVO1() {
+        return (GenTimControlsVOImpl)findViewObject("GenTimControlsVO1");
+    }
 }

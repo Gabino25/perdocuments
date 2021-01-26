@@ -45,7 +45,7 @@
       <ENTRY name="ServiceName" value="ebs_DBEBSTST"/>
       <ENTRY name="JdbcDriver" value="oracle.jdbc.OracleDriver"/>
       <ENTRY name="password">
-         <![CDATA[{904}0510AC8B09947DA3BDEE9DCF5AC291FED7E3A852040E7A5C1A]]>
+         <![CDATA[{904}051961C57255165A910BCB5491BA9B8C06E15177BABAA0FA86]]>
       </ENTRY>
       <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
       <ENTRY name="DeployPassword" value="true"/>
