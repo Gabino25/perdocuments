@@ -22,8 +22,9 @@
                   </oa:messageLovInput>
                   <oa:messageLovInput id="PeriodName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PayPeriodsRN" prompt="Periodo" required="yes" rendered="${oa.GenTimControlsVO1.PeriodoR}">
                      <lovMappings>
-                        <lovMap id="lovMap4" lovItem="PeriodName" resultTo="PeriodName" criteriaFrom="PeriodName"/>
+                        <lovMap id="lovMap4" lovItem="PeriodName" resultTo="PeriodName" criteriaFrom="PeriodName" programmaticQuery="true"/>
                         <lovMap id="lovMap5" lovItem="TimePeriodId" resultTo="TimePeriodIdFV"/>
+                        <lovMap id="lovMap6" lovItem="PayrollId" criteriaFrom="PayrollIdFV" requiredForLOV="true"/>
                      </lovMappings>
                   </oa:messageLovInput>
                </ui:contents>
@@ -42,6 +43,58 @@
             <oa:formValue id="PayrollIdFV"/>
             <oa:formValue id="BusinessGroupIdFV"/>
             <oa:formValue id="TimePeriodIdFV"/>
+            <oa:advancedTable id="PayExecutionsRN" viewName="PayExecutionsVO1">
+               <ui:contents>
+                  <oa:column id="EmployeeNumberCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="EmployeeNumberSH" prompt="Numero Empleado"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="EmployeeNumber" viewAttr="EmployeeNumber"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="FullNameCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="FullNameSH" prompt="Nombre Empleado"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="FullName" viewAttr="FullName"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="NumeroreciboCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="NumeroreciboSH" prompt="Numero Recibo"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="Numerorecibo" viewAttr="Numerorecibo"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="PeriodoCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="PeriodoDH" prompt="Periodo"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="Periodo" viewAttr="Periodo"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="BusinessGroupIdCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="BusinessGroupIdSH" prompt="BusinessGroupId"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="BusinessGroupId" viewAttr="BusinessGroupId"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="PayrollIdCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="PayrollIdSH" prompt="PayrollId"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="PayrollId" viewAttr="PayrollId"/>
+                     </ui:contents>
+                  </oa:column>
+               </ui:contents>
+            </oa:advancedTable>
          </ui:contents>
       </oa:pageLayout>
    </content>

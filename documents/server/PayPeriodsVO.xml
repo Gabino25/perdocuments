@@ -17,6 +17,7 @@ select time_period_id
       ,end_date
       ,period_name
  from per_time_periods
+order by start_date desc
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />

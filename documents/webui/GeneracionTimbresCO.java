@@ -20,6 +20,7 @@ import org.tempuri.ServiceDeGeneracionSoap12Client;
 import xxazor.oracle.apps.per.documents.server.DocumentsAMImpl;
 import xxazor.oracle.apps.per.documents.server.GenTimControlsVOImpl;
 import xxazor.oracle.apps.per.documents.server.GenTimControlsVORowImpl;
+import xxazor.oracle.apps.per.documents.server.PayExecutionsVOImpl;
 
 /**
  * Controller for ...
@@ -60,10 +61,34 @@ public class GeneracionTimbresCO extends OAControllerImpl
   public void processFormRequest(OAPageContext pageContext, OAWebBean webBean)
   {
     super.processFormRequest(pageContext, webBean);
+    String strEventParam = pageContext.getParameter(this.EVENT_PARAM);
+    System.out.println("strEventParam:"+strEventParam);
+    DocumentsAMImpl am = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
+    GenTimControlsVOImpl genTimControlsVOImpl =  am.getGenTimControlsVO1();  
+    GenTimControlsVORowImpl genTimControlsVORowImpl = (GenTimControlsVORowImpl)genTimControlsVOImpl.first();
+    PayExecutionsVOImpl payExecutionsVOImpl = am.getPayExecutionsVO1();    
+    if(pageContext.isLovEvent()){
+        String lovInputSourceId = pageContext.getLovInputSourceId();  
+        System.out.println("lovInputSourceId:"+lovInputSourceId);
+        if(this.LOV_UPDATE.equals(strEventParam)&&"PayrollName".equals(lovInputSourceId)){
+          String strPayrollIdFV = pageContext.getParameter("PayrollIdFV");
+          System.out.println("strPayrollIdFV:"+strPayrollIdFV);
+          genTimControlsVORowImpl.setPeriodo("Y");
+          genTimControlsVORowImpl.setConsultaBtn("Y");
+        }
+    }
+    if("ConsultarEvt".equals(strEventParam)){
+        String strPayrollIdFV = pageContext.getParameter("PayrollIdFV");
+        String strBusinessGroupIdFV = pageContext.getParameter("BusinessGroupIdFV");
+        String strTimePeriodIdFV = pageContext.getParameter("TimePeriodIdFV");
+        payExecutionsVOImpl.filter(strPayrollIdFV,strBusinessGroupIdFV,strTimePeriodIdFV);
+    }
+    /** 
     File file = new File("C:\\Users\\Dell\\Downloads\\ATI_ACOSTA_CORDOBA_JESUS_JAVIER.txt");
     byte[] bytes = readContentIntoByteArray(file);
     String strGetval = ServiceDeGeneracionSoap12Client.generaReciboWSByte(bytes);
     System.out.println(strGetval);
+    **/
   }
   
     private static byte[] readContentIntoByteArray(File file)

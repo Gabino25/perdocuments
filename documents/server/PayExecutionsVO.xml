@@ -32,7 +32,8 @@ SELECT  per.employee_number
         ,ppa.consolidation_set_id 
         ,ppa.element_set_id 
         ,ppa.assignment_set_id 
-        ,per.person_id               
+        ,per.person_id           
+        ,asg.business_group_id    
  FROM   pay_assignment_actions paa 
        ,pay_payroll_actions    ppa 
        ,pay_run_types_f        prtf
@@ -406,6 +407,21 @@ SELECT  per.employee_number
       ColumnType="NUMBER"
       AliasName="PERSON_ID"
       Expression="PERSON_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BusinessGroupId"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="15"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="BUSINESS_GROUP_ID"
+      Expression="BUSINESS_GROUP_ID"
       SQLType="NUMERIC" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="22" />

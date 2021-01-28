@@ -35,6 +35,7 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
     public static final int ELEMENTSETID = 21;
     public static final int ASSIGNMENTSETID = 22;
     public static final int PERSONID = 23;
+    public static final int BUSINESSGROUPID = 24;
 
     /**This is the default constructor (do not remove)
      */
@@ -382,6 +383,8 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
             return getAssignmentSetId();
         case PERSONID:
             return getPersonId();
+        case BUSINESSGROUPID:
+            return getBusinessGroupId();
         default:
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -392,9 +395,24 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
     protected void setAttrInvokeAccessor(int index, Object value, 
                                          AttributeDefImpl attrDef) throws Exception {
         switch (index) {
+        case BUSINESSGROUPID:
+            setBusinessGroupId((Number)value);
+            return;
         default:
             super.setAttrInvokeAccessor(index, value, attrDef);
             return;
         }
+    }
+
+    /**Gets the attribute value for the calculated attribute BusinessGroupId
+     */
+    public Number getBusinessGroupId() {
+        return (Number) getAttributeInternal(BUSINESSGROUPID);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute BusinessGroupId
+     */
+    public void setBusinessGroupId(Number value) {
+        setAttributeInternal(BUSINESSGROUPID, value);
     }
 }
