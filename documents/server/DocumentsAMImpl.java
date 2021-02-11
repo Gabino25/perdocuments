@@ -1,6 +1,11 @@
 package xxazor.oracle.apps.per.documents.server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+
+import java.io.InputStreamReader;
+
+import java.io.Reader;
 
 import java.sql.SQLException;
 import java.sql.Types;
@@ -444,7 +449,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                 ,payExecutionsVORowImpl.getPayrollActionId()
                                 ,payExecutionsVORowImpl.getAssignmentActionId()
                                 );
-                String strgeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[3].getBytes());
+                String strgeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[2].getBytes());
                 System.out.println(strgeneraReciboWS);
             }
         }
@@ -519,8 +524,17 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         oraclecallablestatement.setDouble(9,pAssignmentActionId.doubleValue());
         oraclecallablestatement.execute();
         
+          
         java.sql.Clob atiClob = oraclecallablestatement.getClob(3);
+        String strATI = clobToString(atiClob);
+            /******************************************************
+        System.out.println(atiClob);
+          
             java.io.Reader reader =atiClob.getCharacterStream();
+             java.io.BufferedReader bufferReader = new java.io.BufferedReader(reader);
+           
+            java.io.InputStream is = atiClob.getAsciiStream();
+            java.io.Reader reader = new InputStreamReader(is);
             java.io.BufferedReader bufferReader = new java.io.BufferedReader(reader);
             String strATI = "";
             String line = null; 
@@ -531,18 +545,69 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             System.out.println(strATI);
             bufferReader.close();
             reader.close();
+             *******************************************************/
+            /**
+            oracle.sql.CLOB atiClob2 = oraclecallablestatement.getCLOB(3);
+            System.out.println(atiClob2);
+            java.io.InputStream is = atiClob2.getAsciiStream();
+            java.io.Reader reader = new InputStreamReader(is);
+            java.io.BufferedReader bufferReader = new java.io.BufferedReader(reader);
+            String strATI = "";
+            String line = null; 
+            while((line = bufferReader.readLine())!=null){
+                strATI = strATI+line;
+            }
+             System.out.println(strATI);
+           
+            bufferReader.close();
+            reader.close();
+            **/
+             System.out.println(strATI);
             retval[0] = "ERRCOD";
             retval[1] = "ERRMSG";
             retval[2] = strATI;
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage());
                throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode(),OAException.ERROR); 
-        } catch (IOException ioe) {
-            System.out.println("IOException en el metodo getATI:"+ioe.getMessage());
-            throw new OAException("IOException en el metodo getATI:"+ioe.getMessage(),OAException.ERROR);
-        }
+        } 
         
        return retval; 
         
     }
+    
+    /*********************************************************************************************
+     * From CLOB to String
+     * @return string representation of clob
+     *********************************************************************************************/
+    private String clobToString(java.sql.Clob data)
+    {
+        final StringBuilder sb = new StringBuilder();
+
+        try
+        {
+            final Reader         reader = data.getCharacterStream();
+            final BufferedReader br     = new BufferedReader(reader);
+
+            int b;
+            while(-1 != (b = br.read()))
+            {
+                sb.append((char)b);
+            }
+
+            br.close();
+        }
+        catch (SQLException e)
+        {
+            System.out.println("SQL. Could not convert CLOB to string:"+e.toString());
+            return e.toString();
+        }
+        catch (IOException e)
+        {
+            System.out.println("IO. Could not convert CLOB to string:"+e.toString());
+            return e.toString();
+        }
+
+        return sb.toString();
+    }
+    
 }
