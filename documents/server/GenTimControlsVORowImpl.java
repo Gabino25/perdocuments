@@ -14,6 +14,8 @@ public class GenTimControlsVORowImpl extends OAViewRowImpl {
     public static final int CONSULTABTN = 1;
     public static final int PERIODOR = 2;
     public static final int CONSULTABTNR = 3;
+    public static final int EMPLOYEE = 4;
+    public static final int EMPLOYEER = 5;
 
     /**This is the default constructor (do not remove)
      */
@@ -50,6 +52,10 @@ public class GenTimControlsVORowImpl extends OAViewRowImpl {
             return getPeriodoR();
         case CONSULTABTNR:
             return getConsultaBtnR();
+        case EMPLOYEE:
+            return getEmployee();
+        case EMPLOYEER:
+            return getEmployeeR();
         default:
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -71,6 +77,12 @@ public class GenTimControlsVORowImpl extends OAViewRowImpl {
             return;
         case CONSULTABTNR:
             setConsultaBtnR((Boolean)value);
+            return;
+        case EMPLOYEE:
+            setEmployee((String)value);
+            return;
+        case EMPLOYEER:
+            setEmployeeR((Boolean)value);
             return;
         default:
             super.setAttrInvokeAccessor(index, value, attrDef);
@@ -117,5 +129,34 @@ public class GenTimControlsVORowImpl extends OAViewRowImpl {
      */
     public void setConsultaBtnR(Boolean value) {
         setAttributeInternal(CONSULTABTNR, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute Employee
+     */
+    public String getEmployee() {
+        return (String) getAttributeInternal(EMPLOYEE);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute Employee
+     */
+    public void setEmployee(String value) {
+        setAttributeInternal(EMPLOYEE, value);
+        if("N".equals(value)){
+            setEmployeeR(false);
+        }else{
+            setEmployeeR(true);
+        }
+    }
+
+    /**Gets the attribute value for the calculated attribute EmployeeR
+     */
+    public Boolean getEmployeeR() {
+        return (Boolean) getAttributeInternal(EMPLOYEER);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute EmployeeR
+     */
+    public void setEmployeeR(Boolean value) {
+        setAttributeInternal(EMPLOYEER, value);
     }
 }

@@ -427,4 +427,14 @@ SELECT  per.employee_number
          <Attr Name="_DisplaySize" Value="22" />
       </DesignTime>
    </ViewAttribute>
+   <ViewAttribute
+      Name="MultiSelection"
+      IsSelected="false"
+      IsPersistent="false"
+      DefaultValue="N"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="VIEW_ATTR"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
 </ViewObject>

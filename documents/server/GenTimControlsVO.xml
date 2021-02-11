@@ -9,7 +9,7 @@
    ComponentClass="xxazor.oracle.apps.per.documents.server.GenTimControlsVOImpl"
    UseGlueCode="false" >
    <SQLQuery><![CDATA[
-select 'N' periodo, 'N' consulta_btn from dual
+select 'N' periodo, 'N' consulta_btn, 'N' employee from dual
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
@@ -58,6 +58,28 @@ select 'N' periodo, 'N' consulta_btn from dual
       IsSelected="false"
       IsPersistent="false"
       DefaultValue="False"
+      Type="java.lang.Boolean"
+      ColumnType="NUMBER"
+      AliasName="VIEW_ATTR"
+      SQLType="BIT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Employee"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="EMPLOYEE"
+      Expression="EMPLOYEE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EmployeeR"
+      IsSelected="false"
+      IsPersistent="false"
       Type="java.lang.Boolean"
       ColumnType="NUMBER"
       AliasName="VIEW_ATTR"

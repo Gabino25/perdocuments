@@ -36,6 +36,7 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
     public static final int ASSIGNMENTSETID = 22;
     public static final int PERSONID = 23;
     public static final int BUSINESSGROUPID = 24;
+    public static final int MULTISELECTION = 25;
 
     /**This is the default constructor (do not remove)
      */
@@ -385,6 +386,8 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
             return getPersonId();
         case BUSINESSGROUPID:
             return getBusinessGroupId();
+        case MULTISELECTION:
+            return getMultiSelection();
         default:
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -397,6 +400,9 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
         switch (index) {
         case BUSINESSGROUPID:
             setBusinessGroupId((Number)value);
+            return;
+        case MULTISELECTION:
+            setMultiSelection((String)value);
             return;
         default:
             super.setAttrInvokeAccessor(index, value, attrDef);
@@ -414,5 +420,17 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
      */
     public void setBusinessGroupId(Number value) {
         setAttributeInternal(BUSINESSGROUPID, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute MultiSelection
+     */
+    public String getMultiSelection() {
+        return (String) getAttributeInternal(MULTISELECTION);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute MultiSelection
+     */
+    public void setMultiSelection(String value) {
+        setAttributeInternal(MULTISELECTION, value);
     }
 }

@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.server.OAApplicationModuleImpl;
 
@@ -16,6 +19,8 @@ import oracle.jbo.RowSetIterator;
 import oracle.jbo.domain.Number;
 
 import oracle.jdbc.OracleCallableStatement;
+
+import org.tempuri.ServiceDeGeneracionSoap12Client;
 
 import xxazor.oracle.apps.per.documents.utils.Utils;
 // ---------------------------------------------------------------------
@@ -417,5 +422,127 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
      */
     public GenTimControlsVOImpl getGenTimControlsVO1() {
         return (GenTimControlsVOImpl)findViewObject("GenTimControlsVO1");
+    }
+
+    public void llamarServicioWeb() {
+        PayExecutionsVOImpl payExecutionsVOImpl = getPayExecutionsVO1(); 
+        RowSetIterator iterator  = payExecutionsVOImpl.createRowSetIterator(null);
+        while(iterator.hasNext()){
+             PayExecutionsVORowImpl payExecutionsVORowImpl = (PayExecutionsVORowImpl)iterator.next(); 
+             if("Y".equals(payExecutionsVORowImpl.getMultiSelection())){
+                 generarATI(payExecutionsVORowImpl.getBusinessGroupId()
+                           ,payExecutionsVORowImpl.getPersonId()
+                           ,payExecutionsVORowImpl.getAssignmentId()
+                           ,payExecutionsVORowImpl.getTimePeriodId()
+                           ,payExecutionsVORowImpl.getPayrollActionId()
+                           ,payExecutionsVORowImpl.getAssignmentActionId()
+                           );
+                String[] strArray = getATI(payExecutionsVORowImpl.getBusinessGroupId()
+                                ,payExecutionsVORowImpl.getPersonId()
+                                ,payExecutionsVORowImpl.getAssignmentId()
+                                ,payExecutionsVORowImpl.getTimePeriodId()
+                                ,payExecutionsVORowImpl.getPayrollActionId()
+                                ,payExecutionsVORowImpl.getAssignmentActionId()
+                                );
+                String strgeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[3].getBytes());
+                System.out.println(strgeneraReciboWS);
+            }
+        }
+    }
+
+    private void generarATI(Number pBusinessGroupId
+                          , Number pPersonId
+                          , Number pAssignmentId
+                          , Number pTimePeriodId
+                          , Number pPayrollActionId
+                          , Number pAssignmentActionId) {
+        String strCallableStmt = "BEGIN\n" + 
+                                 "   APPS.XXAZOR_PAY_TE_PKG.GENERATE_ATI (PSI_ERRCOD                => :1\n" + 
+                                 "                                       ,PSI_ERRMSG                => :2\n" + 
+                                 "                                       ,PNI_BGID                  => :3\n" + 
+                                 "                                       ,PNI_PERSON_ID             => :4\n" + 
+                                 "                                       ,PNI_ASSIGNMENT_ID         => :5\n" + 
+                                 "                                       ,PNI_TIME_PERIOD_ID        => :6\n" + 
+                                 "                                       ,PNI_PAYROLL_ACTION_ID     => :7\n" + 
+                                 "                                       ,PNI_ASSIGNMENT_ACTION_ID  => :8\n" + 
+                                 "                                        );\n" + 
+                                 "END;";
+        OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
+        OracleCallableStatement oraclecallablestatement =  (OracleCallableStatement)oadbtransaction.createCallableStatement(strCallableStmt, 1);
+       try {
+        oraclecallablestatement.registerOutParameter(1,Types.VARCHAR);
+        oraclecallablestatement.registerOutParameter(2,Types.VARCHAR);
+        oraclecallablestatement.setDouble(3,pBusinessGroupId.doubleValue());
+        oraclecallablestatement.setDouble(4,pPersonId.doubleValue());
+        oraclecallablestatement.setDouble(5,pAssignmentId.doubleValue());
+        oraclecallablestatement.setDouble(6,pTimePeriodId.doubleValue());
+        oraclecallablestatement.setDouble(7,pPayrollActionId.doubleValue());
+        oraclecallablestatement.setDouble(8,pAssignmentActionId.doubleValue());
+        oraclecallablestatement.execute();
+        
+        } catch (SQLException e) {
+               System.out.println("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage());
+               throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode(),OAException.ERROR); 
+        }   
+    }
+
+    private String[] getATI(Number pBusinessGroupId
+                      , Number pPersonId
+                      , Number pAssignmentId
+                      , Number pTimePeriodId
+                      , Number pPayrollActionId
+                      , Number pAssignmentActionId) {
+        String[] retval = new String[3];
+        String strCallableStmt = "BEGIN\n" + 
+                                 "   APPS.XXAZOR_PAY_TE_PKG.GET_ATI(PSI_ERRCOD                => :1\n" + 
+                                 "                                 ,PSI_ERRMSG                => :2\n" + 
+                                 "                                 ,PCO_ATI                   => :3\n" +
+                                 "                                 ,PNI_BGID                  => :4\n" + 
+                                 "                                 ,PNI_PERSON_ID             => :5\n" + 
+                                 "                                 ,PNI_ASSIGNMENT_ID         => :6\n" + 
+                                 "                                 ,PNI_TIME_PERIOD_ID        => :7\n" + 
+                                 "                                 ,PNI_PAYROLL_ACTION_ID     => :8\n" + 
+                                 "                                 ,PNI_ASSIGNMENT_ACTION_ID  => :9\n" + 
+                                 "                                  );\n" + 
+                                 "END;";
+        OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
+        OracleCallableStatement oraclecallablestatement =  (OracleCallableStatement)oadbtransaction.createCallableStatement(strCallableStmt, 1);
+        try {
+        oraclecallablestatement.registerOutParameter(1,Types.VARCHAR);
+        oraclecallablestatement.registerOutParameter(2,Types.VARCHAR);
+        oraclecallablestatement.registerOutParameter(3,Types.CLOB);
+        oraclecallablestatement.setDouble(4,pBusinessGroupId.doubleValue());
+        oraclecallablestatement.setDouble(5,pPersonId.doubleValue());
+        oraclecallablestatement.setDouble(6,pAssignmentId.doubleValue());
+        oraclecallablestatement.setDouble(7,pTimePeriodId.doubleValue());
+        oraclecallablestatement.setDouble(8,pPayrollActionId.doubleValue());
+        oraclecallablestatement.setDouble(9,pAssignmentActionId.doubleValue());
+        oraclecallablestatement.execute();
+        
+        java.sql.Clob atiClob = oraclecallablestatement.getClob(3);
+            java.io.Reader reader =atiClob.getCharacterStream();
+            java.io.BufferedReader bufferReader = new java.io.BufferedReader(reader);
+            String strATI = "";
+            String line = null; 
+            while((line = bufferReader.readLine())!=null){
+                strATI = strATI+line;
+            }
+            
+            System.out.println(strATI);
+            bufferReader.close();
+            reader.close();
+            retval[0] = "ERRCOD";
+            retval[1] = "ERRMSG";
+            retval[2] = strATI;
+        } catch (SQLException e) {
+               System.out.println("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage());
+               throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode(),OAException.ERROR); 
+        } catch (IOException ioe) {
+            System.out.println("IOException en el metodo getATI:"+ioe.getMessage());
+            throw new OAException("IOException en el metodo getATI:"+ioe.getMessage(),OAException.ERROR);
+        }
+        
+       return retval; 
+        
     }
 }

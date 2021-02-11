@@ -49,6 +49,7 @@ public class GeneracionTimbresCO extends OAControllerImpl
         GenTimControlsVORowImpl genTimControlsVORowImpl = (GenTimControlsVORowImpl)genTimControlsVOImpl.first();
         genTimControlsVORowImpl.setPeriodo("N");
         genTimControlsVORowImpl.setConsultaBtn("N");
+        genTimControlsVORowImpl.setEmployee("N");
     }
   }
 
@@ -75,13 +76,23 @@ public class GeneracionTimbresCO extends OAControllerImpl
           System.out.println("strPayrollIdFV:"+strPayrollIdFV);
           genTimControlsVORowImpl.setPeriodo("Y");
           genTimControlsVORowImpl.setConsultaBtn("Y");
+            genTimControlsVORowImpl.setEmployee("Y");
         }
     }
     if("ConsultarEvt".equals(strEventParam)){
         String strPayrollIdFV = pageContext.getParameter("PayrollIdFV");
         String strBusinessGroupIdFV = pageContext.getParameter("BusinessGroupIdFV");
         String strTimePeriodIdFV = pageContext.getParameter("TimePeriodIdFV");
-        payExecutionsVOImpl.filter(strPayrollIdFV,strBusinessGroupIdFV,strTimePeriodIdFV);
+        String strPersonIdFV = pageContext.getParameter("PersonIdFV");
+        if(null!=strPersonIdFV&&!"".equals(strPersonIdFV)){
+            payExecutionsVOImpl.filter(strPayrollIdFV,strBusinessGroupIdFV,strTimePeriodIdFV,strPersonIdFV);
+        }else{
+            payExecutionsVOImpl.filter(strPayrollIdFV,strBusinessGroupIdFV,strTimePeriodIdFV);
+        }
+        
+    }
+    if("LlamarServicioWebEvt".equals(strEventParam)){
+        am.llamarServicioWeb();
     }
     /** 
     File file = new File("C:\\Users\\Dell\\Downloads\\ATI_ACOSTA_CORDOBA_JESUS_JAVIER.txt");

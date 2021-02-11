@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oa:listOfValues version="10.1.3_" xml:lang="en-US" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:ui="http://xmlns.oracle.com/uix/ui" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$" scope="/">
+   <ui:contents>
+      <oa:table name="PayEmpRN" id="PayExecutionsRN">
+         <ui:contents>
+            <oa:messageStyledText id="EmployeeNumber" dataType="VARCHAR2" prompt="Numero Empleado" viewName="PayExecutionsVO1" viewAttr="EmployeeNumber" maximumLength="30" queryable="true"/>
+            <oa:messageStyledText id="FullName" dataType="VARCHAR2" prompt="Nombre" viewName="PayExecutionsVO1" viewAttr="FullName" maximumLength="240" queryable="true"/>
+            <oa:messageStyledText id="PersonId" dataType="NUMBER" prompt="PersonId" viewName="PayExecutionsVO1" viewAttr="PersonId" maximumLength="10"/>
+            <oa:messageStyledText id="AssignmentId" dataType="NUMBER" prompt="AssignmentId" viewName="PayExecutionsVO1" viewAttr="AssignmentId" maximumLength="10"/>
+            <oa:messageStyledText id="TimePeriodId" dataType="NUMBER" prompt="TimePeriodId" viewName="PayExecutionsVO1" viewAttr="TimePeriodId" maximumLength="15"/>
+         </ui:contents>
+      </oa:table>
+   </ui:contents>
+</oa:listOfValues>

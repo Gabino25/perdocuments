@@ -8,7 +8,11 @@
          <ui:contents>
             <oa:pageButtonBar id="region2">
                <ui:contents>
-                  <oa:submitButton id="item1" text="Llamar Web Service" prompt="Llamar Web Service"/>
+                  <oa:submitButton id="LlamarServicioWebBtn" text="Llamar Servicio Web" prompt="Llamar Servicio Web">
+                     <ui:primaryClientAction>
+                        <ui:fireAction event="LlamarServicioWebEvt"/>
+                     </ui:primaryClientAction>
+                  </oa:submitButton>
                </ui:contents>
             </oa:pageButtonBar>
             <oa:messageComponentLayout id="region3" rows="1" columns="1">
@@ -27,6 +31,13 @@
                         <lovMap id="lovMap6" lovItem="PayrollId" criteriaFrom="PayrollIdFV" requiredForLOV="true"/>
                      </lovMappings>
                   </oa:messageLovInput>
+                  <oa:messageLovInput id="EmployeeName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PayEmpRN" prompt="Empleado" rendered="${oa.GenTimControlsVO1.EmployeeR}">
+                     <lovMappings>
+                        <lovMap id="lovMap7" lovItem="FullName" resultTo="EmployeeName" criteriaFrom="EmployeeName" programmaticQuery="true"/>
+                        <lovMap id="lovMap8" lovItem="PersonId" resultTo="PersonIdFV"/>
+                        <lovMap id="lovMap9" lovItem="TimePeriodId" criteriaFrom="TimePeriodIdFV" requiredForLOV="true"/>
+                     </lovMappings>
+                  </oa:messageLovInput>
                </ui:contents>
                <ui:footer>
                   <oa:flowLayout id="region4">
@@ -40,9 +51,6 @@
                   </oa:flowLayout>
                </ui:footer>
             </oa:messageComponentLayout>
-            <oa:formValue id="PayrollIdFV"/>
-            <oa:formValue id="BusinessGroupIdFV"/>
-            <oa:formValue id="TimePeriodIdFV"/>
             <oa:advancedTable id="PayExecutionsRN" viewName="PayExecutionsVO1">
                <ui:contents>
                   <oa:column id="EmployeeNumberCol">
@@ -93,8 +101,39 @@
                         <oa:messageStyledText id="PayrollId" viewAttr="PayrollId"/>
                      </ui:contents>
                   </oa:column>
+                  <oa:column id="TimePeriodIdCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="TimePeriodIdSH" prompt="TimePeriodId"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="TimePeriodId" viewAttr="TimePeriodId"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="PayrollActionIdCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="PayrollActionIdSH" prompt="PayrollActionId"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="PayrollActionId" viewAttr="PayrollActionId"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="AssignmentActionIdCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="AssignmentActionIdSH" prompt="AssignmentActionId"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="AssignmentActionId" viewAttr="AssignmentActionId"/>
+                     </ui:contents>
+                  </oa:column>
                </ui:contents>
+               <ui:tableSelection>
+                  <oa:multipleSelection id="multipleSelection1" viewAttr="MultiSelection"/>
+               </ui:tableSelection>
             </oa:advancedTable>
+            <oa:formValue id="PayrollIdFV"/>
+            <oa:formValue id="TimePeriodIdFV"/>
+            <oa:formValue id="BusinessGroupIdFV"/>
+            <oa:formValue id="PersonIdFV"/>
          </ui:contents>
       </oa:pageLayout>
    </content>

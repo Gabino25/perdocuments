@@ -34,4 +34,25 @@ public class PayExecutionsVOImpl extends OAViewObjectImpl {
         // 7. Execute the query
         this.executeQuery();                  
     }
+
+    public void filter(String pPayrollIdFV
+                     , String pBusinessGroupIdFV
+                     , String pTimePeriodIdFV
+                     , String pPersonIdFV) {
+        // 2. Create a view criteria row set for this view object
+        ViewCriteria vc = this.createViewCriteria(); 
+        // 3. Use the view criteria to create one or more view criteria rows
+        ViewCriteriaRow vcr1 = vc.createViewCriteriaRow(); 
+        // 4. Set attribute values to filter on in appropriate view criteria rows
+        vcr1.setAttribute("PayrollId",pPayrollIdFV);
+        vcr1.setAttribute("BusinessGroupId",pBusinessGroupIdFV);
+        vcr1.setAttribute("TimePeriodId",pTimePeriodIdFV);
+        vcr1.setAttribute("PersonId",pPersonIdFV);
+        // 5. Add the view criteria rows to the view critera row set 
+        vc.add(vcr1); 
+        // 6. Apply the view criteria to the view object
+        this.applyViewCriteria(vc); 
+        // 7. Execute the query
+        this.executeQuery();                            
+    }
 }
