@@ -8,6 +8,7 @@ CREATE TABLE APPS.XXAZOR_PAY_TE(BUSINESS_GROUP_ID    NUMBER  NOT NULL
                                ,PAYROLL_ACTION_ID    NUMBER  NOT NULL
                                ,ASSIGNMENT_ACTION_ID NUMBER  NOT NULL
                                ,ATI                  CLOB
+                               ,MSG_GRWSBYTE         VARCHAR2(4000)  /** MAX SIZE **/
                                ,CREATED_BY        NUMBER  NOT NULL
                                ,CREATION_DATE     DATE    NOT NULL
                                ,LAST_UPDATED_BY   NUMBER  NOT NULL

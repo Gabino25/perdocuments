@@ -33,13 +33,15 @@ SELECT  per.employee_number
         ,ppa.element_set_id 
         ,ppa.assignment_set_id 
         ,per.person_id           
-        ,asg.business_group_id    
+        ,asg.business_group_id  
+        ,xpt.MSG_GRWSBYTE  
  FROM   pay_assignment_actions paa 
        ,pay_payroll_actions    ppa 
        ,pay_run_types_f        prtf
        ,per_assignments_f      asg
        ,per_people_f           per
        ,per_time_periods       ptp
+       ,XXAZOR_PAY_TE          xpt
    WHERE  ppa.payroll_action_id     = paa.payroll_action_id
    AND    paa.assignment_id         = asg.assignment_id
    AND    asg.person_id             = per.person_id   
@@ -53,6 +55,12 @@ SELECT  per.employee_number
    AND    prtf.legislation_code     = 'MX'
    AND    ppa.action_type           IN ('R','B','Q')
    AND    ppa.action_status         = 'C'
+   AND    asg.business_group_id = xpt.business_group_id(+)
+   AND    asg.person_id = xpt.person_id(+)
+   AND    asg.assignment_id = xpt.assignment_id(+)
+   AND    ptp.time_period_id = xpt.time_period_id(+)
+   AND    ppa.payroll_action_id = xpt.payroll_action_id(+)
+   AND    paa.assignment_action_id  = xpt.assignment_action_id(+)
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
@@ -436,5 +444,18 @@ SELECT  per.employee_number
       ColumnType="VARCHAR2"
       AliasName="VIEW_ATTR"
       SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MsgGrwsbyte"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MSG_GRWSBYTE"
+      Expression="MSG_GRWSBYTE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
    </ViewAttribute>
 </ViewObject>

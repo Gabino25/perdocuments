@@ -17,7 +17,7 @@ BEGIN
   LC_ATI := LC_ATI||'/FIN';           
   
   BEGIN 
-   SELECT ATI
+   SELECT 'Y'
     INTO LS_VAL_REG
     FROM APPS.XXAZOR_PAY_TE
    WHERE BUSINESS_GROUP_ID = PNI_BGID                 
@@ -104,7 +104,39 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN 
 PSI_ERRCOD := '2';
 PSI_ERRMSG := 'EXCEPTION OTHERS XXAZOR_PAY_TE_PKG.GET_ATI '||SQLERRM||', '||SQLCODE;
-END  GET_ATI;                   
+END  GET_ATI;         
+
+
+PROCEDURE UPD_XPT( PSI_ERRCOD               OUT VARCHAR2
+                  ,PSI_ERRMSG               OUT VARCHAR2
+                  ,PSI_MSG_GRWSBYTE         IN  VARCHAR2
+                  ,PNI_BGID                 IN  NUMBER
+                  ,PNI_PERSON_ID            IN  NUMBER
+                  ,PNI_ASSIGNMENT_ID        IN  NUMBER
+                  ,PNI_TIME_PERIOD_ID       IN  NUMBER
+                  ,PNI_PAYROLL_ACTION_ID    IN  NUMBER
+                  ,PNI_ASSIGNMENT_ACTION_ID IN  NUMBER
+                  ) IS 
+BEGIN 
+                  
+ UPDATE APPS.XXAZOR_PAY_TE
+     SET MSG_GRWSBYTE = SUBSTR(PSI_MSG_GRWSBYTE,1,4000)
+        ,LAST_UPDATED_BY   = nvl(fnd_profile.value('USER_ID'),FND_GLOBAL.USER_ID)
+        ,LAST_UPDATE_DATE  = SYSDATE 
+        ,LAST_UPDATE_LOGIN = nvl(fnd_profile.value('LOGIN_ID'),FND_GLOBAL.LOGIN_ID)
+   WHERE BUSINESS_GROUP_ID = PNI_BGID                 
+     AND PERSON_ID = PNI_PERSON_ID            
+     AND ASSIGNMENT_ID = PNI_ASSIGNMENT_ID        
+     AND TIME_PERIOD_ID = PNI_TIME_PERIOD_ID       
+     AND PAYROLL_ACTION_ID = PNI_PAYROLL_ACTION_ID    
+     AND ASSIGNMENT_ACTION_ID = PNI_ASSIGNMENT_ACTION_ID;
+     
+     COMMIT;
+     
+EXCEPTION WHEN OTHERS THEN 
+PSI_ERRCOD := '2';
+PSI_ERRMSG := 'EXCEPTION OTHERS XXAZOR_PAY_TE_PKG.UPD_XPT '||SQLERRM||', '||SQLCODE;
+END  UPD_XPT;                       
                       
 END XXAZOR_PAY_TE_PKG; 
 /

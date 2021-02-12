@@ -125,6 +125,14 @@
                         <oa:messageStyledText id="AssignmentActionId" viewAttr="AssignmentActionId"/>
                      </ui:contents>
                   </oa:column>
+                  <oa:column id="MsgGrwsbyteCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="MsgGrwsbyteSH" prompt="Mensaje Servicio Web"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageStyledText id="MsgGrwsbyte" viewAttr="MsgGrwsbyte" prompt="Mensage Servicio Web"/>
+                     </ui:contents>
+                  </oa:column>
                </ui:contents>
                <ui:tableSelection>
                   <oa:multipleSelection id="multipleSelection1" viewAttr="MultiSelection"/>

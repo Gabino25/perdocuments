@@ -37,6 +37,7 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
     public static final int PERSONID = 23;
     public static final int BUSINESSGROUPID = 24;
     public static final int MULTISELECTION = 25;
+    public static final int MSGGRWSBYTE = 26;
 
     /**This is the default constructor (do not remove)
      */
@@ -388,6 +389,8 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
             return getBusinessGroupId();
         case MULTISELECTION:
             return getMultiSelection();
+        case MSGGRWSBYTE:
+            return getMsgGrwsbyte();
         default:
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -403,6 +406,9 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
             return;
         case MULTISELECTION:
             setMultiSelection((String)value);
+            return;
+        case MSGGRWSBYTE:
+            setMsgGrwsbyte((String)value);
             return;
         default:
             super.setAttrInvokeAccessor(index, value, attrDef);
@@ -432,5 +438,17 @@ public class PayExecutionsVORowImpl extends OAViewRowImpl {
      */
     public void setMultiSelection(String value) {
         setAttributeInternal(MULTISELECTION, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute MsgGrwsbyte
+     */
+    public String getMsgGrwsbyte() {
+        return (String) getAttributeInternal(MSGGRWSBYTE);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute MsgGrwsbyte
+     */
+    public void setMsgGrwsbyte(String value) {
+        setAttributeInternal(MSGGRWSBYTE, value);
     }
 }

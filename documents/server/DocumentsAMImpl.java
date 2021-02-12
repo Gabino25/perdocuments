@@ -449,8 +449,16 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                 ,payExecutionsVORowImpl.getPayrollActionId()
                                 ,payExecutionsVORowImpl.getAssignmentActionId()
                                 );
-                String strgeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[2].getBytes());
-                System.out.println(strgeneraReciboWS);
+                String strGeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[2].getBytes());
+                System.out.println(strGeneraReciboWS);
+                updateXPT(payExecutionsVORowImpl.getBusinessGroupId()
+                          ,payExecutionsVORowImpl.getPersonId()
+                          ,payExecutionsVORowImpl.getAssignmentId()
+                          ,payExecutionsVORowImpl.getTimePeriodId()
+                          ,payExecutionsVORowImpl.getPayrollActionId()
+                          ,payExecutionsVORowImpl.getAssignmentActionId()
+                          ,strGeneraReciboWS
+                           );
             }
         }
     }
@@ -609,5 +617,50 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
 
         return sb.toString();
     }
+    
+    private void updateXPT(Number pBusinessGroupId
+                         , Number pPersonId
+                         , Number pAssignmentId
+                         , Number pTimePeriodId
+                         , Number pPayrollActionId
+                         , Number pAssignmentActionId
+                         , String pGeneraReciboWS
+                         ) {
+        String strCallableStmt = "BEGIN\n" + 
+                                 "   APPS.XXAZOR_PAY_TE_PKG.UPD_XPT(PSI_ERRCOD                => :1\n" + 
+                                 "                                 ,PSI_ERRMSG                => :2\n" + 
+                                 "                                 ,PSI_MSG_GRWSBYTE          => :3\n" + 
+                                 "                                 ,PNI_BGID                  => :4\n" + 
+                                 "                                 ,PNI_PERSON_ID             => :5\n" + 
+                                 "                                 ,PNI_ASSIGNMENT_ID         => :6\n" + 
+                                 "                                 ,PNI_TIME_PERIOD_ID        => :7\n" + 
+                                 "                                 ,PNI_PAYROLL_ACTION_ID     => :8\n" + 
+                                 "                                 ,PNI_ASSIGNMENT_ACTION_ID  => :9\n" + 
+                                 "                                  );\n" + 
+                                 "END;";
+        OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
+        OracleCallableStatement oraclecallablestatement =  (OracleCallableStatement)oadbtransaction.createCallableStatement(strCallableStmt, 1);
+       try {
+        oraclecallablestatement.registerOutParameter(1,Types.VARCHAR);
+        oraclecallablestatement.registerOutParameter(2,Types.VARCHAR);
+        if(pGeneraReciboWS.length()>4000){
+           oraclecallablestatement.setString(3,pGeneraReciboWS.substring(1,4000));
+        }else{
+            oraclecallablestatement.setString(3,pGeneraReciboWS);
+        }
+        oraclecallablestatement.setDouble(4,pBusinessGroupId.doubleValue());
+        oraclecallablestatement.setDouble(5,pPersonId.doubleValue());
+        oraclecallablestatement.setDouble(6,pAssignmentId.doubleValue());
+        oraclecallablestatement.setDouble(7,pTimePeriodId.doubleValue());
+        oraclecallablestatement.setDouble(8,pPayrollActionId.doubleValue());
+        oraclecallablestatement.setDouble(9,pAssignmentActionId.doubleValue());
+        oraclecallablestatement.execute();
+        
+        } catch (SQLException e) {
+               System.out.println("SQLException en el metodo updateXPT:"+e.getErrorCode()+", "+e.getMessage());
+               throw new OAException("SQLException en el metodo updateXPT:"+e.getErrorCode(),OAException.ERROR); 
+        }   
+    }
+
     
 }
