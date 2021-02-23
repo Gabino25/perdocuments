@@ -7,9 +7,14 @@
 package xxazor.oracle.apps.per.documents.webui;
 
 import oracle.apps.fnd.common.VersionInfo;
+import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
+
+import oracle.apps.fnd.framework.webui.beans.message.OAMessageTextInputBean;
+
+import oracle.apps.fnd.framework.webui.beans.nav.OAButtonBean;
 
 import xxazor.oracle.apps.per.documents.server.DocumentsAMImpl;
 
@@ -33,8 +38,20 @@ public class AclrStackLayCO extends OAControllerImpl
     DocumentsAMImpl documentsAM = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
     String strAclarId = pageContext.getParameter("pAclarId");
     if(null!=strAclarId&&!"".equals(strAclarId)){
-        documentsAM.filterAclarInfo(strAclarId);
+        documentsAM.filterAclarInfoPersistent(strAclarId);
     }
+    String strpReOn = pageContext.getParameter("pReOn");
+    if("Y".equals(strpReOn)){
+       OAMessageTextInputBean NotaApproverBean = (OAMessageTextInputBean)webBean.findChildRecursive("NotaApprover");
+       if(null!=NotaApproverBean){
+           NotaApproverBean.setReadOnly(true);
+       }
+       OAButtonBean UpdateBtnBean = (OAButtonBean)webBean.findChildRecursive("UpdateBtn");
+       if(null!=UpdateBtnBean){
+           UpdateBtnBean.setRendered(false);
+       }
+    }
+      
   }
 
   /**
@@ -46,6 +63,12 @@ public class AclrStackLayCO extends OAControllerImpl
   public void processFormRequest(OAPageContext pageContext, OAWebBean webBean)
   {
     super.processFormRequest(pageContext, webBean);
+    String strEventParam = pageContext.getParameter(this.EVENT_PARAM);
+    if("UpdateEvt".equals(strEventParam)){
+        DocumentsAMImpl documentsAM = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
+        documentsAM.getOADBTransaction().commit();
+        throw new OAException("Se guardo la nota",OAException.INFORMATION);
+    }  
   }
 
 }

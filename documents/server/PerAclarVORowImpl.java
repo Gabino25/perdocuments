@@ -29,6 +29,11 @@ public class PerAclarVORowImpl extends OAViewRowImpl {
     public static final int LASTUPDATELOGIN = 13;
     public static final int DESCACLARACION = 14;
     public static final int NOTAAPPROVER = 15;
+    public static final int EMPLOYEENUMBER = 16;
+    public static final int FULLNAME = 17;
+    public static final int PADREDESC = 18;
+    public static final int HIJODESC = 19;
+    public static final int NIETODESC = 20;
 
     /**This is the default constructor (do not remove)
      */
@@ -246,6 +251,16 @@ public class PerAclarVORowImpl extends OAViewRowImpl {
             return getDescAclaracion();
         case NOTAAPPROVER:
             return getNotaApprover();
+        case EMPLOYEENUMBER:
+            return getEmployeeNumber();
+        case FULLNAME:
+            return getFullName();
+        case PADREDESC:
+            return getPadreDesc();
+        case HIJODESC:
+            return getHijoDesc();
+        case NIETODESC:
+            return getNietoDesc();
         default:
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -304,6 +319,21 @@ public class PerAclarVORowImpl extends OAViewRowImpl {
         case NOTAAPPROVER:
             setNotaApprover((String)value);
             return;
+        case EMPLOYEENUMBER:
+            setEmployeeNumber((String)value);
+            return;
+        case FULLNAME:
+            setFullName((String)value);
+            return;
+        case PADREDESC:
+            setPadreDesc((String)value);
+            return;
+        case HIJODESC:
+            setHijoDesc((String)value);
+            return;
+        case NIETODESC:
+            setNietoDesc((String)value);
+            return;
         default:
             super.setAttrInvokeAccessor(index, value, attrDef);
             return;
@@ -332,5 +362,65 @@ public class PerAclarVORowImpl extends OAViewRowImpl {
      */
     public void setNotaApprover(String value) {
         setAttributeInternal(NOTAAPPROVER, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute EmployeeNumber
+     */
+    public String getEmployeeNumber() {
+        return (String) getAttributeInternal(EMPLOYEENUMBER);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute EmployeeNumber
+     */
+    public void setEmployeeNumber(String value) {
+        setAttributeInternal(EMPLOYEENUMBER, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute FullName
+     */
+    public String getFullName() {
+        return (String) getAttributeInternal(FULLNAME);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute FullName
+     */
+    public void setFullName(String value) {
+        setAttributeInternal(FULLNAME, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute PadreDesc
+     */
+    public String getPadreDesc() {
+        return (String) getAttributeInternal(PADREDESC);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute PadreDesc
+     */
+    public void setPadreDesc(String value) {
+        setAttributeInternal(PADREDESC, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute HijoDesc
+     */
+    public String getHijoDesc() {
+        return (String) getAttributeInternal(HIJODESC);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute HijoDesc
+     */
+    public void setHijoDesc(String value) {
+        setAttributeInternal(HIJODESC, value);
+    }
+
+    /**Gets the attribute value for the calculated attribute NietoDesc
+     */
+    public String getNietoDesc() {
+        return (String) getAttributeInternal(NIETODESC);
+    }
+
+    /**Sets <code>value</code> as the attribute value for the calculated attribute NietoDesc
+     */
+    public void setNietoDesc(String value) {
+        setAttributeInternal(NIETODESC, value);
     }
 }

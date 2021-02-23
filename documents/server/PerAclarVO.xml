@@ -3,7 +3,13 @@
 
 <ViewObject
    Name="PerAclarVO"
-   SelectList="PerAclarEO.ID, 
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="xxazor.oracle.apps.per.documents.server.PerAclarVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.PerAclarVOImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT PerAclarEO.ID, 
        PerAclarEO.PERSON_ID, 
        PerAclarEO.ASSIGNMENT_ID, 
        PerAclarEO.EFECTIVE_DATE, 
@@ -18,15 +24,19 @@
        PerAclarEO.LAST_UPDATE_DATE, 
        PerAclarEO.LAST_UPDATE_LOGIN, 
        PerAclarEO.DESC_ACLARACION, 
-       PerAclarEO.NOTA_APPROVER"
-   FromList="XXAZOR_PER_ACLAR PerAclarEO"
-   BindingStyle="OracleName"
-   CustomQuery="false"
-   RowClass="xxazor.oracle.apps.per.documents.server.PerAclarVORowImpl"
-   ComponentClass="xxazor.oracle.apps.per.documents.server.PerAclarVOImpl"
-   UseGlueCode="false" >
+       PerAclarEO.NOTA_APPROVER,
+       XPAV.EMPLOYEE_NUMBER,
+       XPAV.FULL_NAME,
+       XPAV.PADRE_DESC,
+       XPAV.HIJO_DESC,
+       XPAV.NIETO_DESC
+FROM XXAZOR_PER_ACLAR PerAclarEO
+    ,XXAZOR_PER_ACLAR_V XPAV
+WHERE PerAclarEO.ID = XPAV.ID
+   ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_isExpertMode" Value="true" />
       <Attr Name="_version" Value="10.1.3.43.6" />
       <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
    </DesignTime>
@@ -151,5 +161,70 @@
       EntityAttrName="NotaApprover"
       EntityUsage="PerAclarEO"
       AliasName="NOTA_APPROVER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EmployeeNumber"
+      IsPersistent="false"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="EMPLOYEE_NUMBER"
+      Expression="EMPLOYEE_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FullName"
+      IsPersistent="false"
+      Precision="240"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="FULL_NAME"
+      Expression="FULL_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PadreDesc"
+      IsPersistent="false"
+      Precision="19"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PADRE_DESC"
+      Expression="PADRE_DESC"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="19" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="HijoDesc"
+      IsPersistent="false"
+      Precision="35"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="HIJO_DESC"
+      Expression="HIJO_DESC"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="35" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NietoDesc"
+      IsPersistent="false"
+      Precision="38"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NIETO_DESC"
+      Expression="NIETO_DESC"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="38" />
+      </DesignTime>
    </ViewAttribute>
 </ViewObject>

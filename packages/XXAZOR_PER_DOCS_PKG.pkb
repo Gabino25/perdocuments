@@ -653,7 +653,7 @@ BEGIN
                                     ,XXAZOR_PER_DOCS_PKG.gs_open
                                     ,PSI_PADRE
                                     ,PSI_HIJO
-                                    ,PSI_NIETO
+                                    ,NVL(PSI_NIETO,'NA')
                                     ,-1
                                     ,PSI_OBS_ACLA
                                     ,null
@@ -665,9 +665,18 @@ BEGIN
                                     );
        commit; 
 
-  for idx in (select full_name,padre_desc,hijo_desc,nieto_desc from XXAZOR_PER_ACLAR_V where id = ln_aclar_id) loop
 
   
+  for idx in (select id,full_name,padre_desc,hijo_desc,nieto_desc from XXAZOR_PER_ACLAR_V where id = ln_aclar_id) loop
+
+
+        for sup in (select meaning user_name
+          from fnd_lookup_values
+         where lookup_type ='AZOR_PAY_APPROVE_SOL_ACLARA'
+           /*and enabled_flag = 'Y'*/
+           and trunc(sysdate) between nvl(start_date_active,to_date ('01/01/0001','DD/MM/YYYY')) and nvl(end_date_active,to_date ('31/12/4712','DD/MM/YYYY'))
+         ) loop 
+   
      select XXAZOR_PER_DOCS_WF_S.nextval
           into ls_itemkey
           from dual;
@@ -682,66 +691,50 @@ BEGIN
                                  ,userkey  => nvl(fnd_global.user_name,'SYSADMIN')
                                  );
      
+        wf_engine.SetItemOwner (itemtype =>  gs_item_type
+                               ,itemkey  =>  ls_itemkey
+                               ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
+                               );
+     
        wf_engine.SetItemAttrText (itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
                                  ,aname    => '#FROM_ROLE'
                                  ,avalue   =>  nvl(fnd_global.user_name,'SYSADMIN')
                                   );
        
-       for sup in (select fu.user_name
-from per_people_f people
-    ,fnd_user  fu
-where people.attribute1 = 'Y'
-and sysdate between people.effective_start_date and people.effective_end_date
-and fu.employee_id = people.person_id) loop                        
        wf_engine.SetItemAttrText (itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
                                  ,aname    => 'SUPERVISOR'
                                  ,avalue   => sup.user_name
                                   );
 
-       end loop;      
-
+      
        wf_engine.SetItemAttrNumber(itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
                                  ,aname    => 'REQ_ACLR_ID'
                                  ,avalue   => ln_aclar_id
                                   );
                                   
-        wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'ACLAR_LINEA1'
-                                 ,avalue   => 'Tipo Alcaracion:'||idx.padre_desc
-                                  );
-                                  
-          wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'ACLAR_LINEA2'
-                                 ,avalue   => idx.padre_desc||':'||idx.hijo_desc
-                                  );
-                                  
-           wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'ACLAR_LINEA3'
-                                 ,avalue   => idx.hijo_desc||':'||idx.nieto_desc
-                                  );
-                                                                                  
-          wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'EMPLOYEE'
-                                 ,avalue   => idx.full_name
-                                  );
                                                            
-        wf_engine.SetItemOwner (itemtype =>  gs_item_type
-                               ,itemkey  =>  ls_itemkey
-                               ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
-                               );
-     
+       wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'FUNCNAME_ATTR'
+                                 ,avalue   => 'XXAZOR_PER_ACLR_RN_F'
+                                  );
+                                   
+         wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'MSGATTR1'
+                                 ,avalue   => idx.id
+                                  ); 
+                                  
         wf_engine.StartProcess (itemtype  => gs_item_type
                                ,itemkey   => ls_itemkey
                                );
          
          commit; 
+   
+    end loop;         
 
   end loop; 
  

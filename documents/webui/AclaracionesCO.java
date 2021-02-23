@@ -89,10 +89,17 @@ public class AclaracionesCO extends OAControllerImpl
         oAMessageChoiceBean = (OAMessageChoiceBean)webBean.findChildRecursive("hijo"); 
         String strHijo  = oAMessageChoiceBean.getSelectionText(pageContext);
         String strHijoValue = (String)oAMessageChoiceBean.getValue(pageContext);
-        documentsAM.filterAclNieto(strHijoValue);
-        oAMessageChoiceBean = (OAMessageChoiceBean)webBean.findChildRecursive("nieto"); 
-        oAMessageChoiceBean.setPrompt(strHijo);
-        return;
+        System.out.println("strHijoValue:"+strHijoValue);
+        if("POR_PERCEPCIONES_O_DEDUCCIONES".equals(strHijoValue)){
+            documentsAM.filterAclNieto(strHijoValue);
+            oAMessageChoiceBean = (OAMessageChoiceBean)webBean.findChildRecursive("nieto"); 
+            oAMessageChoiceBean.setPrompt(strHijo);
+            return;
+        }else{
+            aclControlsVORowImpl.setObservaciones("Y");
+            oAMessageTextInputBean = (OAMessageTextInputBean)webBean.findChildRecursive("ObservacionesAcl"); 
+            return;
+        }
     }else if("NietoEvt".equals(strEventParam)){
         aclControlsVORowImpl.setObservaciones("Y");
         oAMessageTextInputBean = (OAMessageTextInputBean)webBean.findChildRecursive("ObservacionesAcl"); 
@@ -109,6 +116,7 @@ public class AclaracionesCO extends OAControllerImpl
         System.out.println("strNieto:"+strNieto);
         System.out.println("strObservacionesAcl:"+strObservacionesAcl);
         String strGetVal = documentsAM.crearAclaracion(strPadre,strHijo,strNieto,strObservacionesAcl,userID,loginID);
+        documentsAM.initAclaInfo();
         if(null!=strGetVal){
             throw new OAException(strGetVal,OAException.INFORMATION); 
         }

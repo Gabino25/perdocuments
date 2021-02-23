@@ -662,5 +662,15 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         }   
     }
 
-    
+
+    public void filterAclarInfoPersistent(String strAclarId) {
+        PerAclarVOImpl perAclarVOImpl= getPerAclarVO1();
+        oracle.jbo.domain.Number numAclarId;
+        try {
+            numAclarId = new  oracle.jbo.domain.Number(strAclarId);
+            perAclarVOImpl.filter(numAclarId);
+        } catch (SQLException e) {
+          throw new OAException(e.getMessage(),OAException.ERROR);
+        }
+    }
 }
