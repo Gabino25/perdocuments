@@ -7,6 +7,10 @@ CREATE TABLE APPS.XXAZOR_PAY_TE(BUSINESS_GROUP_ID    NUMBER  NOT NULL
                                ,TIME_PERIOD_ID       NUMBER  NOT NULL
                                ,PAYROLL_ACTION_ID    NUMBER  NOT NULL
                                ,ASSIGNMENT_ACTION_ID NUMBER  NOT NULL
+                               ,CONSOLIDATION_SET_ID NUMBER
+                               ,ELEMENT_SET_ID       NUMBER
+                               ,ASSIGNMENT_SET_ID    NUMBER
+                               ,FECHA_PAGO           DATE   
                                ,ATI                  CLOB
                                ,MSG_GRWSBYTE         VARCHAR2(4000)  /** MAX SIZE **/
                                ,CREATED_BY        NUMBER  NOT NULL

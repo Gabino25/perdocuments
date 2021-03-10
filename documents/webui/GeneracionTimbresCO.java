@@ -10,10 +10,16 @@ import java.io.File;
 
 import java.io.FileInputStream;
 
+import java.text.DateFormat;
+
+import java.text.SimpleDateFormat;
+
 import oracle.apps.fnd.common.VersionInfo;
 import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
+
+import oracle.apps.fnd.framework.webui.beans.message.OAMessageDateFieldBean;
 
 import org.tempuri.ServiceDeGeneracionSoap12Client;
 
@@ -84,15 +90,53 @@ public class GeneracionTimbresCO extends OAControllerImpl
         String strBusinessGroupIdFV = pageContext.getParameter("BusinessGroupIdFV");
         String strTimePeriodIdFV = pageContext.getParameter("TimePeriodIdFV");
         String strPersonIdFV = pageContext.getParameter("PersonIdFV");
-        if(null!=strPersonIdFV&&!"".equals(strPersonIdFV)){
-            payExecutionsVOImpl.filter(strPayrollIdFV,strBusinessGroupIdFV,strTimePeriodIdFV,strPersonIdFV);
-        }else{
-            payExecutionsVOImpl.filter(strPayrollIdFV,strBusinessGroupIdFV,strTimePeriodIdFV);
-        }
+        String strConsolidationSetIdFV = pageContext.getParameter("ConsolidationSetIdFV");
+        String strElementSetIdFV = pageContext.getParameter("ElementSetIdFV");
+        String strAssignmentSetIdFV = pageContext.getParameter("AssignmentSetIdFV");
+        
+        payExecutionsVOImpl.filter(strPayrollIdFV
+                                  ,strBusinessGroupIdFV
+                                  ,strTimePeriodIdFV
+                                  ,strPersonIdFV
+                                  ,strConsolidationSetIdFV
+                                  ,strElementSetIdFV
+                                  ,strAssignmentSetIdFV
+                                  );
         
     }
     if("LlamarServicioWebEvt".equals(strEventParam)){
-        am.llamarServicioWeb();
+        String strFechaPago = pageContext.getParameter("FechaDePago");
+        System.out.println("strFechaPago:"+strFechaPago);
+        OAMessageDateFieldBean FechaDePagoBean = (OAMessageDateFieldBean)webBean.findChildRecursive("FechaDePago");
+        /**  java.sql.Timestamp cannot be cast to oracle.jbo.domain.Date **/
+        java.sql.Timestamp dateFechaPago = null;
+        oracle.jbo.domain.Date oracleDate = null;
+        if(null!=FechaDePagoBean){
+         dateFechaPago = (java.sql.Timestamp)FechaDePagoBean.getValue(pageContext);
+         oracleDate = new oracle.jbo.domain.Date(dateFechaPago);
+        }
+        System.out.println("dateFechaPago:"+dateFechaPago);
+        System.out.println("oracleDate:"+oracleDate);
+        
+        am.llamarServicioWeb(oracleDate);
+        
+        String strPayrollIdFV = pageContext.getParameter("PayrollIdFV");
+        String strBusinessGroupIdFV = pageContext.getParameter("BusinessGroupIdFV");
+        String strTimePeriodIdFV = pageContext.getParameter("TimePeriodIdFV");
+        String strPersonIdFV = pageContext.getParameter("PersonIdFV");
+        String strConsolidationSetIdFV = pageContext.getParameter("ConsolidationSetIdFV");
+        String strElementSetIdFV = pageContext.getParameter("ElementSetIdFV");
+        String strAssignmentSetIdFV = pageContext.getParameter("AssignmentSetIdFV");
+        
+        payExecutionsVOImpl.filter(strPayrollIdFV
+                                  ,strBusinessGroupIdFV
+                                  ,strTimePeriodIdFV
+                                  ,strPersonIdFV
+                                  ,strConsolidationSetIdFV
+                                  ,strElementSetIdFV
+                                  ,strAssignmentSetIdFV
+                                  );
+        
     }
     /** 
     File file = new File("C:\\Users\\Dell\\Downloads\\ATI_ACOSTA_CORDOBA_JESUS_JAVIER.txt");
@@ -123,5 +167,7 @@ public class GeneracionTimbresCO extends OAControllerImpl
           }
           return bFile;
        }
+    
+  
 
 }

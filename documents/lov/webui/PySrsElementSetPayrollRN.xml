@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oa:listOfValues version="10.1.3_" xml:lang="en-US" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:ui="http://xmlns.oracle.com/uix/ui" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$" scope="/">
+   <ui:contents>
+      <oa:table name="PySrsElementSetPayrollRN" id="PySrsElementSetPayrollTab">
+         <ui:contents>
+            <oa:messageStyledText id="ElementSetName" dataType="VARCHAR2" prompt="Juego de Elementos" viewName="PySrsElementSetPayrollVO1" viewAttr="ElementSetName" maximumLength="240" queryable="true"/>
+            <oa:messageStyledText id="ElementSetId" dataType="NUMBER" prompt="Juego de Elementos Id" viewName="PySrsElementSetPayrollVO1" viewAttr="ElementSetId" maximumLength="9"/>
+            <oa:messageStyledText id="BusinessGroupId" dataType="NUMBER" prompt="BusinessGroupId" viewName="PySrsElementSetPayrollVO1" viewAttr="BusinessGroupId" maximumLength="15"/>
+            <oa:messageStyledText id="TimePeriodId" dataType="NUMBER" prompt="TimePeriodId" viewName="PySrsElementSetPayrollVO1" viewAttr="TimePeriodId" maximumLength="15"/>
+            <oa:messageStyledText id="PayrollId" dataType="NUMBER" prompt="PayrollId" viewName="PySrsElementSetPayrollVO1" viewAttr="PayrollId" maximumLength="9"/>
+         </ui:contents>
+      </oa:table>
+   </ui:contents>
+</oa:listOfValues>

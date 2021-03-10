@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="PySrsConsolidationSetVO"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="xxazor.oracle.apps.per.documents.server.PySrsConsolidationSetVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.PySrsConsolidationSetVOImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+/** PY_SRS_CONSOLIDATION_SET VALUE SET **/
+ SELECT CON.CONSOLIDATION_SET_NAME 
+ ,CON.CONSOLIDATION_SET_ID
+ ,CON.BUSINESS_GROUP_ID
+  FROM PAY_CONSOLIDATION_SETS CON
+  order by con.consolidation_set_name
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+   </DesignTime>
+   <ViewAttribute
+      Name="ConsolidationSetName"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="60"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CONSOLIDATION_SET_NAME"
+      Expression="CONSOLIDATION_SET_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="60" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConsolidationSetId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="9"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="CONSOLIDATION_SET_ID"
+      Expression="CONSOLIDATION_SET_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BusinessGroupId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="15"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="BUSINESS_GROUP_ID"
+      Expression="BUSINESS_GROUP_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

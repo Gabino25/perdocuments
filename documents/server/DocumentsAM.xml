@@ -69,4 +69,16 @@
       Name="GenTimControlsVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.GenTimControlsVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="PySrsConsolidationSetVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PySrsConsolidationSetVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PySrsElementSetPayrollVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PySrsElementSetPayrollVO" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PySrsAssetRunVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PySrsAssetRunVO" >
+   </ViewUsage>
 </AppModule>

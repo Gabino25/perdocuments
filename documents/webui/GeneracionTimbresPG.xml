@@ -38,6 +38,30 @@
                         <lovMap id="lovMap9" lovItem="TimePeriodId" criteriaFrom="TimePeriodIdFV" requiredForLOV="true"/>
                      </lovMappings>
                   </oa:messageLovInput>
+                  <oa:messageLovInput id="ConsolidationSetName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PySrsConsolidationSetRN" prompt="Juego de Consolidacion" rendered="${oa.GenTimControlsVO1.PeriodoR}">
+                     <lovMappings>
+                        <lovMap id="lovMap13" lovItem="ConsolidationSetName" resultTo="ConsolidationSetName" criteriaFrom="ConsolidationSetName" programmaticQuery="true"/>
+                        <lovMap id="lovMap14" lovItem="ConsolidationSetId" resultTo="ConsolidationSetIdFV"/>
+                        <lovMap id="lovMap15" lovItem="BusinessGroupId" criteriaFrom="BusinessGroupIdFV" requiredForLOV="true"/>
+                     </lovMappings>
+                  </oa:messageLovInput>
+                  <oa:messageLovInput id="ElementSetName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PySrsElementSetPayrollRN" prompt="Juego de Elementos" rendered="${oa.GenTimControlsVO1.PeriodoR}">
+                     <lovMappings>
+                        <lovMap id="lovMap16" lovItem="ElementSetName" resultTo="ElementSetName" criteriaFrom="ElementSetName" programmaticQuery="true"/>
+                        <lovMap id="lovMap17" lovItem="ElementSetId" resultTo="ElementSetIdFV"/>
+                        <lovMap id="lovMap18" lovItem="BusinessGroupId" criteriaFrom="BusinessGroupIdFV" requiredForLOV="true"/>
+                        <lovMap id="lovMap19" lovItem="PayrollId" criteriaFrom="PayrollIdFV" requiredForLOV="true"/>
+                        <lovMap id="lovMap20" lovItem="TimePeriodId" criteriaFrom="TimePeriodIdFV" requiredForLOV="true"/>
+                     </lovMappings>
+                  </oa:messageLovInput>
+                  <oa:messageLovInput id="AssignmentSetName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PySrsAssetRunRN" prompt="Juego de Asignacion" rendered="${oa.GenTimControlsVO1.PeriodoR}">
+                     <lovMappings>
+                        <lovMap id="lovMap10" lovItem="AssignmentSetName" resultTo="AssignmentSetName" criteriaFrom="AssignmentSetName" programmaticQuery="true"/>
+                        <lovMap id="lovMap11" lovItem="AssignmentSetId" resultTo="AssignmentSetIdFV"/>
+                        <lovMap id="lovMap12" lovItem="PayrollId" requiredForLOV="true" criteriaFrom="PayrollIdFV"/>
+                     </lovMappings>
+                  </oa:messageLovInput>
+                  <oa:messageTextInput id="FechaDePago" required="yes" dataType="DATE" prompt="Fecha de Pago" rendered="${oa.GenTimControlsVO1.PeriodoR}"/>
                </ui:contents>
                <ui:footer>
                   <oa:flowLayout id="region4">
@@ -138,10 +162,13 @@
                   <oa:multipleSelection id="multipleSelection1" viewAttr="MultiSelection"/>
                </ui:tableSelection>
             </oa:advancedTable>
-            <oa:formValue id="PayrollIdFV"/>
-            <oa:formValue id="TimePeriodIdFV"/>
-            <oa:formValue id="BusinessGroupIdFV"/>
-            <oa:formValue id="PersonIdFV"/>
+            <oa:formValue id="PayrollIdFV" dataType="NUMBER"/>
+            <oa:formValue id="TimePeriodIdFV" dataType="NUMBER"/>
+            <oa:formValue id="BusinessGroupIdFV" dataType="NUMBER"/>
+            <oa:formValue id="PersonIdFV" dataType="NUMBER"/>
+            <oa:formValue id="ConsolidationSetIdFV" dataType="NUMBER"/>
+            <oa:formValue id="ElementSetIdFV" dataType="NUMBER"/>
+            <oa:formValue id="AssignmentSetIdFV" dataType="NUMBER"/>
          </ui:contents>
       </oa:pageLayout>
    </content>

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="PySrsAssetRunVO"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="xxazor.oracle.apps.per.documents.server.PySrsAssetRunVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.PySrsAssetRunVOImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+select ASSIGNMENT_SET_NAME
+      ,ASSIGNMENT_SET_ID
+      ,PAYROLL_ID
+  from HR_ASSIGNMENT_SETS
+  where  nvl(status,'A') = 'A'
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+   </DesignTime>
+   <ViewAttribute
+      Name="AssignmentSetName"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="80"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ASSIGNMENT_SET_NAME"
+      Expression="ASSIGNMENT_SET_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="80" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AssignmentSetId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="15"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ASSIGNMENT_SET_ID"
+      Expression="ASSIGNMENT_SET_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PayrollId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="9"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="PAYROLL_ID"
+      Expression="PAYROLL_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

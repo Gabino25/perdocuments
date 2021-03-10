@@ -8,6 +8,10 @@ PROCEDURE GENERATE_ATI(PSI_ERRCOD               OUT VARCHAR2
                       ,PNI_TIME_PERIOD_ID       IN  NUMBER
                       ,PNI_PAYROLL_ACTION_ID    IN  NUMBER
                       ,PNI_ASSIGNMENT_ACTION_ID IN  NUMBER
+                      ,PNI_CONSOLIDATION_SET_ID IN  NUMBER
+                      ,PNI_ELEMENT_SET_ID       IN  NUMBER
+                      ,PNI_ASSIGNMENT_SET_ID    IN  NUMBER
+                      ,PDI_FECHA_PAGO           IN  DATE   
                       ) IS 
   LC_ATI      CLOB; 
   LS_VAL_REG  VARCHAR2(2000);                    
@@ -48,6 +52,10 @@ BEGIN
                                  ,TIME_PERIOD_ID       /** NUMBER  NOT NULL **/
                                  ,PAYROLL_ACTION_ID    /** NUMBER  NOT NULL **/
                                  ,ASSIGNMENT_ACTION_ID /** NUMBER  NOT NULL **/
+                                 ,CONSOLIDATION_SET_ID /** NUMBER **/
+                                 ,ELEMENT_SET_ID       /** NUMBER **/
+                                 ,ASSIGNMENT_SET_ID    /** NUMBER **/
+                                 ,FECHA_PAGO           /** DATE   **/ 
                                  ,ATI                  /** CLOB **/
                                  ,CREATED_BY        /** NUMBER  NOT NULL **/
                                  ,CREATION_DATE     /** DATE    NOT NULL **/
@@ -62,6 +70,10 @@ BEGIN
                                  ,PNI_TIME_PERIOD_ID /** TIME_PERIOD_ID       NUMBER  NOT NULL **/
                                  ,PNI_PAYROLL_ACTION_ID/** PAYROLL_ACTION_ID    NUMBER  NOT NULL **/
                                  ,PNI_ASSIGNMENT_ACTION_ID/** ASSIGNMENT_ACTION_ID NUMBER  NOT NULL **/
+                                 ,PNI_CONSOLIDATION_SET_ID /** IN  NUMBER **/
+                                 ,PNI_ELEMENT_SET_ID       /** IN  NUMBER **/
+                                 ,PNI_ASSIGNMENT_SET_ID    /** IN  NUMBER **/
+                                 ,PDI_FECHA_PAGO           /** IN  DATE  **/
                                  ,LC_ATI/** ATI                  CLOB **/
                                  ,nvl(fnd_profile.value('USER_ID'),FND_GLOBAL.USER_ID)/** CREATED_BY         NUMBER  NOT NULL **/
                                  ,SYSDATE/** CREATION_DATE     DATE    NOT NULL **/
@@ -88,6 +100,10 @@ PROCEDURE GET_ATI( PSI_ERRCOD               OUT VARCHAR2
                   ,PNI_TIME_PERIOD_ID       IN  NUMBER
                   ,PNI_PAYROLL_ACTION_ID    IN  NUMBER
                   ,PNI_ASSIGNMENT_ACTION_ID IN  NUMBER
+                  ,PNI_CONSOLIDATION_SET_ID IN  NUMBER
+                  ,PNI_ELEMENT_SET_ID       IN  NUMBER
+                  ,PNI_ASSIGNMENT_SET_ID    IN  NUMBER
+                  ,PDI_FECHA_PAGO           IN  DATE   
                   ) IS 
 BEGIN 
 
@@ -116,6 +132,10 @@ PROCEDURE UPD_XPT( PSI_ERRCOD               OUT VARCHAR2
                   ,PNI_TIME_PERIOD_ID       IN  NUMBER
                   ,PNI_PAYROLL_ACTION_ID    IN  NUMBER
                   ,PNI_ASSIGNMENT_ACTION_ID IN  NUMBER
+                  ,PNI_CONSOLIDATION_SET_ID IN  NUMBER
+                  ,PNI_ELEMENT_SET_ID       IN  NUMBER
+                  ,PNI_ASSIGNMENT_SET_ID    IN  NUMBER
+                  ,PDI_FECHA_PAGO           IN  DATE   
                   ) IS 
 BEGIN 
                   

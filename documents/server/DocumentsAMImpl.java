@@ -21,6 +21,7 @@ import oracle.apps.fnd.framework.server.OADBTransaction;
 import oracle.jbo.Key;
 import oracle.jbo.RowSetIterator;
 
+import oracle.jbo.domain.Date;
 import oracle.jbo.domain.Number;
 
 import oracle.jdbc.OracleCallableStatement;
@@ -429,7 +430,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         return (GenTimControlsVOImpl)findViewObject("GenTimControlsVO1");
     }
 
-    public void llamarServicioWeb() {
+    public void llamarServicioWeb(oracle.jbo.domain.Date pFechaDepago) {
         PayExecutionsVOImpl payExecutionsVOImpl = getPayExecutionsVO1(); 
         RowSetIterator iterator  = payExecutionsVOImpl.createRowSetIterator(null);
         while(iterator.hasNext()){
@@ -441,6 +442,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                            ,payExecutionsVORowImpl.getTimePeriodId()
                            ,payExecutionsVORowImpl.getPayrollActionId()
                            ,payExecutionsVORowImpl.getAssignmentActionId()
+                           ,payExecutionsVORowImpl.getConsolidationSetId()
+                           ,payExecutionsVORowImpl.getElementSetId()
+                           ,payExecutionsVORowImpl.getAssignmentSetId()
+                           ,pFechaDepago
                            );
                 String[] strArray = getATI(payExecutionsVORowImpl.getBusinessGroupId()
                                 ,payExecutionsVORowImpl.getPersonId()
@@ -448,6 +453,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                 ,payExecutionsVORowImpl.getTimePeriodId()
                                 ,payExecutionsVORowImpl.getPayrollActionId()
                                 ,payExecutionsVORowImpl.getAssignmentActionId()
+                                ,payExecutionsVORowImpl.getConsolidationSetId()
+                                ,payExecutionsVORowImpl.getElementSetId()
+                                ,payExecutionsVORowImpl.getAssignmentSetId()
+                                ,pFechaDepago
                                 );
                 String strGeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[2].getBytes());
                 System.out.println(strGeneraReciboWS);
@@ -457,6 +466,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                           ,payExecutionsVORowImpl.getTimePeriodId()
                           ,payExecutionsVORowImpl.getPayrollActionId()
                           ,payExecutionsVORowImpl.getAssignmentActionId()
+                          ,payExecutionsVORowImpl.getConsolidationSetId()
+                          ,payExecutionsVORowImpl.getElementSetId()
+                          ,payExecutionsVORowImpl.getAssignmentSetId()
+                          ,pFechaDepago
                           ,strGeneraReciboWS
                            );
             }
@@ -468,7 +481,12 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                           , Number pAssignmentId
                           , Number pTimePeriodId
                           , Number pPayrollActionId
-                          , Number pAssignmentActionId) {
+                          , Number pAssignmentActionId
+                          , Number pConsolidationSetId
+                          , Number pElementSetId
+                          , Number pAssignmentSetId
+                          , oracle.jbo.domain.Date pFechaDepago
+                          ) {
         String strCallableStmt = "BEGIN\n" + 
                                  "   APPS.XXAZOR_PAY_TE_PKG.GENERATE_ATI (PSI_ERRCOD                => :1\n" + 
                                  "                                       ,PSI_ERRMSG                => :2\n" + 
@@ -478,6 +496,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                  "                                       ,PNI_TIME_PERIOD_ID        => :6\n" + 
                                  "                                       ,PNI_PAYROLL_ACTION_ID     => :7\n" + 
                                  "                                       ,PNI_ASSIGNMENT_ACTION_ID  => :8\n" + 
+                                 "                                       ,PNI_CONSOLIDATION_SET_ID  => :9\n" + 
+                                 "                                       ,PNI_ELEMENT_SET_ID        => :10\n" + 
+                                 "                                       ,PNI_ASSIGNMENT_SET_ID     => :11\n" + 
+                                 "                                       ,PDI_FECHA_PAGO            => :12\n" + 
                                  "                                        );\n" + 
                                  "END;";
         OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
@@ -491,6 +513,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         oraclecallablestatement.setDouble(6,pTimePeriodId.doubleValue());
         oraclecallablestatement.setDouble(7,pPayrollActionId.doubleValue());
         oraclecallablestatement.setDouble(8,pAssignmentActionId.doubleValue());
+        oraclecallablestatement.setDouble(9,pConsolidationSetId.doubleValue());
+        oraclecallablestatement.setDouble(10,pElementSetId.doubleValue());
+        oraclecallablestatement.setDouble(11,pAssignmentSetId.doubleValue());
+        oraclecallablestatement.setDate(12,pFechaDepago.dateValue());
         oraclecallablestatement.execute();
         
         } catch (SQLException e) {
@@ -504,7 +530,12 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                       , Number pAssignmentId
                       , Number pTimePeriodId
                       , Number pPayrollActionId
-                      , Number pAssignmentActionId) {
+                      , Number pAssignmentActionId
+                      , Number pConsolidationSetId
+                      , Number pElementSetId
+                      , Number pAssignmentSetId
+                      , oracle.jbo.domain.Date pFechaDepago
+                      ) {
         String[] retval = new String[3];
         String strCallableStmt = "BEGIN\n" + 
                                  "   APPS.XXAZOR_PAY_TE_PKG.GET_ATI(PSI_ERRCOD                => :1\n" + 
@@ -516,6 +547,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                  "                                 ,PNI_TIME_PERIOD_ID        => :7\n" + 
                                  "                                 ,PNI_PAYROLL_ACTION_ID     => :8\n" + 
                                  "                                 ,PNI_ASSIGNMENT_ACTION_ID  => :9\n" + 
+                                 "                                 ,PNI_CONSOLIDATION_SET_ID  => :10\n" + 
+                                 "                                 ,PNI_ELEMENT_SET_ID        => :11\n" + 
+                                 "                                 ,PNI_ASSIGNMENT_SET_ID     => :12\n" + 
+                                 "                                 ,PDI_FECHA_PAGO            => :13\n" + 
                                  "                                  );\n" + 
                                  "END;";
         OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
@@ -530,6 +565,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         oraclecallablestatement.setDouble(7,pTimePeriodId.doubleValue());
         oraclecallablestatement.setDouble(8,pPayrollActionId.doubleValue());
         oraclecallablestatement.setDouble(9,pAssignmentActionId.doubleValue());
+        oraclecallablestatement.setDouble(10,pConsolidationSetId.doubleValue());
+        oraclecallablestatement.setDouble(11,pElementSetId.doubleValue());
+        oraclecallablestatement.setDouble(12,pAssignmentSetId.doubleValue());
+        oraclecallablestatement.setDate(13,pFechaDepago.dateValue());
         oraclecallablestatement.execute();
         
           
@@ -624,6 +663,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                          , Number pTimePeriodId
                          , Number pPayrollActionId
                          , Number pAssignmentActionId
+                         , Number pConsolidationSetId
+                         , Number pElementSetId
+                         , Number pAssignmentSetId
+                         , oracle.jbo.domain.Date pFechaDepago
                          , String pGeneraReciboWS
                          ) {
         String strCallableStmt = "BEGIN\n" + 
@@ -636,6 +679,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                  "                                 ,PNI_TIME_PERIOD_ID        => :7\n" + 
                                  "                                 ,PNI_PAYROLL_ACTION_ID     => :8\n" + 
                                  "                                 ,PNI_ASSIGNMENT_ACTION_ID  => :9\n" + 
+                                 "                                 ,PNI_CONSOLIDATION_SET_ID  => :10\n" + 
+                                 "                                 ,PNI_ELEMENT_SET_ID        => :11\n" + 
+                                 "                                 ,PNI_ASSIGNMENT_SET_ID     => :12\n" + 
+                                 "                                 ,PDI_FECHA_PAGO            => :13\n" + 
                                  "                                  );\n" + 
                                  "END;";
         OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
@@ -654,6 +701,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         oraclecallablestatement.setDouble(7,pTimePeriodId.doubleValue());
         oraclecallablestatement.setDouble(8,pPayrollActionId.doubleValue());
         oraclecallablestatement.setDouble(9,pAssignmentActionId.doubleValue());
+        oraclecallablestatement.setDouble(10,pConsolidationSetId.doubleValue());
+        oraclecallablestatement.setDouble(11,pElementSetId.doubleValue());
+        oraclecallablestatement.setDouble(12,pAssignmentSetId.doubleValue());
+        oraclecallablestatement.setDate(13,pFechaDepago.dateValue());
         oraclecallablestatement.execute();
         
         } catch (SQLException e) {
@@ -672,5 +723,23 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         } catch (SQLException e) {
           throw new OAException(e.getMessage(),OAException.ERROR);
         }
+    }
+
+    /**Container's getter for PySrsConsolidationSetVO1
+     */
+    public PySrsConsolidationSetVOImpl getPySrsConsolidationSetVO1() {
+        return (PySrsConsolidationSetVOImpl)findViewObject("PySrsConsolidationSetVO1");
+    }
+
+    /**Container's getter for PySrsElementSetPayrollVO1
+     */
+    public PySrsElementSetPayrollVOImpl getPySrsElementSetPayrollVO1() {
+        return (PySrsElementSetPayrollVOImpl)findViewObject("PySrsElementSetPayrollVO1");
+    }
+
+    /**Container's getter for PySrsAssetRunVO1
+     */
+    public PySrsAssetRunVOImpl getPySrsAssetRunVO1() {
+        return (PySrsAssetRunVOImpl)findViewObject("PySrsAssetRunVO1");
     }
 }

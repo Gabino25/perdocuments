@@ -55,4 +55,46 @@ public class PayExecutionsVOImpl extends OAViewObjectImpl {
         // 7. Execute the query
         this.executeQuery();                            
     }
+
+    public void filter(String pPayrollIdFV
+                     , String pBusinessGroupIdFV
+                     , String pTimePeriodIdFV
+                     , String pPersonIdFV
+                     , String pConsolidationSetIdFV
+                     , String pElementSetIdFV
+                     , String pAssignmentSetIdFV
+                     ) {
+        // 2. Create a view criteria row set for this view object
+        ViewCriteria vc = this.createViewCriteria(); 
+        // 3. Use the view criteria to create one or more view criteria rows
+        ViewCriteriaRow vcr1 = vc.createViewCriteriaRow(); 
+        // 4. Set attribute values to filter on in appropriate view criteria rows
+        if(null!=pPayrollIdFV&&!"".equals(pPayrollIdFV)){
+            vcr1.setAttribute("PayrollId",pPayrollIdFV);
+        }
+        if(null!=pBusinessGroupIdFV&&!"".equals(pBusinessGroupIdFV)){
+        vcr1.setAttribute("BusinessGroupId",pBusinessGroupIdFV);
+        }
+        if(null!=pTimePeriodIdFV&&!"".equals(pTimePeriodIdFV)){
+        vcr1.setAttribute("TimePeriodId",pTimePeriodIdFV);
+        }
+        if(null!=pPersonIdFV&&!"".equals(pPersonIdFV)){
+        vcr1.setAttribute("PersonId",pPersonIdFV);
+        }
+        if(null!=pConsolidationSetIdFV&&!"".equals(pConsolidationSetIdFV)){
+        vcr1.setAttribute("ConsolidationSetId",pConsolidationSetIdFV);
+        }
+        if(null!=pElementSetIdFV&&!"".equals(pElementSetIdFV)){
+        vcr1.setAttribute("ElementSetId",pElementSetIdFV);
+        }
+        if(null!=pAssignmentSetIdFV&&!"".equals(pAssignmentSetIdFV)){
+        vcr1.setAttribute("AssignmentSetId",pAssignmentSetIdFV);
+        }
+        // 5. Add the view criteria rows to the view critera row set 
+        vc.add(vcr1); 
+        // 6. Apply the view criteria to the view object
+        this.applyViewCriteria(vc); 
+        // 7. Execute the query
+        this.executeQuery();       
+    }
 }

@@ -85,6 +85,21 @@
       ObjectType="ViewObject" >
    </Containee>
    <Containee
+      Name="PySrsAssetRunVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PySrsAssetRunVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="PySrsConsolidationSetVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PySrsConsolidationSetVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="PySrsElementSetPayrollVO"
+      FullName="xxazor.oracle.apps.per.documents.server.PySrsElementSetPayrollVO"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
       Name="UsersInfoVO"
       FullName="xxazor.oracle.apps.per.documents.server.UsersInfoVO"
       ObjectType="ViewObject" >
