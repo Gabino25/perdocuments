@@ -41,8 +41,8 @@ CREATE OR REPLACE PACKAGE APPS.XXAZOR_PAY_ATI_PKG AUTHID CURRENT_USER AS
                   ,pni_person_id            in number
                   );
    PROCEDURE Populate_ATI_1
-                  (pci_ati                  in out nocopy clob
-                  ,pni_business_group_id    in number
+                  (
+                   pni_business_group_id    in number
                   ,pni_payroll_id           in number
                   ,pni_time_period_id       in number
                   ,pni_consolidation_set_id IN NUMBER
@@ -50,6 +50,6 @@ CREATE OR REPLACE PACKAGE APPS.XXAZOR_PAY_ATI_PKG AUTHID CURRENT_USER AS
                   ,pni_assignment_set_id    IN NUMBER
                   ,pni_person_id            in number
                   );
-END XXAZOR_PAY_ATI_PKG; 
+END XXAZOR_PAY_ATI_PKG;
 /
 

@@ -227,7 +227,7 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
    --psi_genera_archivo     varchar2(300);
    --pni_pay_action_id_ajuste number;
    --ln_valida_ajuste_anual   number:=0;
-   lc_clob_tmp   clob;
+
 
    BEGIN
 
@@ -279,20 +279,9 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
 
       Fnd_File.put_line(Fnd_File.output,'ls_Query1:'||ls_Query1);*/
       ---asta aqui-----
-
-     DBMS_LOB.CREATETEMPORARY(lob_loc  => lc_clob_tmp
-                                                     ,cache   => true
-                                                     ,dur       => dbms_lob.call
-                                                     );
-
-  DBMS_LOB.OPEN(lob_loc    => lc_clob_tmp
-                            ,open_mode  => DBMS_LOB.LOB_READWRITE
-                            );
-
-
      Populate_ATI_1
-                  (pci_ati                  => lc_clob_tmp
-                  ,pni_business_group_id    => pni_business_group_id
+                  (
+                   pni_business_group_id    => pni_business_group_id
                   ,pni_payroll_id           => pni_payroll_id
                   ,pni_time_period_id       => pni_time_period_id
 				  ,pni_consolidation_set_id => pni_consolidation_set_id
@@ -321,8 +310,8 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
    Description: Populate_ATI_1 Procedure to call others procedure and functions
     *****************************************************/
   PROCEDURE Populate_ATI_1
-                  (pci_ati                  in out nocopy clob
-                  ,pni_business_group_id    in number
+                  (
+                   pni_business_group_id    in number
                   ,pni_payroll_id           in number
                   ,pni_time_period_id       in number
                   ,pni_consolidation_set_id IN NUMBER
@@ -448,8 +437,8 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
         ,to_char(ppa.date_earned,'DDMMYYYY')          numeroRecibo
         ,ptp.period_num                               numReciboMes
         ,'DEL '||to_char(ptp.start_date,'YYYY/MM/DD')||' AL '||to_char(ptp.end_date,'YYYY/MM/DD') periodo
-        ,to_char(ptp.start_date,'YYYY-MM-DD') fechainicialpago
-        ,to_char(ptp.end_date,'YYYY-MM-DD')   fechafinalpago
+        ,to_char(ptp.start_date,'YYYY/MM/DD') fechainicialpago
+        ,to_char(ptp.end_date,'YYYY/MM/DD')   fechafinalpago
 		,(ptp.end_date - ptp.start_date)+1    diasTrabajados
 		,to_char(ptp.start_date,'DD')         iniciadel
 		,to_char(ptp.start_date,'MM')         iniciames
@@ -719,7 +708,7 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
 
 		 begin
 			SELECT pea.segment3  cuentabancaria
-                  ,substr(substr(meaning,1,4),-3) clave_banco
+                  ,substr(meaning,1,4) clave_banco
                   ,pea.segment5	clabe
 			into  ls_num_cta_emp
 			     ,ls_clave_banco
@@ -748,8 +737,8 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
 
 
 	     print_line('OUTPUT','/INICIO');
-         print_line('OUTPUT','/ReciboDeNomina');
-         print_line('OUTPUT',rpad('fechaLiquidacion',75)||j.fechaLiquidacion);
+		 print_line('OUTPUT','/ReciboDeNomina');
+		 print_line('OUTPUT',rpad('fechaLiquidacion',75)||j.fechaLiquidacion);                                       -- 2019-01-19
          print_line('OUTPUT',rpad('anio',75)||j.year);                                                               -- 2019
          print_line('OUTPUT',rpad('mes',75)||j.mes);                                                                 -- 1
          print_line('OUTPUT',rpad('numeroRecibo',75)||j.numeroRecibo||ln_cuenta);                                    -- 170302110427410106
@@ -765,7 +754,7 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
          print_line('OUTPUT',rpad('totalDescuentos',75)||ln_totalDescuentos);                                        -- 58783.67
          print_line('OUTPUT',rpad('sdi',75)||ln_idw);                                                                -- 7247.64
          print_line('OUTPUT',rpad('salariobasecotapor',75)||ln_sueldo_diario);                                       -- 7247.64
-         print_line('OUTPUT',rpad('fecha',75)||to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'));                            -- 2019-01-31T08:39:06
+         print_line('OUTPUT',rpad('fecha',75)||to_char(sysdate,'YYYY/MM/DD HH24:MI:SS'));                            -- 2019-01-31T08:39:06
          print_line('OUTPUT',rpad('metododepago',75)||'NA');                                                         -- NA
          print_line('OUTPUT',rpad('lugarexpedicion',75)||ls_postal_code);                                            -- 03810
          print_line('OUTPUT',rpad('tipodecambio',75)||1);                                                            -- 1
@@ -779,7 +768,7 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
          print_line('OUTPUT',rpad('departamento',75)||j.departamento);                                                           --
          print_line('OUTPUT',rpad('clabe',75)||ls_clabe);                                                                  --
          print_line('OUTPUT',rpad('nomina',75)||ls_payroll_name);                                                    -- QUINCENAL
-         print_line('OUTPUT',rpad('fechainiciorellaboral',75)||to_char(j.original_date_of_hire,'YYYY-MM-DD'));         -- 2014-03-03
+         print_line('OUTPUT',rpad('fechainiciorellaboral',75)||to_char(j.original_date_of_hire,'YYYY/MM/DD'));         -- 2014-03-03
          -- print_line('OUTPUT',rpad('antiguedadporsemana',75)||j.antiguedadporsemana);                                 -- P254W (Calculo en Semandas ) Quitar si no aplica. (Angelina)
          print_line('OUTPUT',rpad('tipocontrato',75)||'01');                                                           -- 03
          print_line('OUTPUT',rpad('tipojornada',75)||'08');                                                            -- 01
@@ -817,7 +806,7 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
          print_line('OUTPUT',rpad('curp',75)||j.curp);                                                                 -- FOSJ911229HMCNNT09
          print_line('OUTPUT',rpad('correo',75)||j.email_address);                                                                 -- brenda.leon@indiciumsolutions.com.mx
          print_line('OUTPUT',rpad('tiporegimen',75)||'02');                                                            -- 02
-         print_line('OUTPUT',rpad('riesgopuesto',75)||'1');                                                           -- 99
+         print_line('OUTPUT',rpad('riesgopuesto',75)||'99');                                                           -- 99
          print_line('OUTPUT',rpad('claveentfed',75)||'DIF');                                                            -- DIF
          print_line('OUTPUT',rpad('periodicidadPago',75)||ls_periodicidadpago);                                                       -- 04
          print_line('OUTPUT',rpad('banco',75)||'014');                                                                  --
@@ -836,113 +825,16 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
          print_line('OUTPUT',rpad('totalgravado',75)||'');                                                           -- 179383.80
          print_line('OUTPUT',rpad('totalexento',75)||'');                                                            -- 0.00
          print_line('OUTPUT','/ReciboDeNomina/Conceptos/Percepciones/Percepcion');                                   --
-
-         dbms_lob.append(pci_ati,'/INICIO'||chr(10));
-         dbms_lob.append(pci_ati,'/ReciboDeNomina'||chr(10));
-         dbms_lob.append(pci_ati,rpad('fechaLiquidacion',75)||j.fechaLiquidacion||chr(10));
-         dbms_lob.append(pci_ati,rpad('anio',75)||j.year||chr(10));                                                               -- 2019
-         dbms_lob.append(pci_ati,rpad('mes',75)||j.mes||chr(10));                                                                 -- 1
-         dbms_lob.append(pci_ati,rpad('numeroRecibo',75)||j.numeroRecibo||ln_cuenta||chr(10));                                    -- 170302110427410106
-         dbms_lob.append(pci_ati,rpad('numReciboMes',75)||j.numReciboMes||chr(10));                                               -- 1
-         dbms_lob.append(pci_ati,rpad('diasTrabajados',75)||j.diasTrabajados||chr(10));                                           -- 6
-         dbms_lob.append(pci_ati,rpad('periodo',75)||j.periodo||chr(10));                                                         -- DEL 2019/01/14 AL 2019/01/19
-         dbms_lob.append(pci_ati,rpad('fechainicialpago',75)||j.fechainicialpago||chr(10));                                       -- 2019-01-14
-         dbms_lob.append(pci_ati,rpad('fechafinalpago',75)||j.fechafinalpago||chr(10));                                           -- 2019-01-19
-         dbms_lob.append(pci_ati,rpad('sueldoDiario',75)||ln_sueldo_diario||chr(10));                                             -- 7247.64
-         dbms_lob.append(pci_ati,rpad('totalPercepciones',75)||ln_totalPercepciones||chr(10));                                    -- 179383.80
-         dbms_lob.append(pci_ati,rpad('totalDeducciones',75)||ln_totalDeducciones||chr(10));                                      -- 58783.67
-         dbms_lob.append(pci_ati,rpad('netoPagado',75)||(ln_totalPercepciones-ln_totalDeducciones)||chr(10));                     -- 120600.13
-         dbms_lob.append(pci_ati,rpad('totalDescuentos',75)||ln_totalDescuentos||chr(10));                                        -- 58783.67
-         dbms_lob.append(pci_ati,rpad('sdi',75)||ln_idw||chr(10));                                                                -- 7247.64
-         dbms_lob.append(pci_ati,rpad('salariobasecotapor',75)||ln_sueldo_diario||chr(10));                                       -- 7247.64
-         dbms_lob.append(pci_ati,rpad('fecha',75)||to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')||chr(10));                            -- 2019-01-31T08:39:06
-         dbms_lob.append(pci_ati,rpad('metododepago',75)||'NA'||chr(10));                                                         -- NA
-         dbms_lob.append(pci_ati,rpad('lugarexpedicion',75)||ls_postal_code||chr(10));                                            -- 03810
-         dbms_lob.append(pci_ati,rpad('tipodecambio',75)||1||chr(10));                                                            -- 1
-         dbms_lob.append(pci_ati,rpad('moneda',75)||'MXN'||chr(10));                                                              -- MXN
-         dbms_lob.append(pci_ati,rpad('cuentabancaria',75)||ls_num_cta_emp||chr(10));                                             -- 012580012749942802
-         dbms_lob.append(pci_ati,rpad('tiponomina',75)||'O'||chr(10));                                                            -- O
-         dbms_lob.append(pci_ati,rpad('totalotrospagos',75)||ln_totalPercepciones||chr(10));                                      --
-         dbms_lob.append(pci_ati,rpad('subTotal',75)||ln_totalPercepciones||chr(10));                                                               -- 179383.80
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Adicionales'||chr(10));                                                       --
-         dbms_lob.append(pci_ati,rpad('clavebanco',75)||ls_clave_banco||chr(10));                                                             --
-         dbms_lob.append(pci_ati,rpad('departamento',75)||j.departamento||chr(10));                                                           --
-         dbms_lob.append(pci_ati,rpad('clabe',75)||ls_clabe||chr(10));                                                                  --
-         dbms_lob.append(pci_ati,rpad('nomina',75)||ls_payroll_name||chr(10));                                                    -- QUINCENAL
-         dbms_lob.append(pci_ati,rpad('fechainiciorellaboral',75)||to_char(j.original_date_of_hire,'YYYY-MM-DD')||chr(10));         -- 2014-03-03
-         dbms_lob.append(pci_ati,rpad('tipocontrato',75)||'01'||chr(10));                                                           -- 03
-         dbms_lob.append(pci_ati,rpad('tipojornada',75)||'08'||chr(10));                                                            -- 01
-         dbms_lob.append(pci_ati,rpad('periodicidadpago',75)||ls_periodicidadpago||chr(10));                                                       -- 04
-         dbms_lob.append(pci_ati,rpad('tipoPago',75)||'001'||chr(10));                                                               -- Pago de nómina
-         dbms_lob.append(pci_ati,rpad('tipo',75)||'001'||chr(10));                                                                   -- CONFIANZA
-         dbms_lob.append(pci_ati,rpad('horasExtra',75)||'0.0'||chr(10));                                                             -- 0
-         dbms_lob.append(pci_ati,rpad('pagoNetoMensual',75)||ln_totalPercepciones||chr(10));                                                        --
-         dbms_lob.append(pci_ati,rpad('numCuenta',75)||ls_num_cta_emp||chr(10));                                                              --
-         dbms_lob.append(pci_ati,rpad('numeronomina',75)||j.employee_number||chr(10));                                                           --
-         dbms_lob.append(pci_ati,rpad('banco',75)||'014'||chr(10));                                                                  --
-         dbms_lob.append(pci_ati,rpad('pagonetoquincenal',75)||ln_totalPercepciones||chr(10));                                                      --
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Patron'||chr(10));                                                 --
-         dbms_lob.append(pci_ati,rpad('rfc',75)||ls_rfc_legal_entity||chr(10));                                                                    -- AAA010101AAA
-         dbms_lob.append(pci_ati,rpad('nombre',75)||ls_razon_social||chr(10));                                                                 -- Empresa de pruebas SA  de CV
-         dbms_lob.append(pci_ati,rpad('registropatronal',75)||ls_reg_imss_gre||chr(10));                                                       -- Y6436441106
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Patron/Regimenes'||chr(10));                                       --
-         dbms_lob.append(pci_ati,rpad('regimenfiscal',75)||ls_le_regimen_fiscal||chr(10));                                                          -- 601
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Patron/DomicilioFiscal'||chr(10));                                 --
-         dbms_lob.append(pci_ati,rpad('calle',75)||ls_gre_calle||chr(10));                                                                  -- INSURGENTES SUR No. Ext. 863 Int. 9
-         dbms_lob.append(pci_ati,rpad('noExterior',75)||substr(ls_gre_calle,-5)||chr(10));                                                             -- 0
-         dbms_lob.append(pci_ati,rpad('noInterior',75)||' '||chr(10));                                                             -- 0
-         dbms_lob.append(pci_ati,rpad('colonia',75)||ls_gre_colonia||chr(10));                                                                -- NAPOLES
-         dbms_lob.append(pci_ati,rpad('localidad',75)||'02'||chr(10));                                                              -- DISTRITO FEDERAL
-         dbms_lob.append(pci_ati,rpad('referencia',75)||' '||chr(10));                                                             -- -
-         dbms_lob.append(pci_ati,rpad('municipio',75)||'002'||chr(10));                                                             -- BENITO JUAREZ
-         dbms_lob.append(pci_ati,rpad('estado',75)||'DIF'||chr(10));                                                                 -- DISTRITO FEDERAL
-         dbms_lob.append(pci_ati,rpad('pais',75)||'MEX'||chr(10));                                                                   -- MEXICO
-         dbms_lob.append(pci_ati,rpad('telefono',75)||ls_gre_telefono||chr(10));                                                               --
-         dbms_lob.append(pci_ati,rpad('codigoPostal',75)||ls_gre_cp||chr(10));                                                           -- 03810
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Empleado'||chr(10));                                         --
-         dbms_lob.append(pci_ati,rpad('rfc',75)||j.rfc||chr(10));                                                                    -- MADC8712145Q7
-         dbms_lob.append(pci_ati,rpad('imss',75)||j.no_imss||chr(10));                                                                  -- 01967101659
-         dbms_lob.append(pci_ati,rpad('nombre',75)||j.full_name||chr(10));                                                                 -- Empleado de pruebas A
-         dbms_lob.append(pci_ati,rpad('curp',75)||j.curp||chr(10));                                                                 -- FOSJ911229HMCNNT09
-         dbms_lob.append(pci_ati,rpad('correo',75)||j.email_address||chr(10));                                                                 -- brenda.leon@indiciumsolutions.com.mx
-         dbms_lob.append(pci_ati,rpad('tiporegimen',75)||'02'||chr(10));                                                            -- 02
-         dbms_lob.append(pci_ati,rpad('riesgopuesto',75)||'1'||chr(10));                                                           -- 99
-         dbms_lob.append(pci_ati,rpad('claveentfed',75)||'DIF'||chr(10));                                                            -- DIF
-         dbms_lob.append(pci_ati,rpad('periodicidadPago',75)||ls_periodicidadpago||chr(10));                                                       -- 04
-         dbms_lob.append(pci_ati,rpad('banco',75)||'014'||chr(10));                                                                  --
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Empleado/Detalle'||chr(10));                                       --
-         dbms_lob.append(pci_ati,rpad('numero',75)||j.employee_number||chr(10));                                                                 -- 147281
-         dbms_lob.append(pci_ati,rpad('puesto',75)||j.position_name||chr(10));                                                                 -- SAPL 120 LIFE TECH DISTRICT LEADER PL09
-         dbms_lob.append(pci_ati,'/RecibosDeNomina/Conceptos'||chr(10));                                             --
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Conceptos/Percepciones'||chr(10));                                 --
-         dbms_lob.append(pci_ati,rpad('totalsueldos',75)||ln_totalPercepciones||chr(10));                                                           -- 179383.80
-         dbms_lob.append(pci_ati,rpad('totalseparacionindemnizacion',75)||''||chr(10));                                           -- 0.00
-         dbms_lob.append(pci_ati,rpad('totaljubilacionpensionretiro',75)||''||chr(10));                                           -- 0.00
-         dbms_lob.append(pci_ati,rpad('totalgravado',75)||''||chr(10));                                                           -- 179383.80
-         dbms_lob.append(pci_ati,rpad('totalexento',75)||''||chr(10));                                                            -- 0.00
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Conceptos/Percepciones/Percepcion'||chr(10));
-
-         FOR p IN cur_per(j.assignment_action_id) LOOP
+		 FOR p IN cur_per(j.assignment_action_id) LOOP
 		    print_line('OUTPUT',rpad('tipopercepcion',75)||'001');                                                   -- 001
             print_line('OUTPUT',rpad('clave',75)||p.clave_per);                                                      -- 001
             print_line('OUTPUT',rpad('descripcion',75)||p.element_per);                                              -- SUELDO
             print_line('OUTPUT',rpad('importe',75)||p.percepciones);                                                 -- 108714.60
-            --print_line('OUTPUT',rpad('importeexento',75)||p.percepciones);                                                    -- 0.00
-           -- print_line('OUTPUT',rpad('importegravado',75)||p.percepciones);                                                   -- 108714.60
+            --print_line('OUTPUT',rpad('importeexento',75)||' ');                                                    -- 0.00
+           -- print_line('OUTPUT',rpad('importegravado',75)||' ');                                                   -- 108714.60
 		    print_line('OUTPUT','/ReciboDeNomina/Conceptos/Percepciones/Percepcion/AccionesOTitulos');               --
             print_line('OUTPUT',rpad('valormercado',75)||' ');
-			print_line('OUTPUT',rpad('precioalotorgarse',75)||' ');
-
-
-            dbms_lob.append(pci_ati,rpad('tipopercepcion',75)||'001'||chr(10));                                                   -- 001
-            dbms_lob.append(pci_ati,rpad('clave',75)||p.clave_per||chr(10));                                                      -- 001
-            dbms_lob.append(pci_ati,rpad('descripcion',75)||p.element_per||chr(10));                                              -- SUELDO
-            dbms_lob.append(pci_ati,rpad('importe',75)||p.percepciones||chr(10));                                                 -- 108714.60
-                                                 -- 108714.60
-            dbms_lob.append(pci_ati,'/ReciboDeNomina/Conceptos/Percepciones/Percepcion/AccionesOTitulos'||chr(10));               --
-            dbms_lob.append(pci_ati,rpad('valormercado',75)||' '||chr(10));
-            dbms_lob.append(pci_ati,rpad('precioalotorgarse',75)||' '||chr(10));
-                                                       --
+			print_line('OUTPUT',rpad('precioalotorgarse',75)||' ');                                                  --
 		 END LOOP;
          /*
          print_line('OUTPUT','/ReciboDeNomina/Conceptos/Percepciones/Percepcion');                                  --
@@ -968,29 +860,13 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
          print_line('OUTPUT',rpad('totalotrasdeducciones',75)||ln_totalDeducciones);                                                  -- 710.08
          print_line('OUTPUT',rpad('totalimpuestosretenidos',75)||' ');                                                -- 58073.59
          print_line('OUTPUT','/ReciboDeNomina/Conceptos/Deducciones/Deduccion');                                     --
-
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Conceptos/Deducciones'||chr(10));                                  --
-         dbms_lob.append(pci_ati,rpad('totalgravado',75)||' '||chr(10));                                                           -- 58783.67
-         dbms_lob.append(pci_ati,rpad('totalexento',75)||' '||chr(10));                                                            -- 0.00
-         dbms_lob.append(pci_ati,rpad('totalotrasdeducciones',75)||ln_totalDeducciones||chr(10));                                                  -- 710.08
-         dbms_lob.append(pci_ati,rpad('totalimpuestosretenidos',75)||' '||chr(10));                                                -- 58073.59
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Conceptos/Deducciones/Deduccion'||chr(10));                                     --
-
 		 FOR d IN cur_ded(j.assignment_action_id) LOOP
 			print_line('OUTPUT',rpad('tipodeduccion',75)||'002');                                                      -- 002
             print_line('OUTPUT',rpad('clave',75)||d.clave_ded);                                                        -- D001
             print_line('OUTPUT',rpad('descripcion',75)||d.element_ded);                                                -- ISR
             print_line('OUTPUT',rpad('importe',75)||d.deducciones);                                                    -- 58073.59
-            --print_line('OUTPUT',rpad('importeexento',75)||d.deducciones);                                                        -- 0.00
-            --print_line('OUTPUT',rpad('importegravado',75)||d.deducciones);
-
-            dbms_lob.append(pci_ati,rpad('tipodeduccion',75)||'002'||chr(10));                                                     -- 002
-            dbms_lob.append(pci_ati,rpad('clave',75)||d.clave_ded||chr(10));                                                       -- D001
-            dbms_lob.append(pci_ati,rpad('descripcion',75)||d.element_ded||chr(10));                                               -- ISR
-            dbms_lob.append(pci_ati,rpad('importe',75)||d.deducciones||chr(10));                                                   -- 58073.59
-           -- dbms_lob.append(pci_ati,rpad('importeexento',75)||' '||chr(10));                                                       -- 0.00
-           -- dbms_lob.append(pci_ati,rpad('importegravado',75)||' '||chr(10));
-
+            print_line('OUTPUT',rpad('importeexento',75)||' ');                                                        -- 0.00
+            print_line('OUTPUT',rpad('importegravado',75)||' ');
 		 END LOOP;
 		 /*
          print_line('OUTPUT','/ReciboDeNomina/Conceptos/Deducciones/Deduccion');                        --
@@ -1013,18 +889,6 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
          print_line('OUTPUT',rpad('finmes',75)||j.finmes);                                                                 --
          print_line('OUTPUT',rpad('finaño',75)||j.finyear);                                                                 --
 
-          dbms_lob.append(pci_ati,'/ReciboDeNomina/Leyendas'||chr(10));                                              --
-         dbms_lob.append(pci_ati,rpad('texto',75)||' '||chr(10));                                                                 -- Pago Efectivo : $ 120600.13
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Asistencia'||chr(10));                                            --
-         dbms_lob.append(pci_ati,'/ReciboDeNomina/Asistencia/Periodo'||chr(10));                                    --
-         dbms_lob.append(pci_ati,rpad('depto',75)||j.departamento||chr(10));                                                                 --
-         dbms_lob.append(pci_ati,rpad('semana',75)||j.numReciboMes||chr(10));                                                                --
-         dbms_lob.append(pci_ati,rpad('iniciadel',75)||j.iniciadel||chr(10));                                                             --
-         dbms_lob.append(pci_ati,rpad('iniciames',75)||j.iniciames||chr(10));                                                             --
-         dbms_lob.append(pci_ati,rpad('final',75)||j.final||chr(10));                                                                 --
-         dbms_lob.append(pci_ati,rpad('finmes',75)||j.finmes||chr(10));                                                                --
-         dbms_lob.append(pci_ati,rpad('finaño',75)||j.finyear||chr(10));
-
 		 FOR k IN cur_marcajes( pni_payroll_id,pni_time_period_id,j.person_id) LOOP
 		    get_time_marcajes ( k.dateLogTime
                                 ,pni_payroll_id
@@ -1042,16 +906,7 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
             print_line('OUTPUT',rpad('mañanasalida',75)||ls_mananasalida);                                                           --
             print_line('OUTPUT',rpad('tardeentrada',75)||ls_tardeentrada);                                                           --
             print_line('OUTPUT',rpad('tardesalida',75)||ls_tardesalida);                                                            --
-            print_line('OUTPUT',rpad('textra',75)||ls_textra);
-
-             dbms_lob.append(pci_ati,'/ReciboDeNomina/Asistencia/Periodo/Detalle'||chr(10));                             --
-            dbms_lob.append(pci_ati,rpad('fecha',75)||99||chr(10));                                                                  --
-            dbms_lob.append(pci_ati,rpad('mañanaentrada',75)||ls_mananaentrada||chr(10));                                                          --
-            dbms_lob.append(pci_ati,rpad('mañanasalida',75)||ls_mananasalida||chr(10));                                                           --
-            dbms_lob.append(pci_ati,rpad('tardeentrada',75)||ls_tardeentrada||chr(10));                                                           --
-            dbms_lob.append(pci_ati,rpad('tardesalida',75)||ls_tardesalida||chr(10));                                                            --
-            dbms_lob.append(pci_ati,rpad('textra',75)||ls_textra||chr(10));
-                                                                --
+            print_line('OUTPUT',rpad('textra',75)||ls_textra); 		                                                         --
 		 END LOOP;
 	     /*
          print_line('OUTPUT','/ReciboDeNomina/Asistencia/Periodo/Detalle');                             --
@@ -1064,7 +919,7 @@ CREATE OR REPLACE PACKAGE BODY APPS.XXAZOR_PAY_ATI_PKG AS
 		 */
 		 print_line('OUTPUT','/FIN');
 
-         dbms_lob.append(pci_ati,'/FIN'||chr(10));
+
 
 		 /*
 

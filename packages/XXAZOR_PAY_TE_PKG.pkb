@@ -14,11 +14,41 @@ PROCEDURE GENERATE_ATI(PSI_ERRCOD               OUT VARCHAR2
                       ,PDI_FECHA_PAGO           IN  DATE   
                       ) IS 
   LC_ATI      CLOB; 
-  LS_VAL_REG  VARCHAR2(2000);                    
+  LS_VAL_REG  VARCHAR2(2000);   
+  
+  ln_payroll_id   number;                  
 BEGIN 
-  LC_ATI := '/INICIO'||CHR(10);
-  LC_ATI := LC_ATI||'HOLA'||CHR(10);
-  LC_ATI := LC_ATI||'/FIN';           
+
+   
+   DBMS_LOB.CREATETEMPORARY(lob_loc   => LC_ATI    
+                               ,cache    => true     
+                               ,dur      => dbms_lob.call
+                               );
+                                                     
+  DBMS_LOB.OPEN(lob_loc    => LC_ATI
+                 ,open_mode  => DBMS_LOB.LOB_READWRITE
+                 );
+                  
+      select payroll_id 
+        into ln_payroll_id
+        from per_time_periods
+       where time_period_id = PNI_TIME_PERIOD_ID;           
+      
+     XXAZOR_PAY_ATI_PKG.Populate_ATI_1(pci_ati                  => LC_ATI
+                                      ,pni_business_group_id    => PNI_BGID
+                                      ,pni_payroll_id           => ln_payroll_id
+                                      ,pni_time_period_id       => pni_time_period_id
+                                      ,pni_consolidation_set_id => pni_consolidation_set_id
+                                      ,pni_element_set_id       => pni_element_set_id
+                                      ,pni_assignment_set_id    => pni_assignment_set_id
+                                      ,pni_person_id            => pni_person_id
+                                      );
+
+  
+--  LC_ATI := '/INICIO'||CHR(10);
+--  LC_ATI := LC_ATI||'HOLA'||CHR(10);
+--  LC_ATI := LC_ATI||'/FIN';   
+          
   
   BEGIN 
    SELECT 'Y'

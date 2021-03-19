@@ -43,7 +43,7 @@ PROCEDURE UPD_XPT( PSI_ERRCOD               OUT VARCHAR2
                   ,PNI_ASSIGNMENT_SET_ID    IN  NUMBER
                   ,PDI_FECHA_PAGO           IN  DATE   
                   );
-                                        
+                                                   
 END XXAZOR_PAY_TE_PKG; 
 /
 
