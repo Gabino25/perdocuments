@@ -8,7 +8,7 @@
          <ui:contents>
             <oa:pageButtonBar id="region2">
                <ui:contents>
-                  <oa:submitButton id="LlamarServicioWebBtn" text="Llamar Servicio Web" prompt="Llamar Servicio Web">
+                  <oa:submitButton id="LlamarServicioWebBtn" text="Generar Timbrado" prompt="Generar Timbrado">
                      <ui:primaryClientAction>
                         <ui:fireAction event="LlamarServicioWebEvt"/>
                      </ui:primaryClientAction>
@@ -109,7 +109,7 @@
                         <oa:messageStyledText id="Periodo" viewAttr="Periodo"/>
                      </ui:contents>
                   </oa:column>
-                  <oa:column id="BusinessGroupIdCol">
+                  <oa:column id="BusinessGroupIdCol" rendered="false">
                      <ui:columnHeader>
                         <oa:sortableHeader id="BusinessGroupIdSH" prompt="BusinessGroupId"/>
                      </ui:columnHeader>
@@ -117,7 +117,7 @@
                         <oa:messageStyledText id="BusinessGroupId" viewAttr="BusinessGroupId"/>
                      </ui:contents>
                   </oa:column>
-                  <oa:column id="PayrollIdCol">
+                  <oa:column id="PayrollIdCol" rendered="false">
                      <ui:columnHeader>
                         <oa:sortableHeader id="PayrollIdSH" prompt="PayrollId"/>
                      </ui:columnHeader>
@@ -125,7 +125,7 @@
                         <oa:messageStyledText id="PayrollId" viewAttr="PayrollId"/>
                      </ui:contents>
                   </oa:column>
-                  <oa:column id="TimePeriodIdCol">
+                  <oa:column id="TimePeriodIdCol" rendered="false">
                      <ui:columnHeader>
                         <oa:sortableHeader id="TimePeriodIdSH" prompt="TimePeriodId"/>
                      </ui:columnHeader>
@@ -133,7 +133,7 @@
                         <oa:messageStyledText id="TimePeriodId" viewAttr="TimePeriodId"/>
                      </ui:contents>
                   </oa:column>
-                  <oa:column id="PayrollActionIdCol">
+                  <oa:column id="PayrollActionIdCol" rendered="false">
                      <ui:columnHeader>
                         <oa:sortableHeader id="PayrollActionIdSH" prompt="PayrollActionId"/>
                      </ui:columnHeader>
@@ -141,7 +141,7 @@
                         <oa:messageStyledText id="PayrollActionId" viewAttr="PayrollActionId"/>
                      </ui:contents>
                   </oa:column>
-                  <oa:column id="AssignmentActionIdCol">
+                  <oa:column id="AssignmentActionIdCol" rendered="false">
                      <ui:columnHeader>
                         <oa:sortableHeader id="AssignmentActionIdSH" prompt="AssignmentActionId"/>
                      </ui:columnHeader>

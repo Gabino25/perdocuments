@@ -97,6 +97,8 @@ CURSOR get_per_info(CUR_PERSON_ID        NUMBER
       AND XPD.DOC_TYPE = XPDT.CODE
       AND XPD.ID = CUR_REQ_DOC_ID;   
       
+    
+    
        CURSOR get_PerDocs_info_v4(CUR_REQ_DOC_ID NUMBER) IS
     SELECT V.PERSON_ID,
           V.ASSIGNMENT_ID,
@@ -151,8 +153,8 @@ CURSOR get_per_info(CUR_PERSON_ID        NUMBER
     WHERE V.PERSON_ID = XPD.PERSON_ID
       AND V.ASSIGNMENT_ID = XPD.ASSIGNMENT_ID
       AND XPD.DOC_TYPE = XPDT.CODE
-      AND XPD.ID = CUR_REQ_DOC_ID;    
- 
+      AND XPD.ID = CUR_REQ_DOC_ID;  
+      
  /**Funcion de reemplazo**/
 FUNCTION replace_char_esp(p_cadena IN VARCHAR2)
  RETURN VARCHAR2 IS
@@ -305,21 +307,20 @@ BEGIN
                                  ,aname    => '#FROM_ROLE'
                                  ,avalue   =>  nvl(fnd_global.user_name,'SYSADMIN')
                                   );
-                                  
+       
        for sup in (select fu.user_name
 from per_people_f people
     ,fnd_user  fu
 where people.attribute1 = 'Y'
 and sysdate between people.effective_start_date and people.effective_end_date
 and fu.employee_id = people.person_id
-and rownum = 1) loop                          
+and rownum = 1) loop                           
        wf_engine.SetItemAttrText (itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
                                  ,aname    => 'SUPERVISOR'
-                                 ,avalue   => sup.user_name
+                                 ,avalue   => sup.user_name /**'MPMOYA'**/
                                   );
-     end loop; 
-     
+       end loop; 
        wf_engine.SetItemAttrNumber(itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
                                  ,aname    => 'REQ_DOC_ID'
@@ -457,7 +458,7 @@ BEGIN
       ls_per_doc := ls_per_doc||'<APROBADOR>'||replace_char_esp(ls_aprovador)||'</APROBADOR>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
       
-      /** exit; deja cursor abierto **/
+     /** EXIT; deja cursor abierto **/
    END LOOP;
    CLOSE get_PerDocs_info;
    
@@ -483,7 +484,7 @@ BEGIN
       ls_per_doc := ls_per_doc||'<DIRECCION_EMP>'||replace_char_esp(PerDocs_info_rec_v2.direccion_empleado)||'</DIRECCION_EMP>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
     
-     /** exit; deja cursor abierto **/
+      /** EXIT; deja cursor abierto ***/
    END LOOP;
    CLOSE get_PerDocs_info_v2;
      
@@ -510,9 +511,10 @@ BEGIN
       ls_per_doc := ls_per_doc||'<SUELDO_MENSUAL>'||trim(to_char(PerDocs_info_rec_v3.sueldo_mensual,gs_currency_format))||'</SUELDO_MENSUAL>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
     
-     /** exit; deja cursor abierto **/
+    /** EXIT; deja cursor abierto ***/
    END LOOP;
    CLOSE get_PerDocs_info_v3; 
+  
   elsif  'CARTA_VISA' = ls_doc_type then 
       
    OPEN get_PerDocs_info_v4(PNI_REQUEST_ID);
@@ -536,7 +538,7 @@ BEGIN
       ls_per_doc := ls_per_doc||'<SUELDO_MENSUAL>'||trim(to_char(PerDocs_info_rec_v4.sueldo_mensual,gs_currency_format))||'</SUELDO_MENSUAL>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
     
-    /** exit; deja cursor abierto **/
+       /** EXIT; deja cursor abierto ***/
    END LOOP;
    CLOSE get_PerDocs_info_v4; 
   
@@ -563,11 +565,12 @@ BEGIN
       ls_per_doc := ls_per_doc||'<SUELDO_MENSUAL>'||trim(to_char(PerDocs_info_rec_v5.sueldo_mensual,gs_currency_format))||'</SUELDO_MENSUAL>';
       ls_per_doc := ls_per_doc||'<DOC_TYPE>'||ls_doc_type||'</DOC_TYPE>';
     
-      /** exit; deja cursor abierto **/
+       /** EXIT; deja cursor abierto ***/
    END LOOP;
    CLOSE get_PerDocs_info_v5; 
    
   end if;
+  
    
   ls_per_doc := ls_per_doc||'</XXAZOR_PER_DOC>';
   
@@ -653,7 +656,7 @@ BEGIN
                                     ,XXAZOR_PER_DOCS_PKG.gs_open
                                     ,PSI_PADRE
                                     ,PSI_HIJO
-                                    ,NVL(PSI_NIETO,'NA')
+                                    ,PSI_NIETO
                                     ,-1
                                     ,PSI_OBS_ACLA
                                     ,null
@@ -665,18 +668,9 @@ BEGIN
                                     );
        commit; 
 
+  for idx in (select full_name,padre_desc,hijo_desc,nieto_desc from XXAZOR_PER_ACLAR_V where id = ln_aclar_id) loop
 
   
-  for idx in (select id,full_name,padre_desc,hijo_desc,nieto_desc from XXAZOR_PER_ACLAR_V where id = ln_aclar_id) loop
-
-
-        for sup in (select meaning user_name
-          from fnd_lookup_values
-         where lookup_type ='AZOR_PAY_APPROVE_SOL_ACLARA'
-           /*and enabled_flag = 'Y'*/
-           and trunc(sysdate) between nvl(start_date_active,to_date ('01/01/0001','DD/MM/YYYY')) and nvl(end_date_active,to_date ('31/12/4712','DD/MM/YYYY'))
-         ) loop 
-   
      select XXAZOR_PER_DOCS_WF_S.nextval
           into ls_itemkey
           from dual;
@@ -691,23 +685,25 @@ BEGIN
                                  ,userkey  => nvl(fnd_global.user_name,'SYSADMIN')
                                  );
      
-        wf_engine.SetItemOwner (itemtype =>  gs_item_type
-                               ,itemkey  =>  ls_itemkey
-                               ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
-                               );
-     
        wf_engine.SetItemAttrText (itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
                                  ,aname    => '#FROM_ROLE'
                                  ,avalue   =>  nvl(fnd_global.user_name,'SYSADMIN')
                                   );
        
+        for sup in (select fu.user_name
+from per_people_f people
+    ,fnd_user  fu
+where people.attribute1 = 'Y'
+and sysdate between people.effective_start_date and people.effective_end_date
+and fu.employee_id = people.person_id
+and rownum = 1) loop                               
        wf_engine.SetItemAttrText (itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
                                  ,aname    => 'SUPERVISOR'
                                  ,avalue   => sup.user_name
                                   );
-
+      end loop; 
       
        wf_engine.SetItemAttrNumber(itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
@@ -715,26 +711,40 @@ BEGIN
                                  ,avalue   => ln_aclar_id
                                   );
                                   
-                                                           
-       wf_engine.SetItemAttrText (itemtype => gs_item_type
+        wf_engine.SetItemAttrText (itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
-                                 ,aname    => 'FUNCNAME_ATTR'
-                                 ,avalue   => 'XXAZOR_PER_ACLR_RN_F'
+                                 ,aname    => 'ACLAR_LINEA1'
+                                 ,avalue   => 'Tipo Alcaracion:'||idx.padre_desc
                                   );
-                                   
-         wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'MSGATTR1'
-                                 ,avalue   => idx.id
-                                  ); 
                                   
+          wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'ACLAR_LINEA2'
+                                 ,avalue   => idx.padre_desc||':'||idx.hijo_desc
+                                  );
+                                  
+           wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'ACLAR_LINEA3'
+                                 ,avalue   => idx.hijo_desc||':'||idx.nieto_desc
+                                  );
+                                                                                  
+          wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'EMPLOYEE'
+                                 ,avalue   => idx.full_name
+                                  );
+                                                           
+        wf_engine.SetItemOwner (itemtype =>  gs_item_type
+                               ,itemkey  =>  ls_itemkey
+                               ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
+                               );
+     
         wf_engine.StartProcess (itemtype  => gs_item_type
                                ,itemkey   => ls_itemkey
                                );
          
          commit; 
-   
-    end loop;         
 
   end loop; 
  

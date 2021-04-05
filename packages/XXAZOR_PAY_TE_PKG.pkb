@@ -115,6 +115,7 @@ BEGIN
     
   END;
   
+  DBMS_LOB.CLOSE(lob_loc    => LC_ATI);
                  
 EXCEPTION WHEN OTHERS THEN 
 PSI_ERRCOD := '2';

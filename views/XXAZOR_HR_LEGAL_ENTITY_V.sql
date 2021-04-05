@@ -1,6 +1,6 @@
 DROP VIEW APPS.XXAZOR_HR_LEGAL_ENTITY_V;
 
-/* Formatted on 17/12/2020 11:09:21 a. m. (QP5 v5.115.810.9015) */
+/* Formatted on 4/4/2021 8:49:13 PM (QP5 v5.115.810.9015) */
 CREATE OR REPLACE FORCE VIEW APPS.XXAZOR_HR_LEGAL_ENTITY_V
 (
    LEGAL_ENTITY,
@@ -11,7 +11,10 @@ CREATE OR REPLACE FORCE VIEW APPS.XXAZOR_HR_LEGAL_ENTITY_V
    RFC_LEGAL_ENTITY,
    REG_IMSS_GRE,
    ZONA_ECONOMICA,
-   LE_LOCATION_ID
+   BUSINESS_GROUP_ID,
+   LE_LOCATION_ID,
+   GRE_LOCATION_ID,
+   LE_REGIMEN_FISCAL
 )
 AS
    SELECT   org_le.name legal_entity,
@@ -22,7 +25,10 @@ AS
             oi_le.org_information2 rfc_legal_entity,
             oi_gre.org_information1 reg_imss_gre,
             oi_gre.org_information7 zona_economica,
-            org_le.location_id le_location_id
+            org_le.business_group_id,
+            org_le.location_id le_location_id,
+            org_gre.location_id gre_location_id,
+            oi_le.org_information9 le_regimen_fiscal
      FROM   hr_all_organization_units org_le,
             per_gen_hierarchy_nodes hn_le,
             hr_all_organization_units org_gre,
