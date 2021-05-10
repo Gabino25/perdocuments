@@ -3,9 +3,14 @@ package xxazor.oracle.apps.per.documents.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.io.OutputStream;
 import java.io.Reader;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import java.sql.SQLException;
 import java.sql.Types;
@@ -27,6 +32,8 @@ import oracle.jbo.domain.Number;
 import oracle.jdbc.OracleCallableStatement;
 
 import org.tempuri.ServiceDeGeneracionSoap12Client;
+
+import sun.nio.cs.StandardCharsets;
 
 import xxazor.oracle.apps.per.documents.utils.Utils;
 // ---------------------------------------------------------------------
@@ -431,6 +438,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
     }
 
     public void llamarServicioWeb(oracle.jbo.domain.Date pFechaDepago) {
+        System.out.println("--> llamarServicioWeb");
         PayExecutionsVOImpl payExecutionsVOImpl = getPayExecutionsVO1(); 
         RowSetIterator iterator  = payExecutionsVOImpl.createRowSetIterator(null);
         while(iterator.hasNext()){
@@ -458,7 +466,45 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                 ,payExecutionsVORowImpl.getAssignmentSetId()
                                 ,pFechaDepago
                                 );
+                System.out.println("Accediendo al WS");
+                try{
+                /**
+                URL oURL = new URL("https://azor.e-personal.mx/GRZ/ePersonalWS/ServiceDeGeneracion.asmx");
+                HttpURLConnection con = (HttpURLConnection) oURL.openConnection();
+                System.out.println("I");
+                con.setRequestMethod("POST");
+                System.out.println("II");
+                con.setRequestProperty("Content-type", "text/xml; charset=utf-8");
+                System.out.println("III");
+                con.setRequestProperty("SOAPAction", "http://tempuri.org/GeneraReciboWSByte");
+                System.out.println("IV");
+                con.setDoOutput(true);
+                System.out.println("VI");
+                String reqXML = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:tem=\"http://tempuri.org/\">\n" + 
+                "   <soap:Header/>\n" + 
+                "   <soap:Body>\n" + 
+                "      <tem:GeneraReciboWSByte>\n" + 
+                "         <tem:byteAti>Hola</tem:byteAti>\n" + 
+                "      </tem:GeneraReciboWSByte>\n" + 
+                "   </soap:Body>\n" + 
+                "</soap:Envelope>";
+                con.setRequestProperty("Content-Length",""+reqXML.length());
+                OutputStream reqStream = con.getOutputStream();
+                    System.out.println("VII");
+                reqStream.write(reqXML.getBytes());
+                    System.out.println("VIII");
+                    InputStream resStream = con.getInputStream();
+                       byte[] byteBuf = new byte[10240];
+                       int len = resStream.read(byteBuf);
+                 System.out.println("len:"+len);      
+                 String strResponse = new String(byteBuf);
+                 System.out.println("strResponse:"+strResponse);    
+                 String strGeneraReciboWS ="strGeneraReciboWS";
+                 
+                 **/      
+                                    
                 String strGeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[2].getBytes());
+                System.out.println("Generando ATI por WS");
                 System.out.println(strGeneraReciboWS);
                 updateXPT(payExecutionsVORowImpl.getBusinessGroupId()
                           ,payExecutionsVORowImpl.getPersonId()
@@ -472,9 +518,30 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                           ,pFechaDepago
                           ,strGeneraReciboWS
                            );
+                System.out.println("Se mando ATI por WS");
+                }
+                catch(Exception e){
+                System.out.println("Error al timbrar: " + e);
+                }
             }
         }
     }
+    
+    public static void copy(InputStream in, OutputStream out)
+                            throws IOException {
+
+                    synchronized (in) {
+                            synchronized (out) {
+                                    byte[] buffer = new byte[256];
+                                    while (true) {
+                                            int bytesRead = in.read(buffer);
+                                            if (bytesRead == -1)
+                                                    break;
+                                            out.write(buffer, 0, bytesRead);
+                                    }
+                            }
+                    }
+            }
 
     private void generarATI(Number pBusinessGroupId
                           , Number pPersonId
@@ -487,6 +554,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                           , Number pAssignmentSetId
                           , oracle.jbo.domain.Date pFechaDepago
                           ) {
+        System.out.println("generarATI");
         String strCallableStmt = "BEGIN\n" + 
                                  "   APPS.XXAZOR_PAY_TE_PKG.GENERATE_ATI (PSI_ERRCOD                => :1\n" + 
                                  "                                       ,PSI_ERRMSG                => :2\n" + 
@@ -536,6 +604,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                       , Number pAssignmentSetId
                       , oracle.jbo.domain.Date pFechaDepago
                       ) {
+        System.out.println("getATI");
         String[] retval = new String[3];
         String strCallableStmt = "BEGIN\n" + 
                                  "   APPS.XXAZOR_PAY_TE_PKG.GET_ATI(PSI_ERRCOD                => :1\n" + 
@@ -559,16 +628,26 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         oraclecallablestatement.registerOutParameter(1,Types.VARCHAR);
         oraclecallablestatement.registerOutParameter(2,Types.VARCHAR);
         oraclecallablestatement.registerOutParameter(3,Types.CLOB);
-        oraclecallablestatement.setDouble(4,pBusinessGroupId.doubleValue());
-        oraclecallablestatement.setDouble(5,pPersonId.doubleValue());
-        oraclecallablestatement.setDouble(6,pAssignmentId.doubleValue());
-        oraclecallablestatement.setDouble(7,pTimePeriodId.doubleValue());
-        oraclecallablestatement.setDouble(8,pPayrollActionId.doubleValue());
-        oraclecallablestatement.setDouble(9,pAssignmentActionId.doubleValue());
-        oraclecallablestatement.setDouble(10,pConsolidationSetId.doubleValue());
-        oraclecallablestatement.setDouble(11,pElementSetId.doubleValue());
-        oraclecallablestatement.setDouble(12,pAssignmentSetId.doubleValue());
+        oraclecallablestatement.setInt(4,pBusinessGroupId.intValue());
+        oraclecallablestatement.setInt(5,pPersonId.intValue());
+        oraclecallablestatement.setInt(6,pAssignmentId.intValue());
+        oraclecallablestatement.setInt(7,pTimePeriodId.intValue());
+        oraclecallablestatement.setInt(8,pPayrollActionId.intValue());
+        oraclecallablestatement.setInt(9,pAssignmentActionId.intValue());
+        oraclecallablestatement.setInt(10,pConsolidationSetId.intValue());
+        oraclecallablestatement.setInt(11,pElementSetId.intValue());
+        oraclecallablestatement.setInt(12,pAssignmentSetId.intValue());
         oraclecallablestatement.setDate(13,pFechaDepago.dateValue());
+        System.out.println("pBusinessGroupId: " + pBusinessGroupId.intValue());
+        System.out.println("pPersonId: " + pPersonId.intValue());
+        System.out.println("pAssignmentId: " + pAssignmentId.intValue());
+        System.out.println("pTimePeriodId: " + pTimePeriodId.intValue());
+        System.out.println("pPayrollActionId: " + pPayrollActionId.intValue());
+        System.out.println("pAssignmentActionId: " + pAssignmentActionId.intValue());
+        System.out.println("pConsolidationSetId: " + pConsolidationSetId.intValue());
+        System.out.println("pElementSetId: " + pElementSetId.intValue());
+        System.out.println("pAssignmentSetId: " + pAssignmentSetId.intValue());
+        System.out.println("pFechaDepago: " + pFechaDepago.dateValue());
         oraclecallablestatement.execute();
         
           
@@ -609,7 +688,6 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             bufferReader.close();
             reader.close();
             **/
-             System.out.println(strATI);
             retval[0] = "ERRCOD";
             retval[1] = "ERRMSG";
             retval[2] = strATI;

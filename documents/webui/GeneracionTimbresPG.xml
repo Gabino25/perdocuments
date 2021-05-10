@@ -75,7 +75,7 @@
                   </oa:flowLayout>
                </ui:footer>
             </oa:messageComponentLayout>
-            <oa:advancedTable id="PayExecutionsRN" viewName="PayExecutionsVO1">
+            <oa:advancedTable id="PayExecutionsRN" viewName="PayExecutionsVO1" blockSize="500">
                <ui:contents>
                   <oa:column id="EmployeeNumberCol">
                      <ui:columnHeader>

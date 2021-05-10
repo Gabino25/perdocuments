@@ -1,0 +1,28 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig>
+   <AppModuleConfigBag>
+      <AppModuleConfig name="LectorBiometricoAMLocal">
+         <AppModuleJndiName>xxazor.oracle.apps.per.lecbio.server.LectorBiometricoAM</AppModuleJndiName>
+         <DeployPlatform>LOCAL</DeployPlatform>
+         <JDBCName>AZOR2020</JDBCName>
+         <ApplicationName>xxazor.oracle.apps.per.lecbio.server.LectorBiometricoAM</ApplicationName>
+         <jbo.project>OALecBio</jbo.project>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <ConnectionDefinition name="AZOR2020">
+      <ENTRY name="JDBC_PORT" value="1521"/>
+      <ENTRY name="ConnectionType" value="JDBC"/>
+      <ENTRY name="HOSTNAME" value="192.168.180.22"/>
+      <ENTRY name="DeployPassword" value="true"/>
+      <ENTRY name="user" value="apps"/>
+      <ENTRY name="ConnectionName" value="AZOR2020"/>
+      <ENTRY name="ServiceName" value="ebs_AZOR2020"/>
+      <ENTRY name="Role" value="Normal"/>
+      <ENTRY name="password">
+         <![CDATA[{904}0544FB3C477262E625B700C36B719CD60A]]>
+      </ENTRY>
+      <ENTRY name="JdbcDriver" value="oracle.jdbc.OracleDriver"/>
+      <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
+      <ENTRY name="DeployPassword" value="true"/>
+   </ConnectionDefinition>
+</BC4JConfig>

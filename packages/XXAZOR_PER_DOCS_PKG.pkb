@@ -656,7 +656,7 @@ BEGIN
                                     ,XXAZOR_PER_DOCS_PKG.gs_open
                                     ,PSI_PADRE
                                     ,PSI_HIJO
-                                    ,PSI_NIETO
+                                    ,NVL(PSI_NIETO,'NA')
                                     ,-1
                                     ,PSI_OBS_ACLA
                                     ,null
@@ -711,23 +711,7 @@ and rownum = 1) loop
                                  ,avalue   => ln_aclar_id
                                   );
                                   
-        wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'ACLAR_LINEA1'
-                                 ,avalue   => 'Tipo Alcaracion:'||idx.padre_desc
-                                  );
-                                  
-          wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'ACLAR_LINEA2'
-                                 ,avalue   => idx.padre_desc||':'||idx.hijo_desc
-                                  );
-                                  
-           wf_engine.SetItemAttrText (itemtype => gs_item_type
-                                 ,itemkey  => ls_itemkey
-                                 ,aname    => 'ACLAR_LINEA3'
-                                 ,avalue   => idx.hijo_desc||':'||idx.nieto_desc
-                                  );
+        
                                                                                   
           wf_engine.SetItemAttrText (itemtype => gs_item_type
                                  ,itemkey  => ls_itemkey
@@ -739,6 +723,18 @@ and rownum = 1) loop
                                ,itemkey  =>  ls_itemkey
                                ,owner    =>  nvl(fnd_global.user_name,'SYSADMIN')
                                );
+                               
+         wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'FUNCNAME_ATTR'
+                                 ,avalue   => 'XXAZOR_PER_ACLR_RN_F'
+                                  );
+                                   
+         wf_engine.SetItemAttrText (itemtype => gs_item_type
+                                 ,itemkey  => ls_itemkey
+                                 ,aname    => 'MSGATTR1'
+                                 ,avalue   => ln_aclar_id
+                                  );                       
      
         wf_engine.StartProcess (itemtype  => gs_item_type
                                ,itemkey   => ls_itemkey

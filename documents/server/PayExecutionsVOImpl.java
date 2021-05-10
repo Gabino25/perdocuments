@@ -64,6 +64,13 @@ public class PayExecutionsVOImpl extends OAViewObjectImpl {
                      , String pElementSetIdFV
                      , String pAssignmentSetIdFV
                      ) {
+        System.out.println("PayrollId: " + pPayrollIdFV);
+        System.out.println("BusinessGroupId: " + pBusinessGroupIdFV);
+        System.out.println("TimePeriodId: " + pTimePeriodIdFV);
+        System.out.println("PersonId: " + pPersonIdFV);
+        System.out.println("ConsolidationSetId: " + pConsolidationSetIdFV);
+        System.out.println("ElementSetId: " + pElementSetIdFV);
+        System.out.println("AssignmentSetId: " + pAssignmentSetIdFV);
         // 2. Create a view criteria row set for this view object
         ViewCriteria vc = this.createViewCriteria(); 
         // 3. Use the view criteria to create one or more view criteria rows
@@ -95,6 +102,7 @@ public class PayExecutionsVOImpl extends OAViewObjectImpl {
         // 6. Apply the view criteria to the view object
         this.applyViewCriteria(vc); 
         // 7. Execute the query
+        /*System.out.println(this.getQuery());*/
         this.executeQuery();       
     }
 }
