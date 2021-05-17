@@ -31,14 +31,7 @@
                         <lovMap id="lovMap6" lovItem="PayrollId" criteriaFrom="PayrollIdFV" requiredForLOV="true"/>
                      </lovMappings>
                   </oa:messageLovInput>
-                  <oa:messageLovInput id="EmployeeName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PayEmpRN" prompt="Empleado" rendered="${oa.GenTimControlsVO1.EmployeeR}">
-                     <lovMappings>
-                        <lovMap id="lovMap7" lovItem="FullName" resultTo="EmployeeName" criteriaFrom="EmployeeName" programmaticQuery="true"/>
-                        <lovMap id="lovMap8" lovItem="PersonId" resultTo="PersonIdFV"/>
-                        <lovMap id="lovMap9" lovItem="TimePeriodId" criteriaFrom="TimePeriodIdFV" requiredForLOV="true"/>
-                     </lovMappings>
-                  </oa:messageLovInput>
-                  <oa:messageLovInput id="ConsolidationSetName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PySrsConsolidationSetRN" prompt="Juego de Consolidacion" rendered="${oa.GenTimControlsVO1.PeriodoR}">
+                  <oa:messageLovInput id="ConsolidationSetName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PySrsConsolidationSetRN" prompt="Juego de Consolidacion" rendered="${oa.GenTimControlsVO1.PeriodoR}" required="yes">
                      <lovMappings>
                         <lovMap id="lovMap13" lovItem="ConsolidationSetName" resultTo="ConsolidationSetName" criteriaFrom="ConsolidationSetName" programmaticQuery="true"/>
                         <lovMap id="lovMap14" lovItem="ConsolidationSetId" resultTo="ConsolidationSetIdFV"/>
@@ -61,7 +54,15 @@
                         <lovMap id="lovMap12" lovItem="PayrollId" requiredForLOV="true" criteriaFrom="PayrollIdFV"/>
                      </lovMappings>
                   </oa:messageLovInput>
+                  <oa:messageLovInput id="EmployeeName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PayEmpRN" prompt="Empleado" rendered="${oa.GenTimControlsVO1.EmployeeR}">
+                     <lovMappings>
+                        <lovMap id="lovMap7" lovItem="FullName" resultTo="EmployeeName" criteriaFrom="EmployeeName" programmaticQuery="true"/>
+                        <lovMap id="lovMap8" lovItem="PersonId" resultTo="PersonIdFV"/>
+                        <lovMap id="lovMap9" lovItem="TimePeriodId" criteriaFrom="TimePeriodIdFV" requiredForLOV="true"/>
+                     </lovMappings>
+                  </oa:messageLovInput>
                   <oa:messageTextInput id="FechaDePago" required="yes" dataType="DATE" prompt="Fecha de Pago" rendered="${oa.GenTimControlsVO1.PeriodoR}"/>
+                  <oa:messageChoice id="TeStatus" prompt="Estatus Timbrado Electronico" pickListViewDef="xxazor.oracle.apps.per.documents.server.PayTeStatusVO" pickListDispAttr="Meaning" pickListValAttr="Code" rendered="${oa.GenTimControlsVO1.PeriodoR}"/>
                </ui:contents>
                <ui:footer>
                   <oa:flowLayout id="region4">
@@ -69,6 +70,11 @@
                         <oa:button id="ConsultarBtn" text="Consultar" prompt="Consultar" rendered="${oa.GenTimControlsVO1.ConsultaBtnR}">
                            <ui:primaryClientAction>
                               <ui:fireAction event="ConsultarEvt"/>
+                           </ui:primaryClientAction>
+                        </oa:button>
+                        <oa:button id="LimpiarBtn" text="Limpiar" prompt="Limpiar" rendered="${oa.GenTimControlsVO1.ConsultaBtnR}">
+                           <ui:primaryClientAction>
+                              <ui:fireAction event="LimpiarEvt" unvalidated="true"/>
                            </ui:primaryClientAction>
                         </oa:button>
                      </ui:contents>

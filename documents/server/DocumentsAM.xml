@@ -81,4 +81,8 @@
       Name="PySrsAssetRunVO1"
       ViewObjectName="xxazor.oracle.apps.per.documents.server.PySrsAssetRunVO" >
    </ViewUsage>
+   <ViewUsage
+      Name="PayTeStatusVO1"
+      ViewObjectName="xxazor.oracle.apps.per.documents.server.PayTeStatusVO" >
+   </ViewUsage>
 </AppModule>

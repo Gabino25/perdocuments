@@ -589,7 +589,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage());
-               throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode(),OAException.ERROR); 
+               throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR); 
         }   
     }
 
@@ -692,8 +692,8 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             retval[1] = "ERRMSG";
             retval[2] = strATI;
         } catch (SQLException e) {
-               System.out.println("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage());
-               throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode(),OAException.ERROR); 
+               System.out.println("SQLException en el metodo getATI:"+e.getErrorCode()+", "+e.getMessage());
+               throw new OAException("SQLException en el metodo getATI:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR); 
         } 
         
        return retval; 
@@ -787,7 +787,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo updateXPT:"+e.getErrorCode()+", "+e.getMessage());
-               throw new OAException("SQLException en el metodo updateXPT:"+e.getErrorCode(),OAException.ERROR); 
+               throw new OAException("SQLException en el metodo updateXPT:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR); 
         }   
     }
 
@@ -819,5 +819,11 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
      */
     public PySrsAssetRunVOImpl getPySrsAssetRunVO1() {
         return (PySrsAssetRunVOImpl)findViewObject("PySrsAssetRunVO1");
+    }
+
+    /**Container's getter for PayTeStatusVO1
+     */
+    public PayTeStatusVOImpl getPayTeStatusVO1() {
+        return (PayTeStatusVOImpl)findViewObject("PayTeStatusVO1");
     }
 }

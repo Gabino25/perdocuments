@@ -15,8 +15,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import oracle.apps.fnd.common.VersionInfo;
+import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
+import oracle.apps.fnd.framework.webui.OAWebBeanConstants;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
 
 import oracle.apps.fnd.framework.webui.beans.message.OAMessageDateFieldBean;
@@ -93,6 +95,7 @@ public class GeneracionTimbresCO extends OAControllerImpl
         String strConsolidationSetIdFV = pageContext.getParameter("ConsolidationSetIdFV");
         String strElementSetIdFV = pageContext.getParameter("ElementSetIdFV");
         String strAssignmentSetIdFV = pageContext.getParameter("AssignmentSetIdFV");
+        String strTeStatus = pageContext.getParameter("TeStatus");
         
         payExecutionsVOImpl.filter(strPayrollIdFV
                                   ,strBusinessGroupIdFV
@@ -101,8 +104,9 @@ public class GeneracionTimbresCO extends OAControllerImpl
                                   ,strConsolidationSetIdFV
                                   ,strElementSetIdFV
                                   ,strAssignmentSetIdFV
+                                  ,strTeStatus
                                   );
-        
+        return;
     }
     if("LlamarServicioWebEvt".equals(strEventParam)){
         String strFechaPago = pageContext.getParameter("FechaDePago");
@@ -127,6 +131,7 @@ public class GeneracionTimbresCO extends OAControllerImpl
         String strConsolidationSetIdFV = pageContext.getParameter("ConsolidationSetIdFV");
         String strElementSetIdFV = pageContext.getParameter("ElementSetIdFV");
         String strAssignmentSetIdFV = pageContext.getParameter("AssignmentSetIdFV");
+        String strTeStatus = pageContext.getParameter("TeStatus");
         
         payExecutionsVOImpl.filter(strPayrollIdFV
                                   ,strBusinessGroupIdFV
@@ -135,9 +140,24 @@ public class GeneracionTimbresCO extends OAControllerImpl
                                   ,strConsolidationSetIdFV
                                   ,strElementSetIdFV
                                   ,strAssignmentSetIdFV
+                                  ,strTeStatus
                                   );
-        
+        return;
     }
+    
+      if("LimpiarEvt".equals(strEventParam)){
+          com.sun.java.util.collections.HashMap parameters = new com.sun.java.util.collections.HashMap();
+          pageContext.setForwardURL("OA.jsp?page=/xxazor/oracle/apps/per/documents/webui/GeneracionTimbresPG" /*url*/
+                                                 ,null /*functionName*/
+                                                 ,OAWebBeanConstants.KEEP_MENU_CONTEXT /*menuContextAction*/
+                                                 ,null /*menuName*/
+                                                 ,parameters /*parameters*/
+                                                 ,false /*retainAM*/
+                                                 ,OAWebBeanConstants.ADD_BREAD_CRUMB_NO /*addBreadCrumb*/
+                                                 ,OAException.ERROR /*messagingLevel*/
+                                                 );
+          return;
+      }
     /** 
     File file = new File("C:\\Users\\Dell\\Downloads\\ATI_ACOSTA_CORDOBA_JESUS_JAVIER.txt");
     byte[] bytes = readContentIntoByteArray(file);

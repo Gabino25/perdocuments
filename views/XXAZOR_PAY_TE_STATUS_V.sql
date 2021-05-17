@@ -1,0 +1,8 @@
+CREATE OR REPLACE FORCE VIEW APPS.XXAZOR_PAY_TE_STATUS_V (CODE, MEANING)
+AS
+   SELECT   'SIN_TIMBRAR' code, 'Sin Timbrar' meaning FROM DUAL
+   UNION
+   SELECT   'TIMBRADO_CON_EXITO' code, 'Timbrado Con Exito' meaning FROM DUAL
+   UNION
+   SELECT   'TIMBRADO_CON_ERROR' code, 'Timbrado Con Error' meaning FROM DUAL
+;

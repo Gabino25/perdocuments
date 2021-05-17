@@ -35,6 +35,7 @@ SELECT  per.employee_number
         ,per.person_id           
         ,asg.business_group_id  
         ,xpt.MSG_GRWSBYTE  
+        ,xpt.TE_STATUS
  FROM   pay_assignment_actions paa 
        ,pay_payroll_actions    ppa 
        ,pay_run_types_f        prtf
@@ -456,6 +457,19 @@ SELECT  per.employee_number
       SQLType="VARCHAR" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TeStatus"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TE_STATUS"
+      Expression="TE_STATUS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
       </DesignTime>
    </ViewAttribute>
 </ViewObject>
