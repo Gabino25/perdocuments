@@ -3,7 +3,7 @@
    <AppModuleConfigBag>
       <AppModuleConfig name="DocumentsAMLocal">
          <DeployPlatform>LOCAL</DeployPlatform>
-         <JDBCName>AZORDBEBSPRO</JDBCName>
+         <JDBCName>AZOR_DEV</JDBCName>
          <jbo.project>OAProject2</jbo.project>
          <AppModuleJndiName>xxazor.oracle.apps.per.documents.server.DocumentsAM</AppModuleJndiName>
          <java.naming.factory.initial>oracle.jbo.common.JboInitialContextFactory</java.naming.factory.initial>
@@ -24,18 +24,6 @@
       <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
       <ENTRY name="DeployPassword" value="true"/>
    </ConnectionDefinition>
-   <ConnectionDefinition name="AZOR_DEV">
-      <ENTRY name="JDBC_PORT" value="1551"/>
-      <ENTRY name="ConnectionType" value="JDBC"/>
-      <ENTRY name="HOSTNAME" value="10.10.0.16"/>
-      <ENTRY name="user" value="APPS"/>
-      <ENTRY name="ConnectionName" value="AZOR_DEV"/>
-      <ENTRY name="ServiceName" value="ebs_DBEBSDEV"/>
-      <ENTRY name="JdbcDriver" value="oracle.jdbc.OracleDriver"/>
-      <ENTRY name="password">{904}05F306D32979E9BA15B7A50BAE44CBA7D0C4D0DFF1524B5CDF</ENTRY>
-      <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
-      <ENTRY name="DeployPassword" value="true"/>
-   </ConnectionDefinition>
    <ConnectionDefinition name="AZORDBEBSTEST">
       <ENTRY name="JDBC_PORT" value="1561"/>
       <ENTRY name="ConnectionType" value="JDBC"/>
@@ -44,9 +32,7 @@
       <ENTRY name="ConnectionName" value="AZORDBEBSTEST"/>
       <ENTRY name="SID" value="ebs_DBEBSTST"/>
       <ENTRY name="JdbcDriver" value="oracle.jdbc.OracleDriver"/>
-      <ENTRY name="password">
-         <![CDATA[{904}058BEADF3558D3D52E073FCFD11406C137E2BE73D5C06E424D]]>
-      </ENTRY>
+      <ENTRY name="password">{904}058BEADF3558D3D52E073FCFD11406C137E2BE73D5C06E424D</ENTRY>
       <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
       <ENTRY name="DeployPassword" value="true"/>
    </ConnectionDefinition>
@@ -58,8 +44,20 @@
       <ENTRY name="ConnectionName" value="AZORDBEBSPRO"/>
       <ENTRY name="SID" value="ebs_DBEBSPRO"/>
       <ENTRY name="JdbcDriver" value="oracle.jdbc.OracleDriver"/>
+      <ENTRY name="password">{904}0553D1EC907D1AC299ECF61726E22BE409786BAE1D5809016D</ENTRY>
+      <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
+      <ENTRY name="DeployPassword" value="true"/>
+   </ConnectionDefinition>
+   <ConnectionDefinition name="AZOR_DEV">
+      <ENTRY name="JDBC_PORT" value="1551"/>
+      <ENTRY name="ConnectionType" value="JDBC"/>
+      <ENTRY name="HOSTNAME" value="10.10.0.16"/>
+      <ENTRY name="user" value="APPS"/>
+      <ENTRY name="ConnectionName" value="AZOR_DEV"/>
+      <ENTRY name="ServiceName" value="ebs_DBEBSDEV"/>
+      <ENTRY name="JdbcDriver" value="oracle.jdbc.OracleDriver"/>
       <ENTRY name="password">
-         <![CDATA[{904}0553D1EC907D1AC299ECF61726E22BE409786BAE1D5809016D]]>
+         <![CDATA[{904}05BB48E1AC95B6E8DBBFA84ED72DDAF4AEA3B80932F1BC3740]]>
       </ENTRY>
       <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
       <ENTRY name="DeployPassword" value="true"/>

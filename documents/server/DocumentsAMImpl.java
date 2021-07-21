@@ -32,6 +32,7 @@ import oracle.jbo.domain.Number;
 import oracle.jdbc.OracleCallableStatement;
 
 import org.tempuri.ServiceDeGeneracionSoap12Client;
+import java.util.Timer;
 
 import sun.nio.cs.StandardCharsets;
 
@@ -130,6 +131,8 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         } catch (SQLException e) {
                    System.out.println("SQLException en el metodo crearSolicitud:"+e.getErrorCode()+", "+e.getMessage());
                    throw new OAException("SQLException en el metodo crearSolicitud:"+e.getErrorCode(),OAException.ERROR); 
+       }finally{
+         closeOracleCallableStatement(oraclecallablestatement);
        }
        return retval;
     }
@@ -182,7 +185,9 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         } catch (SQLException e) {
                    System.out.println("SQLException en el metodo generateReqDoc:"+e.getErrorCode()+", "+e.getMessage());
                    throw new OAException("SQLException en el metodo generateReqDoc:"+e.getErrorCode(),OAException.ERROR); 
-        }
+        }finally{
+         closeOracleCallableStatement(oraclecallablestatement);
+       }
         return retval;
     }
 
@@ -235,7 +240,9 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         }catch (IOException ioe) {
             System.out.println("IOException en el metodo getXmlDocByReqId:"+ioe.getMessage());
             throw new OAException("IOException en el metodo getXmlDocByReqId:"+ioe.getMessage(),OAException.ERROR);
-        }
+        }finally{
+         closeOracleCallableStatement(oraclecallablestatement);
+       }
         return retval;
     }
 
@@ -291,6 +298,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
            System.out.println("aclControlsVORowImpl.getPadre():"+aclControlsVORowImpl.getPadre());
            System.out.println("aclControlsVORowImpl.getPadreR():"+aclControlsVORowImpl.getPadreR());
         }
+        rowSetIterator.closeRowSetIterator();
     }
 
     public void filterAclHijo(String pPadreValue) {
@@ -373,7 +381,9 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         } catch (SQLException e) {
                    System.out.println("SQLException en el metodo crearAclaracion:"+e.getErrorCode()+", "+e.getMessage());
                    throw new OAException("SQLException en el metodo crearAclaracion:"+e.getErrorCode(),OAException.ERROR); 
-        }
+        }finally{
+         closeOracleCallableStatement(oraclecallablestatement);
+       }
         return retval;                         
     }
 
@@ -441,7 +451,17 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         System.out.println("--> llamarServicioWeb");
         PayExecutionsVOImpl payExecutionsVOImpl = getPayExecutionsVO1(); 
         RowSetIterator iterator  = payExecutionsVOImpl.createRowSetIterator(null);
+        int count = 0;
         while(iterator.hasNext()){
+            count++;
+            if(count == 30) {
+                try{
+                    Thread.sleep(3000);
+                    count = 0;
+                }catch(Exception e)
+                {}
+            }
+             System.out.println("--+");
              PayExecutionsVORowImpl payExecutionsVORowImpl = (PayExecutionsVORowImpl)iterator.next(); 
              if("Y".equals(payExecutionsVORowImpl.getMultiSelection())){
                  generarATI(payExecutionsVORowImpl.getBusinessGroupId()
@@ -517,7 +537,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                           ,payExecutionsVORowImpl.getAssignmentSetId()
                           ,pFechaDepago
                           ,strGeneraReciboWS
-                           );
+                           ); 
                 System.out.println("Se mando ATI por WS");
                 }
                 catch(Exception e){
@@ -525,6 +545,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                 }
             }
         }
+        iterator.closeRowSetIterator();
     }
     
     public static void copy(InputStream in, OutputStream out)
@@ -590,9 +611,12 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage());
                throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR); 
-        }   
+        } finally{
+           closeOracleCallableStatement(oraclecallablestatement);
+        }
+  
     }
-
+    
     private String[] getATI(Number pBusinessGroupId
                       , Number pPersonId
                       , Number pAssignmentId
@@ -649,10 +673,14 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         System.out.println("pAssignmentSetId: " + pAssignmentSetId.intValue());
         System.out.println("pFechaDepago: " + pFechaDepago.dateValue());
         oraclecallablestatement.execute();
-        
+        System.out.println("Execute");
           
         java.sql.Clob atiClob = oraclecallablestatement.getClob(3);
+        System.out.println("Regresa Clob");
         String strATI = clobToString(atiClob);
+        System.out.println("Convierte Clob");
+        System.out.println(strATI);
+        
             /******************************************************
         System.out.println(atiClob);
           
@@ -693,12 +721,15 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             retval[2] = strATI;
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo getATI:"+e.getErrorCode()+", "+e.getMessage());
-               throw new OAException("SQLException en el metodo getATI:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR); 
-        } 
+               throw new OAException("SQLException en el metodo getATI:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR);
+        } finally{
+           closeOracleCallableStatement(oraclecallablestatement);
+        }
         
        return retval; 
         
     }
+         
     
     /*********************************************************************************************
      * From CLOB to String
@@ -707,7 +738,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
     private String clobToString(java.sql.Clob data)
     {
         final StringBuilder sb = new StringBuilder();
-
+        System.out.println("    --> Iniciar clobToString");
         try
         {
             final Reader         reader = data.getCharacterStream();
@@ -731,7 +762,11 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             System.out.println("IO. Could not convert CLOB to string:"+e.toString());
             return e.toString();
         }
-
+        catch (Exception e) {
+            System.out.println("E. Could not convert CLOB to string:"+e.toString());
+            return e.toString();
+        }
+        System.out.println("    --> Iniciar clobToString");
         return sb.toString();
     }
     
@@ -788,7 +823,9 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo updateXPT:"+e.getErrorCode()+", "+e.getMessage());
                throw new OAException("SQLException en el metodo updateXPT:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR); 
-        }   
+        } finally{
+           closeOracleCallableStatement(oraclecallablestatement);
+        }  
     }
 
 
@@ -826,4 +863,15 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
     public PayTeStatusVOImpl getPayTeStatusVO1() {
         return (PayTeStatusVOImpl)findViewObject("PayTeStatusVO1");
     }
+
+    private void closeOracleCallableStatement(OracleCallableStatement pOraclecallablestatement) {
+      if(null!=pOraclecallablestatement){
+          try {
+              pOraclecallablestatement.close();
+          } catch (SQLException e) {
+              System.out.println("SQLException closeOracleCallableStatement");
+          }
+      }
+    }
+    
 }

@@ -142,6 +142,7 @@ public class GeneracionTimbresCO extends OAControllerImpl
                                   ,strAssignmentSetIdFV
                                   ,strTeStatus
                                   );
+        //pageContext.forwardImmediatelyToCurrentPage(null, false, null);
         return;
     }
     
