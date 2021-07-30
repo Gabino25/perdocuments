@@ -109,4 +109,9 @@
       FullName="xxazor.oracle.apps.per.documents.server.UsersInfoVO"
       ObjectType="ViewObject" >
    </Containee>
+   <Containee
+      Name="XxazorHrLegalEntityVO"
+      FullName="xxazor.oracle.apps.per.documents.server.XxazorHrLegalEntityVO"
+      ObjectType="ViewObject" >
+   </Containee>
 </JboPackage>

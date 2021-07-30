@@ -35,7 +35,7 @@ SELECT  per.employee_number
         ,per.person_id           
         ,asg.business_group_id  
         ,xpt.MSG_GRWSBYTE  
-        ,xpt.TE_STATUS
+        ,nvl(xpt.te_status,'SIN_TIMBRAR') te_status
  FROM   pay_assignment_actions paa 
        ,pay_payroll_actions    ppa 
        ,pay_run_types_f        prtf
@@ -62,6 +62,7 @@ SELECT  per.employee_number
    AND    ptp.time_period_id = xpt.time_period_id(+)
    AND    ppa.payroll_action_id = xpt.payroll_action_id(+)
    AND    paa.assignment_action_id  = xpt.assignment_action_id(+)
+ORDER BY TO_NUMBER(per.employee_number) ASC
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />

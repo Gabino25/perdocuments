@@ -85,4 +85,13 @@ select 'N' periodo, 'N' consulta_btn, 'N' employee from dual
       AliasName="VIEW_ATTR"
       SQLType="BIT" >
    </ViewAttribute>
+   <ViewAttribute
+      Name="ContadorRegistros"
+      IsSelected="false"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="VIEW_ATTR"
+      SQLType="NUMERIC" >
+   </ViewAttribute>
 </ViewObject>

@@ -10,6 +10,8 @@ import java.io.File;
 
 import java.io.FileInputStream;
 
+import java.sql.SQLException;
+
 import java.text.DateFormat;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +23,7 @@ import oracle.apps.fnd.framework.webui.OAPageContext;
 import oracle.apps.fnd.framework.webui.OAWebBeanConstants;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
 
+import oracle.apps.fnd.framework.webui.beans.message.OAMessageChoiceBean;
 import oracle.apps.fnd.framework.webui.beans.message.OAMessageDateFieldBean;
 
 import org.tempuri.ServiceDeGeneracionSoap12Client;
@@ -72,6 +75,8 @@ public class GeneracionTimbresCO extends OAControllerImpl
     super.processFormRequest(pageContext, webBean);
     String strEventParam = pageContext.getParameter(this.EVENT_PARAM);
     System.out.println("strEventParam:"+strEventParam);
+    OAMessageChoiceBean oAMessageChoiceBean = null; 
+      
     DocumentsAMImpl am = (DocumentsAMImpl)pageContext.getApplicationModule(webBean);
     GenTimControlsVOImpl genTimControlsVOImpl =  am.getGenTimControlsVO1();  
     GenTimControlsVORowImpl genTimControlsVORowImpl = (GenTimControlsVORowImpl)genTimControlsVOImpl.first();
@@ -106,6 +111,9 @@ public class GeneracionTimbresCO extends OAControllerImpl
                                   ,strAssignmentSetIdFV
                                   ,strTeStatus
                                   );
+        System.out.println(payExecutionsVOImpl.getFetchedRowCount()); 
+        System.out.println(payExecutionsVOImpl.getRowCount()); 
+        genTimControlsVORowImpl.setContadorRegistros(new oracle.jbo.domain.Number(payExecutionsVOImpl.getRowCount()));                          
         return;
     }
     if("LlamarServicioWebEvt".equals(strEventParam)){
@@ -122,7 +130,22 @@ public class GeneracionTimbresCO extends OAControllerImpl
         System.out.println("dateFechaPago:"+dateFechaPago);
         System.out.println("oracleDate:"+oracleDate);
         
-        am.llamarServicioWeb(oracleDate);
+        oAMessageChoiceBean = (OAMessageChoiceBean)webBean.findChildRecursive("OrganizationGre"); 
+        String strOrganizationGreId = "";
+        oracle.jbo.domain.Number numOrganizationGre = null; 
+        if(null!=oAMessageChoiceBean){
+            strOrganizationGreId = (String)oAMessageChoiceBean.getValue(pageContext);
+                try {
+                    numOrganizationGre = new oracle.jbo.domain.Number(strOrganizationGreId);
+                } catch (SQLException e) {
+                    throw new OAException(e.toString(),OAException.ERROR);
+                }
+            }
+        
+        System.out.println("strOrganizationGreId:"+strOrganizationGreId);
+        System.out.println("numOrganizationGre:"+numOrganizationGre);
+        
+        am.llamarServicioWeb(oracleDate,numOrganizationGre);
         
         String strPayrollIdFV = pageContext.getParameter("PayrollIdFV");
         String strBusinessGroupIdFV = pageContext.getParameter("BusinessGroupIdFV");
@@ -142,6 +165,9 @@ public class GeneracionTimbresCO extends OAControllerImpl
                                   ,strAssignmentSetIdFV
                                   ,strTeStatus
                                   );
+        System.out.println(payExecutionsVOImpl.getFetchedRowCount()); 
+        System.out.println(payExecutionsVOImpl.getRowCount()); 
+        genTimControlsVORowImpl.setContadorRegistros(new oracle.jbo.domain.Number(payExecutionsVOImpl.getRowCount()));                          
         //pageContext.forwardImmediatelyToCurrentPage(null, false, null);
         return;
     }

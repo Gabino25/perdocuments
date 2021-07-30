@@ -17,6 +17,7 @@
             </oa:pageButtonBar>
             <oa:messageComponentLayout id="region3" rows="1" columns="1">
                <ui:contents>
+                  <oa:messageChoice id="OrganizationGre" prompt="Empleador" pickListViewDef="xxazor.oracle.apps.per.documents.server.XxazorHrLegalEntityVO" pickListDispAttr="RazonSocial" pickListValAttr="OrganizationGreId" rendered="true" required="yes" allowBlankValue="false"/>
                   <oa:messageLovInput id="PayrollName" externalListOfValues="/xxazor/oracle/apps/per/documents/lov/webui/PayrollsRN" prompt="Nomina" required="yes">
                      <lovMappings>
                         <lovMap id="lovMap1" lovItem="PayrollName" resultTo="PayrollName" criteriaFrom="PayrollName"/>
@@ -63,6 +64,7 @@
                   </oa:messageLovInput>
                   <oa:messageTextInput id="FechaDePago" required="yes" dataType="DATE" prompt="Fecha de Pago" rendered="${oa.GenTimControlsVO1.PeriodoR}"/>
                   <oa:messageChoice id="TeStatus" prompt="Estatus Timbrado Electronico" pickListViewDef="xxazor.oracle.apps.per.documents.server.PayTeStatusVO" pickListDispAttr="Meaning" pickListValAttr="Code" rendered="${oa.GenTimControlsVO1.PeriodoR}"/>
+                  <oa:messageStyledText id="ContadorRegistros" viewName="GenTimControlsVO1" viewAttr="ContadorRegistros" prompt="Total"/>
                </ui:contents>
                <ui:footer>
                   <oa:flowLayout id="region4">
@@ -81,9 +83,9 @@
                   </oa:flowLayout>
                </ui:footer>
             </oa:messageComponentLayout>
-            <oa:advancedTable id="PayExecutionsRN" viewName="PayExecutionsVO1" blockSize="500">
+            <oa:advancedTable id="PayExecutionsRN" viewName="PayExecutionsVO1" blockSize="500" userCustomizable="false" enableUserControlOnColumns="false" columnHideShowEnabled="false" colReorderEnabled="false" colResizeEnabled="false" colFreezeEnabled="false" adminCustomizable="false">
                <ui:contents>
-                  <oa:column id="EmployeeNumberCol">
+                  <oa:column id="EmployeeNumberCol" totalValue="false">
                      <ui:columnHeader>
                         <oa:sortableHeader id="EmployeeNumberSH" prompt="Numero Empleado"/>
                      </ui:columnHeader>
@@ -161,6 +163,14 @@
                      </ui:columnHeader>
                      <ui:contents>
                         <oa:messageStyledText id="MsgGrwsbyte" viewAttr="MsgGrwsbyte" prompt="Mensage Servicio Web"/>
+                     </ui:contents>
+                  </oa:column>
+                  <oa:column id="TeStatusCol">
+                     <ui:columnHeader>
+                        <oa:sortableHeader id="TeStatusSH" prompt="Estatus"/>
+                     </ui:columnHeader>
+                     <ui:contents>
+                        <oa:messageChoice id="TeStatus1" prompt="Estatus Timbrado Electronico" pickListViewDef="xxazor.oracle.apps.per.documents.server.PayTeStatusVO" pickListDispAttr="Meaning" pickListValAttr="Code" rendered="${oa.GenTimControlsVO1.PeriodoR}" readOnly="true" viewAttr="TeStatus"/>
                      </ui:contents>
                   </oa:column>
                </ui:contents>

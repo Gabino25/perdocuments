@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="XxazorHrLegalEntityVO"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="xxazor.oracle.apps.per.documents.server.XxazorHrLegalEntityVORowImpl"
+   ComponentClass="xxazor.oracle.apps.per.documents.server.XxazorHrLegalEntityVOImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT ORGANIZATION_GRE_ID
+       ,RAZON_SOCIAL
+  FROM XXAZOR_HR_LEGAL_ENTITY_V
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+   </DesignTime>
+   <ViewAttribute
+      Name="OrganizationGreId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ORGANIZATION_GRE_ID"
+      Expression="ORGANIZATION_GRE_ID"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RazonSocial"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="150"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RAZON_SOCIAL"
+      Expression="RAZON_SOCIAL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="150" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

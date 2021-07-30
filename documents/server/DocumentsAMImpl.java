@@ -447,21 +447,15 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         return (GenTimControlsVOImpl)findViewObject("GenTimControlsVO1");
     }
 
-    public void llamarServicioWeb(oracle.jbo.domain.Date pFechaDepago) {
+    public void llamarServicioWeb(oracle.jbo.domain.Date pFechaDepago
+                                 ,oracle.jbo.domain.Number  pOrganizationGreId) {
         System.out.println("--> llamarServicioWeb");
+        System.out.println("pOrganizationGreId:"+pOrganizationGreId);
         PayExecutionsVOImpl payExecutionsVOImpl = getPayExecutionsVO1(); 
         RowSetIterator iterator  = payExecutionsVOImpl.createRowSetIterator(null);
         int count = 0;
         while(iterator.hasNext()){
             count++;
-            if(count == 30) {
-                try{
-                    Thread.sleep(3000);
-                    count = 0;
-                }catch(Exception e)
-                {}
-            }
-             System.out.println("--+");
              PayExecutionsVORowImpl payExecutionsVORowImpl = (PayExecutionsVORowImpl)iterator.next(); 
              if("Y".equals(payExecutionsVORowImpl.getMultiSelection())){
                  generarATI(payExecutionsVORowImpl.getBusinessGroupId()
@@ -474,6 +468,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                            ,payExecutionsVORowImpl.getElementSetId()
                            ,payExecutionsVORowImpl.getAssignmentSetId()
                            ,pFechaDepago
+                           ,pOrganizationGreId
                            );
                 String[] strArray = getATI(payExecutionsVORowImpl.getBusinessGroupId()
                                 ,payExecutionsVORowImpl.getPersonId()
@@ -486,7 +481,8 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                 ,payExecutionsVORowImpl.getAssignmentSetId()
                                 ,pFechaDepago
                                 );
-                System.out.println("Accediendo al WS");
+                
+                if(null!=strArray[2]){
                 try{
                 /**
                 URL oURL = new URL("https://azor.e-personal.mx/GRZ/ePersonalWS/ServiceDeGeneracion.asmx");
@@ -522,9 +518,9 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                  String strGeneraReciboWS ="strGeneraReciboWS";
                  
                  **/      
-                                    
+                System.out.println("Accediendo al WS");                    
                 String strGeneraReciboWS = ServiceDeGeneracionSoap12Client.generaReciboWSByte(strArray[2].getBytes());
-                System.out.println("Generando ATI por WS");
+                System.out.println("Obteniendo Respuesta WS");
                 System.out.println(strGeneraReciboWS);
                 updateXPT(payExecutionsVORowImpl.getBusinessGroupId()
                           ,payExecutionsVORowImpl.getPersonId()
@@ -543,6 +539,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                 catch(Exception e){
                 System.out.println("Error al timbrar: " + e);
                 }
+              } /** END   if(null!=strArray[2]){ **/
             }
         }
         iterator.closeRowSetIterator();
@@ -574,6 +571,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                           , Number pElementSetId
                           , Number pAssignmentSetId
                           , oracle.jbo.domain.Date pFechaDepago
+                          , Number pOrganizationGreId
                           ) {
         System.out.println("generarATI");
         String strCallableStmt = "BEGIN\n" + 
@@ -589,6 +587,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                                  "                                       ,PNI_ELEMENT_SET_ID        => :10\n" + 
                                  "                                       ,PNI_ASSIGNMENT_SET_ID     => :11\n" + 
                                  "                                       ,PDI_FECHA_PAGO            => :12\n" + 
+                                 "                                       ,PNI_ORGANIZATION_GRE_ID   => :13\n" + 
                                  "                                        );\n" + 
                                  "END;";
         OADBTransaction oadbtransaction = (OADBTransaction)this.getTransaction();
@@ -606,8 +605,15 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         oraclecallablestatement.setDouble(10,pElementSetId.doubleValue());
         oraclecallablestatement.setDouble(11,pAssignmentSetId.doubleValue());
         oraclecallablestatement.setDate(12,pFechaDepago.dateValue());
+        oraclecallablestatement.setDouble(13,pOrganizationGreId.doubleValue());
         oraclecallablestatement.execute();
         
+        String errcod = oraclecallablestatement.getString(1);
+        String errmsg = oraclecallablestatement.getString(2);
+        
+        System.out.println("errcod:"+errcod);
+        System.out.println("errmsg:"+errmsg);
+            
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage());
                throw new OAException("SQLException en el metodo generarATI:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR); 
@@ -630,6 +636,10 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
                       ) {
         System.out.println("getATI");
         String[] retval = new String[3];
+        retval[0] = "ERRCOD";
+        retval[1] = "ERRMSG";
+        retval[2] = null;
+        
         String strCallableStmt = "BEGIN\n" + 
                                  "   APPS.XXAZOR_PAY_TE_PKG.GET_ATI(PSI_ERRCOD                => :1\n" + 
                                  "                                 ,PSI_ERRMSG                => :2\n" + 
@@ -676,10 +686,17 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
         System.out.println("Execute");
           
         java.sql.Clob atiClob = oraclecallablestatement.getClob(3);
-        System.out.println("Regresa Clob");
-        String strATI = clobToString(atiClob);
-        System.out.println("Convierte Clob");
-        System.out.println(strATI);
+        System.out.println("Regresa Clob:"+atiClob);
+        if(null!=atiClob){
+            String strATI = clobToString(atiClob);
+            System.out.println("Convierte Clob");
+            retval[0] = "ERRCOD";
+            retval[1] = "ERRMSG";
+            retval[2] = strATI;
+        }
+        
+                        
+        /** System.out.println(strATI); **/
         
             /******************************************************
         System.out.println(atiClob);
@@ -716,9 +733,6 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             bufferReader.close();
             reader.close();
             **/
-            retval[0] = "ERRCOD";
-            retval[1] = "ERRMSG";
-            retval[2] = strATI;
         } catch (SQLException e) {
                System.out.println("SQLException en el metodo getATI:"+e.getErrorCode()+", "+e.getMessage());
                throw new OAException("SQLException en el metodo getATI:"+e.getErrorCode()+", "+e.getMessage(),OAException.ERROR);
@@ -766,7 +780,7 @@ public class DocumentsAMImpl extends OAApplicationModuleImpl {
             System.out.println("E. Could not convert CLOB to string:"+e.toString());
             return e.toString();
         }
-        System.out.println("    --> Iniciar clobToString");
+        System.out.println("    --> Finalizar clobToString");
         return sb.toString();
     }
     
